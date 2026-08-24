@@ -113,6 +113,30 @@
       color: #475569;
     }
 
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #111827, #374151, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .login-card {
+      background: white;
+      max-width: 420px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 30px #0008;
+    }
+
+    .login-card h2 {
+      margin-top: 0;
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 10px;
@@ -152,6 +176,26 @@
 </head>
 
 <body>
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <h2>🛂 Staff Login</h2>
+      <p>Enter staff password to open the scanner.</p>
+
+      <label>Password</label>
+      <input id="staffPassword" type="password" placeholder="Staff password" autofocus>
+
+      <button onclick="staffLogin()">Unlock Staff Scanner</button>
+
+      <div id="loginMessage" class="result">
+        Staff access required.
+      </div>
+
+      <p class="small">
+        Hint: this is for roleplay only, not real security.
+      </p>
+    </div>
+  </div>
+
   <h1>🛂 London Stansted Staff</h1>
   <p class="subtitle">Scan customer QR boarding passes</p>
 
@@ -163,8 +207,8 @@
         Click the box, then scan your friend's downloaded QR code with the USB scanner.
       </p>
 
-      <label>Scanner input</label>
-      <input id="scanInput" placeholder="Scan ticket QR code here" autofocus>
+<label>Scanner input</label>
+      <input id="scanInput" placeholder="Scan ticket QR code here">
 
       <button onclick="checkTicket()">Check Ticket</button>
       <button class="danger" onclick="clearScan()">Clear Scanner Box</button>
@@ -188,6 +232,24 @@
   </div>
 
   <script>
+    function staffLogin() {
+      const password = document.getElementById("staffPassword").value;
+      const message = document.getElementById("loginMessage");
+
+      message.classList.remove("good", "bad");
+
+      if (password === "stansted123456") {
+        message.classList.add("good");
+        message.textContent = "✅ Access granted.";
+
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("scanInput").focus();
+      } else {
+        message.classList.add("bad");
+        message.textContent = "⛔️ Wrong password.";
+      }
+    }
+
     function checkTicket() {
       const rawText = document.getElementById("scanInput").value.trim();
       const result = document.getElementById("scanResult");
@@ -202,7 +264,7 @@
         return;
       }
 
-const parts = rawText.split(/[|~¬]/);
+      const parts = rawText.split(/[|~¬]/);
 
       if (parts.length !== 8 || parts[0] !== "LSB-TICKET") {
         result.classList.add("bad");
@@ -240,6 +302,12 @@ const parts = rawText.split(/[|~¬]/);
 
       document.getElementById("ticketInfo").textContent = "No ticket scanned yet.";
     }
+
+    document.getElementById("staffPassword").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        staffLogin();
+      }
+    });
 
     document.getElementById("scanInput").addEventListener("keydown", function(event) {
       if (event.key === "Enter") {

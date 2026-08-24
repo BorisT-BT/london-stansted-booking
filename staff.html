@@ -190,9 +190,21 @@
         Staff access required.
       </div>
 
-      <p class="small">
-        Hint: this is for roleplay only, not real security.
-      </p>
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <h2>🛂 Staff Login</h2>
+    <p>Enter staff password to open the scanner.</p>
+
+    <label>Password</label>
+    <input id="staffPassword" type="password" placeholder="Staff password" autofocus>
+
+    <button onclick="staffLogin()">Unlock Staff Scanner</button>
+
+    <div id="loginMessage" class="result">
+      Staff access required.
+    </div>
+  </div>
+</div>
     </div>
   </div>
 

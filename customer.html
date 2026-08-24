@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Customer - London Stansted Booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e40af, #38bdf8);
+      color: #0f172a;
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      color: white;
+      text-align: center;
+      font-size: 42px;
+    }
+
+    .subtitle {
+      color: white;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px #0005;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    input,
+    select,
+    button,
+    a.download-button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button,
+    a.download-button {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+
+    button:hover,
+    a.download-button:hover {
+      background: #1d4ed8;
+    }
+
+    .ticket {
+      border: 3px dashed #111827;
+      border-radius: 16px;
+      padding: 15px;
+      background: #f8fafc;
+      margin-top: 10px;
+    }
+
+    .ticket-code {
+      font-size: 22px;
+      font-weight: bold;
+      background: #fde68a;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    #qrCode {
+      display: block;
+      margin: 15px auto;
+      width: 220px;
+      height: 220px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .small {
+      font-size: 14px;
+      color: #475569;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 30px;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+
+      .container {
+        margin: 16px auto;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card {
+        padding: 16px;
+        border-radius: 16px;
+      }
+
+      input,
+      select,
+      button,
+      a.download-button {
+        font-size: 18px;
+        padding: 14px;
+      }
+
+      #qrCode {
+        width: 260px;
+        height: 260px;
+        max-width: 100%;
+      }
+
+      .ticket-code {
+        font-size: 20px;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>✈️ London Stansted Booking</h1>
+  <p class="subtitle">Customer ticket booking</p>
+
+  <div class="container">
+    <div class="card">
+      <h2>Book Your Ticket</h2>
+
+      <label>Passenger name</label>
+      <input id="passengerName" placeholder="Passenger name">
+
+      <label>From</label>
+      <select id="fromAirport">
+        <option value="">Choose departure airport</option>
+        <option value="London Stansted">London Stansted</option>
+        <option value="London Heathrow">London Heathrow</option>
+        <option value="London Gatwick">London Gatwick</option>
+        <option value="Manchester Airport">Manchester Airport</option>
+        <option value="New York JFK">New York JFK</option>
+        <option value="Tokyo Haneda">Tokyo Haneda</option>
+        <option value="Dubai International">Dubai International</option>
+        <option value="Australia Sydney">Australia Sydney</option>
+      </select>
+
+      <label>To</label>
+      <select id="toAirport">
+<option value="">Choose destination airport</option>
+        <option value="London Stansted">London Stansted</option>
+        <option value="London Heathrow">London Heathrow</option>
+        <option value="London Gatwick">London Gatwick</option>
+        <option value="Manchester Airport">Manchester Airport</option>
+        <option value="New York JFK">New York JFK</option>
+        <option value="Tokyo Haneda">Tokyo Haneda</option>
+        <option value="Dubai International">Dubai International</option>
+        <option value="Australia Sydney">Australia Sydney</option>
+      </select>
+
+      <label>Class</label>
+      <select id="flightClass">
+        <option value="">Choose class</option>
+        <option value="Economy">Economy</option>
+        <option value="Business">Business</option>
+        <option value="First Class">First Class</option>
+      </select>
+
+      <button onclick="bookTicket()">Book Ticket</button>
+
+      <p class="small">
+        Your QR code contains the ticket info, so staff can scan it on another computer.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Your Boarding Pass</h2>
+
+      <p id="noTicket">No ticket yet. Book one first.</p>
+
+      <div id="ticket" class="ticket hidden">
+        <p class="ticket-code" id="ticketCode"></p>
+
+        <p><b>Name:</b> <span id="ticketName"></span></p>
+        <p><b>Route:</b> <span id="ticketRoute"></span></p>
+        <p><b>Class:</b> <span id="ticketClass"></span></p>
+        <p><b>Gate:</b> <span id="ticketGate"></span></p>
+        <p><b>Seat:</b> <span id="ticketSeat"></span></p>
+
+        <img id="qrCode">
+
+        <a id="downloadQr" class="download-button" href="#" download="boarding-pass-qr.png">
+          Download QR Code
+        </a>
+
+        <p class="small">
+          Download this QR and show it to staff.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function makeTicketCode() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let part = "";
+
+      for (let i = 0; i < 2; i++) {
+        part += letters[Math.floor(Math.random() * letters.length)];
+      }
+
+      const number = Math.floor(1000 + Math.random() * 9000);
+      return "LSB-" + number + "-" + part;
+    }
+
+    function randomGate() {
+      const gates = ["A1", "A2", "B4", "C3", "D6", "E8"];
+      return gates[Math.floor(Math.random() * gates.length)];
+    }
+
+    function randomSeat() {
+      const rows = Math.floor(1 + Math.random() * 30);
+      const seats = ["A", "B", "C", "D", "E", "F"];
+      return rows + seats[Math.floor(Math.random() * seats.length)];
+    }
+
+    function safeText(text) {
+      return text.replaceAll("|", "-").replaceAll("~", "-").replaceAll("¬", "-");
+    }
+
+    function bookTicket() {
+      const name = document.getElementById("passengerName").value.trim();
+      const from = document.getElementById("fromAirport").value.trim();
+      const to = document.getElementById("toAirport").value.trim();
+      const flightClass = document.getElementById("flightClass").value.trim();
+
+      if (name === "") {
+        alert("Type a passenger name first.");
+        return;
+      }
+
+      if (from === "") {
+        alert("Choose a departure airport.");
+        return;
+      }
+
+      if (to === "") {
+        alert("Choose a destination airport.");
+        return;
+      }
+
+      if (flightClass === "") {
+        alert("Choose a class.");
+        return;
+      }
+
+      if (from.toLowerCase() === to.toLowerCase()) {
+        alert("Choose two different airports.");
+        return;
+      }
+
+      const code = makeTicketCode();
+      const gate = randomGate();
+      const seat = randomSeat();
+      const route = from + " → " + to;
+
+      const qrData =
+        "LSB-TICKET~" +
+        safeText(code) + "~" +
+        safeText(name) + "~" +
+        safeText(from) + "~" +
+        safeText(to) + "~" +
+        safeText(flightClass) + "~" +
+        safeText(gate) + "~" +
+        safeText(seat);
+
+      const qrUrl =
+        "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" +
+        encodeURIComponent(qrData);
+
+document.getElementById("ticketCode").textContent = code;
+      document.getElementById("ticketName").textContent = name;
+      document.getElementById("ticketRoute").textContent = route;
+      document.getElementById("ticketClass").textContent = flightClass;
+      document.getElementById("ticketGate").textContent = gate;
+      document.getElementById("ticketSeat").textContent = seat;
+
+      document.getElementById("qrCode").src = qrUrl;
+      document.getElementById("downloadQr").href = qrUrl;
+      document.getElementById("downloadQr").download = code + "-qr.png";
+
+      document.getElementById("ticket").classList.remove("hidden");
+      document.getElementById("noTicket").classList.add("hidden");
+    }
+  </script>
+</body>
+</html>

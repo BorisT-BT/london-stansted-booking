@@ -189,22 +189,6 @@
       <div id="loginMessage" class="result">
         Staff access required.
       </div>
-
-<div id="loginScreen" class="login-screen">
-  <div class="login-card">
-    <h2>🛂 Staff Login</h2>
-    <p>Enter staff password to open the scanner.</p>
-
-    <label>Password</label>
-    <input id="staffPassword" type="password" placeholder="Staff password" autofocus>
-
-    <button onclick="staffLogin()">Unlock Staff Scanner</button>
-
-    <div id="loginMessage" class="result">
-      Staff access required.
-    </div>
-  </div>
-</div>
     </div>
   </div>
 
@@ -219,128 +203,9 @@
         Click the box, then scan your friend's downloaded QR code with the USB scanner.
       </p>
 
-<label>Scanner input</label>
-      <input id="scanInput" placeholder="Scan ticket QR code here">
-
-      <button onclick="checkTicket()">Check Ticket</button>
-      <button class="danger" onclick="clearScan()">Clear Scanner Box</button>
-
-      <div id="scanResult" class="result">
-        Waiting for passenger...
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Passenger Details</h2>
-
-      <div id="ticketInfo" class="ticket-info">
-        No ticket scanned yet.
-      </div>
-
-      <p class="small">
-        This version works across phones and computers because the QR itself contains the ticket info.
-      </p>
-    </div>
-  </div>
-
-  <script>
-    function staffLogin() {
-      const password = document.getElementById("staffPassword").value;
-      const message = document.getElementById("loginMessage");
-
-      message.classList.remove("good", "bad");
-
-      if (password === "stansted123456") {
-        message.classList.add("good");
-        message.textContent = "✅ Access granted.";
-
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("scanInput").focus();
-      } else {
-        message.classList.add("bad");
-        message.textContent = "⛔️ Wrong password.";
-      }
-    }
-
-    function checkTicket() {
-      const rawText = document.getElementById("scanInput").value.trim();
-      const result = document.getElementById("scanResult");
-      const info = document.getElementById("ticketInfo");
-
-      result.classList.remove("good", "bad");
-
-      if (rawText === "") {
-        result.classList.add("bad");
-        result.textContent = "⛔️ No QR code scanned.";
-        info.textContent = "Click the scanner box first, then scan.";
-        return;
-      }
-
-      const parts = rawText.split(/[|~¬]/);
-
-      if (parts.length !== 8 || parts[0] !== "LSB-TICKET") {
-        result.classList.add("bad");
-        result.textContent = "⛔️ DENIED: This is not a London Stansted ticket QR.";
-        info.textContent = "Scanned text: " + rawText;
-        return;
-      }
-
-      const code = parts[1];
-      const name = parts[2];
-      const from = parts[3];
-      const to = parts[4];
-      const flightClass = parts[5];
-      const gate = parts[6];
-      const seat = parts[7];
-
-      result.classList.add("good");
-      result.textContent = "✅ APPROVED: Passenger may board.";
-
-      info.innerHTML =
-        "<b>Code:</b> " + code + "<br>" +
-        "<b>Name:</b> " + name + "<br>" +
-        "<b>Route:</b> " + from + " → " + to + "<br>" +
-        "<b>Class:</b> " + flightClass + "<br>" +
-        "<b>Gate:</b> " + gate + "<br>" +
-        "<b>Seat:</b> " + seat;
-    }
-
-    function clearScan() {
-      document.getElementById("scanInput").value = "";
-      document.getElementById("scanInput").focus();
-
-      document.getElementById("scanResult").classList.remove("good", "bad");
-      document.getElementById("scanResult").textContent = "Waiting for passenger...";
-
-      document.getElementById("ticketInfo").textContent = "No ticket scanned yet.";
-    }
-
-    document.getElementById("staffPassword").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        staffLogin();
-      }
-    });
-
-    document.getElementById("scanInput").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        checkTicket();
-      }
-    });
-  </script>
-</body>
-</html><h1>🛂 London Stansted Staff</h1>
-  <p class="subtitle">Scan customer QR boarding passes</p>
-
-  <div class="container">
-    <div class="card">
-      <h2>Scan Boarding Pass</h2>
-
-      <p class="small">
-        Click the box, then scan your friend's downloaded QR code with the USB scanner.
-      </p>
-
       <label>Scanner input</label>
-      <input id="scanInput" placeholder="Scan ticket QR code here">
+
+<input id="scanInput" placeholder="Scan ticket QR code here">
 
       <button onclick="checkTicket()">Check Ticket</button>
       <button class="danger" onclick="clearScan()">Clear Scanner Box</button>

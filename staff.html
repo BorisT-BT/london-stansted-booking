@@ -345,23 +345,21 @@ code: parts[1],
         return;
       }
 
-      const ticket = parseTicket(rawText);
+if (rawText.startsWith("Ticket ID:") && currentPassenger) {
+  result.classList.add("good");
+  result.textContent = "✅ APPROVED: Passenger may board.";
+  setBigStatus("APPROVED", "approved");
+  return;
+}
 
-      if (!ticket) {
-        result.classList.add("bad");
-        result.textContent = "⛔️ DENIED: Not a London Stansted ticket QR.";
-        info.textContent = "Scanned text: " + rawText;
-        setBigStatus("DENIED", "denied");
-        beep("bad");
-        return;
-      }
+const ticket = parseTicket(rawText);
+if (!ticket) {
+  result.classList.add("bad"); result.textContent = "⛔️ DENIED: Not a London Stansted ticket QR."; info.textContent = "Scanned text: " + rawText; setBigStatus("DENIED", "denied"); beep("bad"); return;
+}
 
-      currentPassenger = ticket;
-
-      result.classList.add("good");
-      result.textContent = "✅ APPROVED: Passenger may board.";
-      setBigStatus("APPROVED", "approved");
-      beep("good");
+currentPassenger = ticket;
+document.getElementById("scanInput").value = "Ticket ID: " + ticket.code;
+result.classList.add("good"); result.textContent = "✅ APPROVED: Passenger may board."; setBigStatus("APPROVED", "approved"); beep("good");
 
       info.innerHTML =
         "<b>Code:</b> " + ticket.code + "<br>" +

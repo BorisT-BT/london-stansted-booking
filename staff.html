@@ -118,6 +118,14 @@
       background: #475569;
     }
 
+    .orange {
+      background: #f97316;
+    }
+
+    .orange:hover {
+      background: #ea580c;
+    }
+
     .status {
       border-radius: 22px;
       padding: 28px 14px;
@@ -213,7 +221,7 @@
       border-radius: 14px;
       padding: 12px;
       line-height: 1.6;
-    }
+}
 
     summary {
       cursor: pointer;
@@ -222,7 +230,7 @@
     }
 
     .manifest-top {
-display: flex;
+      display: flex;
       justify-content: space-between;
       gap: 12px;
       align-items: center;
@@ -343,6 +351,53 @@ display: flex;
 
         <button class="grey" onclick="clearScan()">Clear Scanner</button>
 
+        <details>
+          <summary>Manual ticket entry</summary>
+
+          <label>Ticket ID</label>
+          <input id="manualCode" placeholder="Example: LSB-MANUAL-001">
+
+          <label>Passenger name</label>
+          <input id="manualName" placeholder="Passenger name">
+
+          <div class="button-row">
+            <div>
+              <label>Flight</label>
+              <input id="manualFlight" placeholder="Example: LS201JFK">
+            </div>
+
+            <div>
+              <label>Seat</label>
+              <input id="manualSeat" placeholder="Example: 3A">
+            </div>
+          </div>
+
+          <div class="button-row">
+            <div>
+              <label>Passenger gate</label>
+              <select id="manualGate">
+                <option value="A1">Gate A1</option>
+                <option value="A2">Gate A2</option>
+                <option value="B4">Gate B4</option>
+                <option value="C3">Gate C3</option>
+                <option value="D6">Gate D6</option>
+<option value="E8">Gate E8</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Class</label>
+              <select id="manualClass">
+                <option value="Economy">Economy</option>
+                <option value="Business">Business</option>
+                <option value="First Class">First Class</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="orange" onclick="loadManualTicket()">Load Manual Ticket</button>
+        </details>
+
         <div id="scanResult" class="message">Waiting for passenger...</div>
         <div id="bigStatus" class="status">READY</div>
       </section>
@@ -381,7 +436,7 @@ display: flex;
       if (password === "stansted123456") {
         message.classList.add("good");
         message.textContent = "✅ Access granted.";
-document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("loginScreen").style.display = "none";
         document.getElementById("scanInput").focus();
       } else {
         message.classList.add("bad");
@@ -473,7 +528,7 @@ document.getElementById("loginScreen").style.display = "none";
     }
 
     function showPassenger(ticket) {
-      document.getElementById("passengerCard").innerHTML =
+document.getElementById("passengerCard").innerHTML =
         '<div class="big-name">' + ticket.name + '</div>' +
         '<div class="facts">' +
           '<div class="fact"><small>Flight</small><b>' + ticket.flight + '</b></div>' +
@@ -495,6 +550,70 @@ document.getElementById("loginScreen").style.display = "none";
         '</details>';
     }
 
+    function loadManualTicket() {
+      const result = document.getElementById("scanResult");
+
+      result.className = "message";
+
+      const code = document.getElementById("manualCode").value.trim() || "LSB-MANUAL-" + Math.floor(100 + Math.random() * 900);
+      const name = document.getElementById("manualName").value.trim();
+      const flight = document.getElementById("manualFlight").value.trim() || "Manual flight";
+      const seat = document.getElementById("manualSeat").value.trim() || "No seat";
+      const gate = document.getElementById("manualGate").value;
+      const flightClass = document.getElementById("manualClass").value;
+
+      if (!name) {
+        result.classList.add("bad");
+        result.textContent = "Type the passenger name first.";
+        setStatus("NO NAME", "bad");
+        beep("bad");
+        return;
+      }
+
+      const ticket = {
+        version: "manual",
+        code: code,
+        ref: "Manual entry",
+        name: name,
+        from: "Manual",
+        to: "Manual",
+        route: "Manual entry",
+        flight: flight,
+        date: "Manual entry",
+        time: "Manual entry",
+        gate: gate,
+        seat: seat,
+        flightClass: flightClass,
+        baggage: "Manual check",
+        extras: "Manual check",
+        price: "Manual check",
+        passport: "Manual check"
+      };
+
+      currentPassenger = ticket;
+
+      document.getElementById("scanInput").value = "Ticket ID: " + ticket.code;
+
+      showPassenger(ticket);
+
+      const currentGate = document.getElementById("currentGate").value;
+
+      gateApproved = ticket.gate === currentGate;
+
+      if (!gateApproved) {
+        result.classList.add("bad");
+        result.textContent = "⛔️ WRONG GATE: Passenger must go to Gate " + ticket.gate + ". This desk is Gate " + currentGate + ".";
+        setStatus("WRONG GATE", "bad");
+        beep("bad");
+        return;
+      }
+
+      result.classList.add("good");
+      result.textContent = "✅ MANUAL APPROVED: Correct gate. Passenger may board.";
+      setStatus("APPROVED", "good");
+      beep("good");
+    }
+
     function checkTicket() {
       const rawText = document.getElementById("scanInput").value.trim();
       const result = document.getElementById("scanResult");
@@ -514,7 +633,7 @@ document.getElementById("loginScreen").style.display = "none";
 
         if (gateApproved) {
           result.textContent = "✅ Ticket already loaded.";
-setStatus("APPROVED", "good");
+          setStatus("APPROVED", "good");
         } else {
           result.textContent = "⛔️ Ticket already loaded, but passenger is at the wrong gate.";
           setStatus("WRONG GATE", "bad");
@@ -526,7 +645,7 @@ setStatus("APPROVED", "good");
       const ticket = parseTicket(rawText);
 
       if (!ticket) {
-        result.classList.add("bad");
+result.classList.add("bad");
         result.textContent = "⛔️ DENIED: Not a London Stansted QR pass.";
         setStatus("DENIED", "bad");
         beep("bad");

@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #111827, #374151, #0f172a);
@@ -28,14 +30,14 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 30px auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
     }
 
-    .card {
+    .card, .login-card {
       background: white;
       border-radius: 20px;
       padding: 20px;
@@ -48,15 +50,13 @@
       margin-top: 12px;
     }
 
-    input,
-    button {
+    input, button {
       width: 100%;
       padding: 12px;
       margin-top: 6px;
       border-radius: 10px;
       border: 2px solid #cbd5e1;
       font-size: 16px;
-      box-sizing: border-box;
     }
 
     button {
@@ -80,6 +80,14 @@
       background: #b91c1c;
     }
 
+    .blue {
+      background: #2563eb;
+    }
+
+    .blue:hover {
+      background: #1d4ed8;
+    }
+
     .result {
       margin-top: 15px;
       padding: 15px;
@@ -98,14 +106,39 @@
       color: #991b1b;
     }
 
-    .ticket-info {
+    .warn {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .ticket-info, .manifest {
       border: 2px solid #d1d5db;
       border-radius: 14px;
       padding: 12px;
       margin-top: 12px;
       background: #f9fafb;
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .scan-screen {
+      text-align: center;
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 12px;
+      background: #e5e7eb;
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .scan-screen.approved {
+      background: #16a34a;
+      color: white;
+    }
+
+    .scan-screen.denied {
+      background: #dc2626;
+      color: white;
     }
 
     .small {
@@ -125,52 +158,15 @@
     }
 
     .login-card {
-      background: white;
       max-width: 420px;
       width: 100%;
-      border-radius: 20px;
-      padding: 22px;
-      box-shadow: 0 10px 30px #0008;
-    }
-
-    .login-card h2 {
-      margin-top: 0;
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-
-      h1 {
-        font-size: 30px;
-        line-height: 1.1;
-      }
-
-      .subtitle {
-        font-size: 15px;
-      }
-
-      .container {
-        margin: 16px auto;
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card {
-        padding: 16px;
-        border-radius: 16px;
-      }
-
-      input,
-      button {
-        font-size: 18px;
-        padding: 14px;
-      }
-
-      .ticket-info {
-        font-size: 16px;
-      }
+      body { padding: 10px; }
+      h1 { font-size: 30px; }
+      input, button { font-size: 18px; padding: 14px; }
+.ticket-info { font-size: 16px; }
     }
   </style>
 </head>
@@ -186,49 +182,47 @@
 
       <button onclick="staffLogin()">Unlock Staff Scanner</button>
 
-      <div id="loginMessage" class="result">
-        Staff access required.
-      </div>
+      <div id="loginMessage" class="result">Staff access required.</div>
     </div>
   </div>
 
   <h1>🛂 London Stansted Staff</h1>
-  <p class="subtitle">Scan customer QR boarding passes</p>
+  <p class="subtitle">Scan QR boarding passes and manage boarding</p>
 
   <div class="container">
     <div class="card">
       <h2>Scan Boarding Pass</h2>
 
-      <p class="small">
-        Click the box, then scan your friend's downloaded QR code with the USB scanner.
-      </p>
+      <p class="small">Click the box, then scan the downloaded customer QR code with the USB scanner.</p>
 
       <label>Scanner input</label>
-
-<input id="scanInput" placeholder="Scan ticket QR code here">
+      <input id="scanInput" placeholder="Scan ticket QR code here">
 
       <button onclick="checkTicket()">Check Ticket</button>
+      <button class="blue" onclick="markBoarded()">Mark Passenger Boarded</button>
+      <button class="danger" onclick="denyBoarding()">Deny Boarding</button>
       <button class="danger" onclick="clearScan()">Clear Scanner Box</button>
 
-      <div id="scanResult" class="result">
-        Waiting for passenger...
-      </div>
+      <div id="scanResult" class="result">Waiting for passenger...</div>
+      <div id="bigStatus" class="scan-screen">READY</div>
     </div>
 
     <div class="card">
       <h2>Passenger Details</h2>
+      <div id="ticketInfo" class="ticket-info">No ticket scanned yet.</div>
+      <p class="small">New QR codes include date, time, flight number, seat, baggage, extras, price, and passport field.</p>
+    </div>
 
-      <div id="ticketInfo" class="ticket-info">
-        No ticket scanned yet.
-      </div>
-
-      <p class="small">
-        This version works across phones and computers because the QR itself contains the ticket info.
-      </p>
+    <div class="card">
+      <h2>Flight Manifest</h2>
+      <div id="manifest" class="manifest">No passengers boarded yet.</div>
     </div>
   </div>
 
   <script>
+    let currentPassenger = null;
+    let boarded = [];
+
     function staffLogin() {
       const password = document.getElementById("staffPassword").value;
       const message = document.getElementById("loginMessage");
@@ -238,7 +232,6 @@
       if (password === "stansted123456") {
         message.classList.add("good");
         message.textContent = "✅ Access granted.";
-
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("scanInput").focus();
       } else {
@@ -247,57 +240,197 @@
       }
     }
 
+    function beep(type) {
+      try {
+        const audio = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+
+        osc.frequency.value = type === "bad" ? 180 : 740;
+        gain.gain.value = 0.08;
+
+        osc.start();
+
+        setTimeout(function() {
+          osc.stop();
+          audio.close();
+        }, type === "bad" ? 350 : 160);
+      } catch (e) {}
+    }
+
+    function setBigStatus(text, mode) {
+      const big = document.getElementById("bigStatus");
+
+      big.className = "scan-screen";
+
+      if (mode) {
+        big.classList.add(mode);
+      }
+
+      big.textContent = text;
+    }
+
+    function parseTicket(rawText) {
+      const parts = rawText.split(/[|~¬]/);
+
+      if (parts[0] === "LSB2" && parts.length >= 17) {
+        return {
+          version: "new",
+          code: parts[1],
+          ref: parts[2],
+          name: parts[3],
+          from: parts[4],
+          to: parts[5],
+          route: parts[6],
+          flight: parts[7],
+          date: parts[8],
+          time: parts[9],
+          terminal: "Not shown",
+          gate: parts[10],
+          group: "Not shown",
+          closes: "Not shown",
+          seat: parts[11],
+          flightClass: parts[12],
+          baggage: parts[13],
+          extras: parts[14],
+          price: parts[15],
+          passport: parts[16]
+        };
+      }
+
+      if (parts[0] === "LSB-TICKET" && (parts.length === 8 || parts.length === 12)) {
+        return {
+          version: "old",
+code: parts[1],
+          ref: "Old pass",
+          name: parts[2],
+          from: parts[3],
+          to: parts[4],
+          route: parts[3] + " → " + parts[4],
+          flight: "Not shown",
+          date: parts[8] || "Not shown",
+          time: parts[9] || "Not shown",
+          terminal: "Not shown",
+          gate: parts[6],
+          group: "Not shown",
+          closes: "Not shown",
+          seat: parts[7],
+          flightClass: parts[5],
+          baggage: parts[10] || "Not shown",
+          extras: "Not shown",
+          price: parts[11] || "Not shown",
+          passport: "Not shown"
+        };
+      }
+
+      return null;
+    }
+
     function checkTicket() {
       const rawText = document.getElementById("scanInput").value.trim();
       const result = document.getElementById("scanResult");
       const info = document.getElementById("ticketInfo");
 
-      result.classList.remove("good", "bad");
+      result.classList.remove("good", "bad", "warn");
 
-      if (rawText === "") {
+      if (!rawText) {
         result.classList.add("bad");
         result.textContent = "⛔️ No QR code scanned.";
         info.textContent = "Click the scanner box first, then scan.";
+        setBigStatus("NO SCAN", "denied");
+        beep("bad");
         return;
       }
 
-      const parts = rawText.split(/[|~¬]/);
+      const ticket = parseTicket(rawText);
 
-      if (parts.length !== 8 || parts[0] !== "LSB-TICKET") {
+      if (!ticket) {
         result.classList.add("bad");
-        result.textContent = "⛔️ DENIED: This is not a London Stansted ticket QR.";
+        result.textContent = "⛔️ DENIED: Not a London Stansted ticket QR.";
         info.textContent = "Scanned text: " + rawText;
+        setBigStatus("DENIED", "denied");
+        beep("bad");
         return;
       }
 
-      const code = parts[1];
-      const name = parts[2];
-      const from = parts[3];
-      const to = parts[4];
-      const flightClass = parts[5];
-      const gate = parts[6];
-      const seat = parts[7];
+      currentPassenger = ticket;
 
       result.classList.add("good");
       result.textContent = "✅ APPROVED: Passenger may board.";
+      setBigStatus("APPROVED", "approved");
+      beep("good");
 
       info.innerHTML =
-        "<b>Code:</b> " + code + "<br>" +
-        "<b>Name:</b> " + name + "<br>" +
-        "<b>Route:</b> " + from + " → " + to + "<br>" +
-        "<b>Class:</b> " + flightClass + "<br>" +
-        "<b>Gate:</b> " + gate + "<br>" +
-        "<b>Seat:</b> " + seat;
+        "<b>Code:</b> " + ticket.code + "<br>" +
+        "<b>Booking ref:</b> " + ticket.ref + "<br>" +
+        "<b>Name:</b> " + ticket.name + "<br>" +
+        "<b>Route:</b> " + ticket.route + "<br>" +
+        "<b>Flight:</b> " + ticket.flight + "<br>" +
+        "<b>Date:</b> " + ticket.date + "<br>" +
+        "<b>Time:</b> " + ticket.time + "<br>" +
+        "<b>Terminal:</b> " + ticket.terminal + "<br>" +
+        "<b>Gate:</b> " + ticket.gate + "<br>" +
+        "<b>Boarding group:</b> " + ticket.group + "<br>" +
+        "<b>Boarding closes:</b> " + ticket.closes + "<br>" +
+        "<b>Seat:</b> " + ticket.seat + "<br>" +
+        "<b>Class:</b> " + ticket.flightClass + "<br>" +
+        "<b>Baggage:</b> " + ticket.baggage + "<br>" +
+        "<b>Extras:</b> " + ticket.extras + "<br>" +
+        "<b>Price:</b> " + ticket.price + "<br>" +
+        "<b>Passport:</b> " + ticket.passport;
+    }
+
+    function markBoarded() {
+      if (!currentPassenger) {
+        alert("Scan a passenger first.");
+        return;
+      }
+
+      boarded.push(currentPassenger);
+      updateManifest();
+
+      document.getElementById("scanResult").className = "result good";
+      document.getElementById("scanResult").textContent = "✅ BOARDED: " + currentPassenger.name + " added to manifest.";
+
+      setBigStatus("BOARDED", "approved");
+    }
+
+    function denyBoarding() {
+      document.getElementById("scanResult").className = "result bad";
+      document.getElementById("scanResult").textContent = "⛔️ DENIED: Passenger must go to check-in desk.";
+
+      setBigStatus("DENIED", "denied");
+      beep("bad");
+    }
+
+    function updateManifest() {
+      const manifest = document.getElementById("manifest");
+
+      if (!boarded.length) {
+        manifest.textContent = "No passengers boarded yet.";
+        return;
+      }
+
+      manifest.innerHTML = boarded.map(function(p, i) {
+        return (i + 1) + ". <b>" + p.name + "</b> — " + p.flight + " — Seat " + p.seat + " — " + p.gate;
+      }).join("<br>");
     }
 
     function clearScan() {
       document.getElementById("scanInput").value = "";
       document.getElementById("scanInput").focus();
 
-      document.getElementById("scanResult").classList.remove("good", "bad");
+      document.getElementById("scanResult").className = "result";
       document.getElementById("scanResult").textContent = "Waiting for passenger...";
 
-      document.getElementById("ticketInfo").textContent = "No ticket scanned yet.";
+document.getElementById("ticketInfo").textContent = "No ticket scanned yet.";
+
+      setBigStatus("READY", "");
+
+      currentPassenger = null;
     }
 
     document.getElementById("staffPassword").addEventListener("keydown", function(event) {

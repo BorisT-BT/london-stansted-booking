@@ -2,303 +2,62 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Staff - London Stansted Booking</title>
+  <title>Staff - Emirates Gate Control</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #0f172a; color: #111827; min-height: 100vh; }
+    .top { background: linear-gradient(135deg, #450a0a, #991b1b, #f59e0b); color: white; padding: 22px 16px; text-align: center; }
+    .top h1 { margin: 0; font-size: 34px; }
+    .top p { margin: 8px 0 0; color: #fff7ed; }
+    .wrap { max-width: 1050px; margin: 22px auto; padding: 0 14px 30px; }
+    .panel { background: white; border-radius: 22px; padding: 18px; box-shadow: 0 16px 40px #0006; margin-bottom: 16px; }
+    .gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+    .control-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    label { display: block; font-weight: 900; margin-top: 12px; }
+    input, select, button { width: 100%; padding: 14px; margin-top: 7px; border-radius: 14px; border: 2px solid #cbd5e1; font-size: 17px; }
+    input:focus, select:focus { outline: none; border-color: #b91c1c; box-shadow: 0 0 0 3px #fecaca; }
+    button { border: none; background: #2563eb; color: white; font-weight: 900; cursor: pointer; }
+    button:hover { filter: brightness(0.92); }
+    .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .green { background: #16a34a; }
+    .red { background: #dc2626; }
+    .grey { background: #64748b; }
+    .orange { background: #f97316; }
+    .gold { background: #b45309; }
+    .black { background: #020617; }
+    .status { border-radius: 22px; padding: 28px 14px; text-align: center; font-size: 42px; font-weight: 900; background: #e5e7eb; color: #374151; margin-top: 12px; }
+    .status.good { background: #16a34a; color: white; }
+    .status.bad { background: #dc2626; color: white; }
+    .status.warn { background: #f59e0b; color: white; }
+    .message { margin-top: 12px; padding: 12px; border-radius: 14px; background: #e5e7eb; font-weight: 900; }
+    .message.good { background: #bbf7d0; color: #166534; }
+    .message.bad { background: #fecaca; color: #991b1b; }
+    .message.warn { background: #fef3c7; color: #92400e; }
+    .control-card { background: #fff7ed; border: 2px solid #fed7aa; border-radius: 16px; padding: 10px; }
+    .control-card small { display: block; color: #7c2d12; font-weight: 900; text-transform: uppercase; font-size: 11px; }
+    .control-card b { font-size: 20px; color: #7f1d1d; }
+    .passenger-card { border: 2px solid #fed7aa; border-radius: 18px; background: #fff7ed; padding: 15px; min-height: 235px; }
+    .big-name { font-size: 28px; font-weight: 900; margin-bottom: 10px; color: #7f1d1d; }
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .fact { background: white; border: 1px solid #fed7aa; border-radius: 14px; padding: 10px; }
+    .fact small { display: block; color: #64748b; font-weight: 900; text-transform: uppercase; font-size: 11px; }
+    .fact b { font-size: 18px; }
+    details { margin-top: 12px; background: #f1f5f9; border-radius: 14px; padding: 12px; line-height: 1.6; }
+    summary { cursor: pointer; font-weight: 900; color: #7f1d1d; }
+    .manifest-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+.counter { background: #fee2e2; color: #7f1d1d; font-weight: 900; padding: 8px 12px; border-radius: 999px; }
+    .manifest-list { margin-top: 12px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; padding: 12px; line-height: 1.7; }
+    .small { color: #64748b; font-size: 14px; }
+    .login-screen { position: fixed; inset: 0; background: linear-gradient(135deg, #020617, #7f1d1d); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 9999; }
+    .login-card { background: white; border-radius: 22px; padding: 22px; width: 100%; max-width: 420px; box-shadow: 0 16px 40px #0008; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #111827;
-      min-height: 100vh;
-    }
-
-    .top {
-      background: linear-gradient(135deg, #020617, #1e3a8a);
-      color: white;
-      padding: 22px 16px;
-      text-align: center;
-    }
-
-    .top h1 {
-      margin: 0;
-      font-size: 34px;
-    }
-
-    .top p {
-      margin: 8px 0 0;
-      color: #dbeafe;
-    }
-
-    .wrap {
-      max-width: 980px;
-      margin: 22px auto;
-      padding: 0 14px 30px;
-    }
-
-    .panel {
-      background: white;
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 16px 40px #0006;
-      margin-bottom: 16px;
-    }
-
-    .gate-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      align-items: start;
-    }
-
-    label {
-      display: block;
-      font-weight: 900;
-      margin-top: 12px;
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 7px;
-      border-radius: 14px;
-      border: 2px solid #cbd5e1;
-      font-size: 17px;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px #bfdbfe;
-    }
-
-    button {
-      border: none;
-      background: #2563eb;
-      color: white;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    .button-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .green {
-      background: #16a34a;
-    }
-
-    .green:hover {
-      background: #15803d;
-    }
-
-    .red {
-      background: #dc2626;
-    }
-
-    .red:hover {
-      background: #b91c1c;
-    }
-
-    .grey {
-      background: #64748b;
-    }
-
-    .grey:hover {
-      background: #475569;
-    }
-
-    .orange {
-      background: #f97316;
-    }
-
-    .orange:hover {
-      background: #ea580c;
-    }
-
-    .status {
-      border-radius: 22px;
-      padding: 28px 14px;
-      text-align: center;
-      font-size: 42px;
-      font-weight: 900;
-      background: #e5e7eb;
-      color: #374151;
-      margin-top: 12px;
-    }
-
-    .status.good {
-      background: #16a34a;
-      color: white;
-    }
-
-    .status.bad {
-      background: #dc2626;
-      color: white;
-    }
-
-    .status.warn {
-      background: #f59e0b;
-      color: white;
-    }
-
-    .message {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 14px;
-      background: #e5e7eb;
-      font-weight: 900;
-    }
-
-    .message.good {
-      background: #bbf7d0;
-      color: #166534;
-    }
-
-    .message.bad {
-      background: #fecaca;
-      color: #991b1b;
-    }
-
-    .message.warn {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .passenger-card {
-      border: 2px solid #dbeafe;
-      border-radius: 18px;
-      background: #f8fbff;
-      padding: 15px;
-      min-height: 235px;
-    }
-
-    .big-name {
-      font-size: 28px;
-      font-weight: 900;
-      margin-bottom: 10px;
-      color: #1e3a8a;
-    }
-
-    .facts {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .fact {
-      background: white;
-      border: 1px solid #dbeafe;
-      border-radius: 14px;
-      padding: 10px;
-    }
-
-    .fact small {
-      display: block;
-      color: #64748b;
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: 11px;
-    }
-
-    .fact b {
-      font-size: 18px;
-    }
-
-    details {
-      margin-top: 12px;
-      background: #f1f5f9;
-      border-radius: 14px;
-      padding: 12px;
-      line-height: 1.6;
-}
-
-    summary {
-      cursor: pointer;
-      font-weight: 900;
-      color: #1e3a8a;
-    }
-
-    .manifest-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .counter {
-      background: #dbeafe;
-      color: #1e3a8a;
-      font-weight: 900;
-      padding: 8px 12px;
-      border-radius: 999px;
-    }
-
-    .manifest-list {
-      margin-top: 12px;
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 12px;
-      line-height: 1.7;
-    }
-
-    .small {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .login-screen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #020617, #1e3a8a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 9999;
-    }
-
-    .login-card {
-      background: white;
-      border-radius: 22px;
-      padding: 22px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 16px 40px #0008;
-    }
-
-    @media (max-width: 760px) {
-      .gate-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .facts {
-        grid-template-columns: 1fr;
-      }
-
-      .button-row {
-        grid-template-columns: 1fr;
-      }
-
-      .status {
-        font-size: 32px;
-      }
-
-      .top h1 {
-        font-size: 28px;
-      }
+    @media (max-width: 800px) {
+      .gate-grid, .control-grid { grid-template-columns: 1fr; }
+      .facts, .button-row { grid-template-columns: 1fr; }
+      .status { font-size: 32px; }
+      .top h1 { font-size: 28px; }
     }
   </style>
 </head>
@@ -307,7 +66,7 @@
   <div id="loginScreen" class="login-screen">
     <div class="login-card">
       <h2>🛂 Staff Login</h2>
-      <p class="small">Enter the staff password to open the boarding gate.</p>
+      <p class="small">Enter the staff password to open Emirates gate control.</p>
 
       <label>Password</label>
       <input id="staffPassword" type="password" placeholder="Staff password" autofocus>
@@ -319,25 +78,91 @@
   </div>
 
   <div class="top">
-    <h1>🛂 London Stansted Staff Gate</h1>
-    <p>Clean boarding scanner for QR passes</p>
+    <h1>🛂 Emirates Gate Control</h1>
+    <p>Boarding status, zones, emergency controls, and scanner sounds</p>
   </div>
 
   <div class="wrap">
+    <section class="panel">
+      <h2>Gate Control Desk</h2>
+
+      <div class="control-grid">
+        <div class="control-card">
+          <small>Gate</small>
+          <b id="displayGate">A1</b>
+        </div>
+
+        <div class="control-card">
+          <small>Status</small>
+          <b id="displayBoardingStatus">Boarding</b>
+        </div>
+
+        <div class="control-card">
+          <small>Zone</small>
+          <b id="displayZone">Zone 1</b>
+        </div>
+
+        <div class="control-card">
+          <small>Boarded</small>
+          <b id="displayBoarded">0</b>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <div>
+          <label>Current staff gate</label>
+
+          <select id="currentGate" onchange="updateControlDesk()">
+            <option value="A1">Gate A1</option>
+            <option value="A2">Gate A2</option>
+            <option value="B4">Gate B4</option>
+            <option value="C3">Gate C3</option>
+            <option value="D6">Gate D6</option>
+            <option value="E8">Gate E8</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Boarding status</label>
+
+          <select id="boardingStatus" onchange="updateControlDesk()">
+            <option value="Boarding">Boarding</option>
+            <option value="Not boarding yet">Not boarding yet</option>
+            <option value="Final call">Final call</option>
+            <option value="Gate closed">Gate closed</option>
+            <option value="Delayed">Delayed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Current boarding zone</label>
+
+      <select id="boardingZone" onchange="updateControlDesk()">
+        <option value="Zone 1">Zone 1 — First Class / Business</option>
+        <option value="Zone 2">Zone 2 — Priority boarding</option>
+        <option value="Zone 3">Zone 3 — Rows 1 to 3</option>
+        <option value="Zone 4">Zone 4 — Rows 4 to 6</option>
+        <option value="All zones">All zones</option>
+      </select>
+
+      <h3>Emergency controls</h3>
+
+      <div class="button-row">
+        <button class="orange" onclick="setBoardingStatus('Delayed')">Delay Flight</button>
+        <button class="red" onclick="setBoardingStatus('Gate closed')">Close Gate</button>
+      </div>
+
+      <div class="button-row">
+        <button class="green" onclick="setBoardingStatus('Boarding')">Reopen Gate</button>
+        <button class="black" onclick="emergencyStop()">Emergency Stop Boarding</button>
+      </div>
+</section>
+
     <div class="gate-grid">
       <section class="panel">
         <h2>Scan Boarding Pass</h2>
-        <p class="small">Click the scanner box, then scan the passenger QR code.</p>
-
-        <label>Current staff gate</label>
-        <select id="currentGate">
-          <option value="A1">Gate A1</option>
-          <option value="A2">Gate A2</option>
-          <option value="B4">Gate B4</option>
-          <option value="C3">Gate C3</option>
-          <option value="D6">Gate D6</option>
-          <option value="E8">Gate E8</option>
-        </select>
+        <p class="small">Scan the QR code, or open manual ticket entry.</p>
 
         <label>Scanner input</label>
         <input id="scanInput" placeholder="Ready to scan...">
@@ -363,7 +188,7 @@
           <div class="button-row">
             <div>
               <label>Flight</label>
-              <input id="manualFlight" placeholder="Example: LS201JFK">
+              <input id="manualFlight" placeholder="Example: EK203DXB">
             </div>
 
             <div>
@@ -375,18 +200,20 @@
           <div class="button-row">
             <div>
               <label>Passenger gate</label>
+
               <select id="manualGate">
                 <option value="A1">Gate A1</option>
                 <option value="A2">Gate A2</option>
                 <option value="B4">Gate B4</option>
                 <option value="C3">Gate C3</option>
                 <option value="D6">Gate D6</option>
-<option value="E8">Gate E8</option>
+                <option value="E8">Gate E8</option>
               </select>
             </div>
 
             <div>
               <label>Class</label>
+
               <select id="manualClass">
                 <option value="Economy">Economy</option>
                 <option value="Business">Business</option>
@@ -394,6 +221,15 @@
               </select>
             </div>
           </div>
+
+          <label>Manual boarding zone</label>
+
+          <select id="manualZone">
+            <option value="Zone 1">Zone 1</option>
+            <option value="Zone 2">Zone 2</option>
+            <option value="Zone 3">Zone 3</option>
+            <option value="Zone 4">Zone 4</option>
+          </select>
 
           <button class="orange" onclick="loadManualTicket()">Load Manual Ticket</button>
         </details>
@@ -403,7 +239,7 @@
       </section>
 
       <section class="panel">
-        <h2>Passenger</h2>
+        <h2>Passenger Decision Screen</h2>
 
         <div id="passengerCard" class="passenger-card">
           <div class="big-name">No passenger</div>
@@ -426,6 +262,8 @@
     let currentPassenger = null;
     let boarded = [];
     let gateApproved = false;
+    let zoneApproved = false;
+    let statusApproved = false;
 
     function staffLogin() {
       const password = document.getElementById("staffPassword").value;
@@ -438,30 +276,40 @@
         message.textContent = "✅ Access granted.";
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("scanInput").focus();
+        updateControlDesk();
       } else {
         message.classList.add("bad");
         message.textContent = "⛔️ Wrong password.";
+        beep("bad");
       }
     }
 
     function beep(type) {
       try {
-        const audio = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audio.createOscillator();
+const audio = new (window.AudioContext || window.webkitAudioContext)();
         const gain = audio.createGain();
 
-        osc.connect(gain);
         gain.connect(audio.destination);
-
-        osc.frequency.value = type === "bad" ? 180 : 740;
         gain.gain.value = 0.08;
 
-        osc.start();
+        const notes = type === "good"
+          ? [660, 880]
+          : type === "warn"
+            ? [440, 330, 440]
+            : [180, 140];
+
+        notes.forEach(function(freq, i) {
+          const osc = audio.createOscillator();
+
+          osc.connect(gain);
+          osc.frequency.value = freq;
+          osc.start(audio.currentTime + i * 0.12);
+          osc.stop(audio.currentTime + i * 0.12 + 0.1);
+        });
 
         setTimeout(function() {
-          osc.stop();
           audio.close();
-        }, type === "bad" ? 350 : 160);
+        }, 650);
       } catch (e) {}
     }
 
@@ -475,6 +323,60 @@
       }
 
       big.textContent = text;
+    }
+
+    function setBoardingStatus(status) {
+      document.getElementById("boardingStatus").value = status;
+
+      updateControlDesk();
+      clearScan();
+
+      setStatus(status.toUpperCase(), status === "Boarding" ? "good" : "warn");
+
+      document.getElementById("scanResult").className = "message warn";
+      document.getElementById("scanResult").textContent = "Gate status changed to: " + status;
+
+      beep("warn");
+    }
+
+    function emergencyStop() {
+      setBoardingStatus("Gate closed");
+
+      document.getElementById("scanResult").className = "message bad";
+      document.getElementById("scanResult").textContent = "🚨 EMERGENCY STOP: Boarding is closed immediately.";
+
+      setStatus("EMERGENCY STOP", "bad");
+      beep("bad");
+    }
+
+    function updateControlDesk() {
+      document.getElementById("displayGate").textContent = document.getElementById("currentGate").value;
+      document.getElementById("displayBoardingStatus").textContent = document.getElementById("boardingStatus").value;
+      document.getElementById("displayZone").textContent = document.getElementById("boardingZone").value;
+      document.getElementById("displayBoarded").textContent = boarded.length;
+      document.getElementById("boardedCounter").textContent = "Boarded: " + boarded.length;
+    }
+
+    function passengerZone(ticket) {
+      if (ticket.zone) {
+        return ticket.zone;
+      }
+
+      if (ticket.flightClass === "First Class" || ticket.flightClass === "Business") {
+        return "Zone 1";
+      }
+
+      if (String(ticket.extras).toLowerCase().includes("priority")) {
+        return "Zone 2";
+      }
+
+      const row = parseInt(ticket.seat, 10);
+
+      if (!isNaN(row) && row <= 3) {
+        return "Zone 3";
+      }
+
+      return "Zone 4";
     }
 
     function parseTicket(rawText) {
@@ -527,14 +429,16 @@
       return null;
     }
 
-    function showPassenger(ticket) {
-document.getElementById("passengerCard").innerHTML =
+function showPassenger(ticket) {
+      const zone = passengerZone(ticket);
+
+      document.getElementById("passengerCard").innerHTML =
         '<div class="big-name">' + ticket.name + '</div>' +
         '<div class="facts">' +
           '<div class="fact"><small>Flight</small><b>' + ticket.flight + '</b></div>' +
           '<div class="fact"><small>Seat</small><b>' + ticket.seat + '</b></div>' +
           '<div class="fact"><small>Gate</small><b>' + ticket.gate + '</b></div>' +
-          '<div class="fact"><small>Class</small><b>' + ticket.flightClass + '</b></div>' +
+          '<div class="fact"><small>Zone</small><b>' + zone + '</b></div>' +
         '</div>' +
         '<details>' +
           '<summary>More details</summary>' +
@@ -543,6 +447,7 @@ document.getElementById("passengerCard").innerHTML =
           '<b>Route:</b> ' + ticket.route + '<br>' +
           '<b>Date:</b> ' + ticket.date + '<br>' +
           '<b>Time:</b> ' + ticket.time + '<br>' +
+          '<b>Class:</b> ' + ticket.flightClass + '<br>' +
           '<b>Baggage:</b> ' + ticket.baggage + '<br>' +
           '<b>Extras:</b> ' + ticket.extras + '<br>' +
           '<b>Price:</b> ' + ticket.price + '<br>' +
@@ -550,78 +455,93 @@ document.getElementById("passengerCard").innerHTML =
         '</details>';
     }
 
+    function checkRules(ticket) {
+      const result = document.getElementById("scanResult");
+      const currentGate = document.getElementById("currentGate").value;
+      const currentZone = document.getElementById("boardingZone").value;
+      const boardingStatus = document.getElementById("boardingStatus").value;
+      const zone = passengerZone(ticket);
+
+      statusApproved = boardingStatus === "Boarding" || boardingStatus === "Final call";
+      gateApproved = ticket.gate === currentGate;
+      zoneApproved = currentZone === "All zones" || zone === currentZone;
+
+      if (!statusApproved) {
+        result.className = "message bad";
+        result.textContent = "⛔️ DENIED: Flight status is " + boardingStatus + ".";
+        setStatus(boardingStatus.toUpperCase(), "bad");
+        beep("bad");
+        return false;
+      }
+
+      if (!gateApproved) {
+        result.className = "message bad";
+        result.textContent = "⛔️ WRONG GATE: Passenger must go to " + ticket.gate + ". This desk is " + currentGate + ".";
+        setStatus("WRONG GATE", "bad");
+        beep("bad");
+        return false;
+      }
+
+      if (!zoneApproved) {
+        result.className = "message warn";
+        result.textContent = "⚠️ WAIT: Passenger is " + zone + ", but now boarding " + currentZone + ".";
+        setStatus("WAIT - WRONG ZONE", "warn");
+        beep("warn");
+        return false;
+      }
+
+      result.className = "message good";
+      result.textContent = "✅ APPROVED: Correct gate, status, and zone. Passenger may board.";
+      setStatus("APPROVED", "good");
+      beep("good");
+      return true;
+    }
+
     function loadManualTicket() {
       const result = document.getElementById("scanResult");
-
-      result.className = "message";
-
-      const code = document.getElementById("manualCode").value.trim() || "LSB-MANUAL-" + Math.floor(100 + Math.random() * 900);
       const name = document.getElementById("manualName").value.trim();
-      const flight = document.getElementById("manualFlight").value.trim() || "Manual flight";
-      const seat = document.getElementById("manualSeat").value.trim() || "No seat";
-      const gate = document.getElementById("manualGate").value;
-      const flightClass = document.getElementById("manualClass").value;
 
       if (!name) {
-        result.classList.add("bad");
+        result.className = "message bad";
         result.textContent = "Type the passenger name first.";
         setStatus("NO NAME", "bad");
         beep("bad");
         return;
       }
 
-      const ticket = {
+      currentPassenger = {
         version: "manual",
-        code: code,
+        code: document.getElementById("manualCode").value.trim() || "LSB-MANUAL-" + Math.floor(100 + Math.random() * 900),
         ref: "Manual entry",
         name: name,
         from: "Manual",
         to: "Manual",
         route: "Manual entry",
-        flight: flight,
+        flight: document.getElementById("manualFlight").value.trim() || "Manual flight",
         date: "Manual entry",
         time: "Manual entry",
-        gate: gate,
-        seat: seat,
-        flightClass: flightClass,
+        gate: document.getElementById("manualGate").value,
+        seat: document.getElementById("manualSeat").value.trim() || "No seat",
+        flightClass: document.getElementById("manualClass").value,
         baggage: "Manual check",
         extras: "Manual check",
         price: "Manual check",
-        passport: "Manual check"
+        passport: "Manual check",
+        zone: document.getElementById("manualZone").value
       };
 
-      currentPassenger = ticket;
+document.getElementById("scanInput").value = "Ticket ID: " + currentPassenger.code;
 
-      document.getElementById("scanInput").value = "Ticket ID: " + ticket.code;
-
-      showPassenger(ticket);
-
-      const currentGate = document.getElementById("currentGate").value;
-
-      gateApproved = ticket.gate === currentGate;
-
-      if (!gateApproved) {
-        result.classList.add("bad");
-        result.textContent = "⛔️ WRONG GATE: Passenger must go to Gate " + ticket.gate + ". This desk is Gate " + currentGate + ".";
-        setStatus("WRONG GATE", "bad");
-        beep("bad");
-        return;
-      }
-
-      result.classList.add("good");
-      result.textContent = "✅ MANUAL APPROVED: Correct gate. Passenger may board.";
-      setStatus("APPROVED", "good");
-      beep("good");
+      showPassenger(currentPassenger);
+      checkRules(currentPassenger);
     }
 
     function checkTicket() {
       const rawText = document.getElementById("scanInput").value.trim();
       const result = document.getElementById("scanResult");
 
-      result.className = "message";
-
       if (!rawText) {
-        result.classList.add("bad");
+        result.className = "message bad";
         result.textContent = "⛔️ No QR code scanned.";
         setStatus("NO SCAN", "bad");
         beep("bad");
@@ -629,23 +549,14 @@ document.getElementById("passengerCard").innerHTML =
       }
 
       if (rawText.startsWith("Ticket ID:") && currentPassenger) {
-        result.classList.add("good");
-
-        if (gateApproved) {
-          result.textContent = "✅ Ticket already loaded.";
-          setStatus("APPROVED", "good");
-        } else {
-          result.textContent = "⛔️ Ticket already loaded, but passenger is at the wrong gate.";
-          setStatus("WRONG GATE", "bad");
-        }
-
+        checkRules(currentPassenger);
         return;
       }
 
       const ticket = parseTicket(rawText);
 
       if (!ticket) {
-result.classList.add("bad");
+        result.className = "message bad";
         result.textContent = "⛔️ DENIED: Not a London Stansted QR pass.";
         setStatus("DENIED", "bad");
         beep("bad");
@@ -653,45 +564,24 @@ result.classList.add("bad");
       }
 
       currentPassenger = ticket;
-
       document.getElementById("scanInput").value = "Ticket ID: " + ticket.code;
 
       showPassenger(ticket);
-
-      const currentGate = document.getElementById("currentGate").value;
-
-      gateApproved = ticket.gate === currentGate;
-
-      if (!gateApproved) {
-        result.classList.add("bad");
-        result.textContent = "⛔️ WRONG GATE: Passenger must go to Gate " + ticket.gate + ". This desk is Gate " + currentGate + ".";
-        setStatus("WRONG GATE", "bad");
-        beep("bad");
-        return;
-      }
-
-      result.classList.add("good");
-      result.textContent = "✅ APPROVED: Correct gate. Passenger may board.";
-      setStatus("APPROVED", "good");
-      beep("good");
+      checkRules(ticket);
     }
 
     function markBoarded() {
       const result = document.getElementById("scanResult");
 
-      result.className = "message";
-
       if (!currentPassenger) {
-        result.classList.add("bad");
+        result.className = "message bad";
         result.textContent = "Scan a passenger first.";
         setStatus("NO PASSENGER", "bad");
+        beep("bad");
         return;
       }
 
-      if (!gateApproved) {
-        result.classList.add("bad");
-        result.textContent = "Cannot board: passenger is at Gate " + currentPassenger.gate + ".";
-        setStatus("WRONG GATE", "bad");
+      if (!checkRules(currentPassenger)) {
         return;
       }
 
@@ -700,18 +590,20 @@ result.classList.add("bad");
       });
 
       if (alreadyBoarded) {
-        result.classList.add("warn");
+        result.className = "message warn";
         result.textContent = "⚠️ Already boarded: " + currentPassenger.name;
         setStatus("ALREADY BOARDED", "warn");
+        beep("warn");
         return;
       }
 
       boarded.push(currentPassenger);
       updateManifest();
 
-      result.classList.add("good");
+      result.className = "message good";
       result.textContent = "✅ BOARDED: " + currentPassenger.name;
       setStatus("BOARDED", "good");
+      beep("good");
     }
 
     function denyBoarding() {
@@ -727,7 +619,7 @@ result.classList.add("bad");
     function updateManifest() {
       const manifest = document.getElementById("manifest");
 
-      document.getElementById("boardedCounter").textContent = "Boarded: " + boarded.length;
+      updateControlDesk();
 
       if (!boarded.length) {
         manifest.textContent = "No passengers boarded yet.";
@@ -735,13 +627,15 @@ result.classList.add("bad");
       }
 
       manifest.innerHTML = boarded.map(function(p, i) {
-        return (i + 1) + ". <b>" + p.name + "</b> — " + p.flight + " — Seat " + p.seat + " — Gate " + p.gate;
+        return (i + 1) + ". <b>" + p.name + "</b> — " + p.flight + " — Seat " + p.seat + " — " + passengerZone(p) + " — Gate " + p.gate;
       }).join("<br>");
     }
 
     function clearScan() {
       currentPassenger = null;
       gateApproved = false;
+      zoneApproved = false;
+      statusApproved = false;
 
       document.getElementById("scanInput").value = "";
       document.getElementById("scanInput").focus();
@@ -767,6 +661,8 @@ result.classList.add("bad");
         checkTicket();
       }
     });
+
+    updateControlDesk();
   </script>
 </body>
 </html>

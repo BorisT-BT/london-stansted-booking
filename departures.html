@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Departures - London Stansted</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #050b18; color: #e5e7eb; }
+    .top { background: #05203c; padding: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .top a { color: white; background: #123f6d; border-radius: 999px; padding: 8px 12px; text-decoration: none; margin: 3px; display: inline-block; }
+    h1 { margin: 0; font-size: 34px; }
+    .clock { font-size: 22px; font-weight: 900; color: #facc15; }
+    .board { max-width: 1100px; margin: 24px auto; padding: 0 12px; }
+    .row, .header { display: grid; grid-template-columns: 1fr 1.5fr 1fr 0.8fr 1.1fr; gap: 8px; align-items: center; padding: 14px; border-bottom: 1px solid #243041; }
+    .header { background: #111827; color: #facc15; font-weight: 900; border-radius: 14px 14px 0 0; }
+    .row { background: #0f172a; font-size: 20px; }
+    .row:nth-child(odd) { background: #111c30; }
+    .status { border-radius: 999px; padding: 6px 10px; text-align: center; font-weight: 900; font-size: 15px; }
+    .boarding { background: #16a34a; color: white; }
+    .delayed { background: #dc2626; color: white; }
+    .final { background: #f97316; color: white; }
+    .scheduled { background: #2563eb; color: white; }
+
+    @media (max-width: 700px) {
+      .row, .header { grid-template-columns: 1fr; font-size: 18px; }
+      .header { display: none; }
+      .row { border-radius: 14px; margin-bottom: 10px; }
+      .row span::before { color: #facc15; font-weight: 900; }
+      .flight::before { content: "Flight: "; }
+      .dest::before { content: "Destination: "; }
+      .time::before { content: "Time: "; }
+      .gate::before { content: "Gate: "; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top">
+    <h1>✈️ London Stansted Departures</h1>
+
+    <div>
+      <a href="customer.html">Book</a>
+      <a href="staff.html">Staff</a>
+    </div>
+
+    <div class="clock" id="clock">--:--</div>
+  </div>
+
+  <div class="board">
+    <div class="header">
+      <span>Flight</span>
+      <span>Destination</span>
+      <span>Time</span>
+      <span>Gate</span>
+      <span>Status</span>
+    </div>
+
+    <div id="rows"></div>
+  </div>
+
+  <script>
+    const flights = [
+      ["LS200MAN", "Manchester", "06:15", "A1", "Boarding", "boarding"],
+      ["LS201DXB", "Dubai International", "09:40", "B4", "Scheduled", "scheduled"],
+      ["LS202JFK", "New York JFK", "13:25", "C3", "Final Call", "final"],
+      ["LS203HND", "Tokyo Haneda", "17:50", "D6", "Delayed", "delayed"],
+      ["LS204SYD", "Sydney", "21:10", "E8", "Scheduled", "scheduled"]
+    ];
+
+    function render() {
+      document.getElementById("rows").innerHTML = flights.map(function(f) {
+        return '<div class="row">' +
+          '<span class="flight">' + f[0] + '</span>' +
+          '<span class="dest">' + f[1] + '</span>' +
+          '<span class="time">' + f[2] + '</span>' +
+          '<span class="gate">' + f[3] + '</span>' +
+          '<span class="status ' + f[5] + '">' + f[4] + '</span>' +
+        '</div>';
+      }).join("");
+    }
+
+    function clock() {
+      const now = new Date();
+      document.getElementById("clock").textContent =
+        now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+
+    render();
+    clock();
+    setInterval(clock, 1000);
+  </script>
+</body>
+</html>

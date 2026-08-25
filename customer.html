@@ -44,7 +44,8 @@
     .pill { display: inline-block; background: #e0f2fe; color: #075985; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 800; margin: 2px; }
     .good-pill { background: #dcfce7; color: #166534; }
     .warn-pill { background: #fef3c7; color: #92400e; }
-.extras { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fake-warning { background: #fff7ed; border: 2px solid #fed7aa; color: #9a3412; border-radius: 14px; padding: 12px; margin-top: 10px; font-weight: 800; }
+    .extras { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .extra { border: 2px solid #e2e8f0; border-radius: 14px; padding: 12px; background: #f8fafc; cursor: pointer; }
     .extra input { width: auto; margin-right: 8px; }
     .seat-map { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; padding: 12px; margin-top: 8px; }
@@ -89,9 +90,9 @@
       .card { padding: 15px; border-radius: 16px; }
       .progress { grid-template-columns: 1fr; }
       .row, .extras { grid-template-columns: 1fr; gap: 0; }
-      input, select, button, a.download-button { font-size: 18px; padding: 14px; }
+input, select, button, a.download-button { font-size: 18px; padding: 14px; }
       .flight-card { grid-template-columns: 1fr; }
-.seat-row { grid-template-columns: 24px repeat(3, 1fr) 12px repeat(3, 1fr); gap: 4px; }
+      .seat-row { grid-template-columns: 24px repeat(3, 1fr) 12px repeat(3, 1fr); gap: 4px; }
       .seat { font-size: 12px; padding: 9px 0; }
       #qrCode { width: 260px; height: 260px; max-width: 100%; }
     }
@@ -101,7 +102,6 @@
 <body>
   <div class="top-bar">
     <div class="brand">✈️ Emirates Style Booking</div>
-
     <div class="top-links">
       <a href="customer.html">Customer Booking</a>
       <a href="staff.html">Staff Scanner</a>
@@ -188,27 +188,13 @@
           <h2 class="step-title">2. Passenger details</h2>
 
           <div class="row">
-            <div>
-              <label>Email</label>
-              <input id="email" placeholder="pretend@email.com">
-            </div>
-
-            <div>
-              <label>Phone number</label>
-              <input id="phone" placeholder="07123 456789">
-            </div>
+            <div><label>Email</label><input id="email" placeholder="pretend@email.com"></div>
+<div><label>Phone number</label><input id="phone" placeholder="07123 456789"></div>
           </div>
 
-<div class="row">
-            <div>
-              <label>Passport number</label>
-              <input id="passport" placeholder="123456789">
-            </div>
-
-            <div>
-              <label>Date of birth</label>
-              <input id="dob" type="date">
-            </div>
+          <div class="row">
+            <div><label>Passport number</label><input id="passport" placeholder="123456789"></div>
+            <div><label>Date of birth</label><input id="dob" type="date"></div>
           </div>
 
           <button onclick="showPage(3)">Continue to extras</button>
@@ -242,30 +228,11 @@
           <h3>Paid extras</h3>
 
           <div class="extras">
-            <label class="extra">
-              <input type="checkbox" class="extraBox" value="Priority boarding" data-price="9" onchange="updateSummary()">
-              Priority boarding +£9
-            </label>
-
-            <label class="extra">
-              <input type="checkbox" class="extraBox" value="Fast track security" data-price="12" onchange="updateSummary()">
-              Fast track security +£12
-            </label>
-
-            <label class="extra">
-              <input type="checkbox" class="extraBox" value="Lounge access" data-price="35" onchange="updateSummary()">
-              Lounge access +£35
-            </label>
-
-            <label class="extra">
-              <input type="checkbox" class="extraBox" value="Travel insurance" data-price="14" onchange="updateSummary()">
-              Travel insurance +£14
-            </label>
-
-            <label class="extra">
-              <input type="checkbox" class="extraBox" value="Extra legroom seat" data-price="20" onchange="updateSummary()">
-              Extra legroom seat +£20
-            </label>
+            <label class="extra"><input type="checkbox" class="extraBox" value="Priority boarding" data-price="9" onchange="updateSummary()"> Priority boarding +£9</label>
+            <label class="extra"><input type="checkbox" class="extraBox" value="Fast track security" data-price="12" onchange="updateSummary()"> Fast track security +£12</label>
+            <label class="extra"><input type="checkbox" class="extraBox" value="Lounge access" data-price="35" onchange="updateSummary()"> Lounge access +£35</label>
+            <label class="extra"><input type="checkbox" class="extraBox" value="Travel insurance" data-price="14" onchange="updateSummary()"> Travel insurance +£14</label>
+            <label class="extra"><input type="checkbox" class="extraBox" value="Extra legroom seat" data-price="20" onchange="updateSummary()"> Extra legroom seat +£20</label>
           </div>
 
           <h3>Seat selection</h3>
@@ -289,15 +256,8 @@
           <input id="cardNumber" placeholder="4242 4242 4242 4242">
 
           <div class="row">
-            <div>
-              <label>Expiry</label>
-              <input id="expiry" placeholder="12/30">
-            </div>
-
-            <div>
-              <label>CVV</label>
-              <input id="cvv" placeholder="123">
-            </div>
+            <div><label>Expiry</label><input id="expiry" placeholder="12/30"></div>
+            <div><label>CVV</label><input id="cvv" placeholder="123"></div>
           </div>
 
           <button onclick="confirmBooking()">Pay and confirm booking</button>
@@ -310,8 +270,9 @@
           <div id="confirmation" class="confirmation">✅ Booking confirmed!</div>
 
           <p>Your boarding pass is ready on the right. Download the QR code and show it to staff.</p>
+          <p><b>BRING £5 DONATIONS</b></p>
 
-<button class="secondary" onclick="window.print()">Print / save page</button>
+          <button class="secondary" onclick="window.print()">Print / save page</button>
           <button class="back" onclick="showPage(1)">Book another flight</button>
         </section>
       </div>
@@ -319,40 +280,17 @@
 
     <aside>
       <div class="card">
-        <h2>Trip Summary</h2>
+<h2>Trip Summary</h2>
 
         <p id="chosenFlightText" class="small">No flight selected yet.</p>
 
         <div class="price-box">
-          <div class="price-line">
-            <span>Base fare</span>
-            <span id="baseFare">£0.00</span>
-          </div>
-
-          <div class="price-line">
-            <span>Class upgrade</span>
-            <span id="classFare">£0.00</span>
-          </div>
-
-          <div class="price-line">
-            <span>Baggage</span>
-            <span id="bagFare">£0.00</span>
-          </div>
-
-          <div class="price-line">
-            <span>Seat choice</span>
-            <span id="seatFare">£0.00</span>
-          </div>
-
-          <div class="price-line">
-            <span>Extras</span>
-            <span id="extrasFare">£0.00</span>
-          </div>
-
-          <div class="price-line">
-            <span>Total</span>
-            <span id="totalFare">£0.00</span>
-          </div>
+          <div class="price-line"><span>Base fare</span><span id="baseFare">£0.00</span></div>
+          <div class="price-line"><span>Class upgrade</span><span id="classFare">£0.00</span></div>
+          <div class="price-line"><span>Baggage</span><span id="bagFare">£0.00</span></div>
+          <div class="price-line"><span>Seat choice</span><span id="seatFare">£0.00</span></div>
+          <div class="price-line"><span>Extras</span><span id="extrasFare">£0.00</span></div>
+          <div class="price-line"><span>Total</span><span id="totalFare">£0.00</span></div>
         </div>
       </div>
 
@@ -362,10 +300,7 @@
         <p id="noTicket">No Emirates-style boarding pass yet.</p>
 
         <div id="ticket" class="ticket hidden">
-          <div class="boarding-strip">
-            <span>BOARDING PASS</span>
-            <span>EMIRATES</span>
-          </div>
+          <div class="boarding-strip"><span>BOARDING PASS</span><span>EMIRATES</span></div>
 
           <div class="route-big">
             <div>
@@ -385,63 +320,21 @@
           <p class="ticket-code" id="ticketCode"></p>
 
           <div class="ticket-grid">
-            <div class="ticket-item">
-              <small>Booking ref</small>
-              <b id="ticketRef"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Flight</small>
-              <b id="ticketFlight"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Date</small>
-              <b id="ticketDate"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Boarding</small>
-              <b id="ticketBoarding"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Gate</small>
-              <b id="ticketGate"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Seat</small>
-              <b id="ticketSeat"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Class</small>
-              <b id="ticketClass"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Baggage</small>
-              <b id="ticketBaggage"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Extras</small>
-              <b id="ticketExtras"></b>
-            </div>
-
-            <div class="ticket-item">
-              <small>Price</small>
-              <b id="ticketPrice"></b>
-            </div>
+            <div class="ticket-item"><small>Booking ref</small><b id="ticketRef"></b></div>
+            <div class="ticket-item"><small>Flight</small><b id="ticketFlight"></b></div>
+            <div class="ticket-item"><small>Date</small><b id="ticketDate"></b></div>
+            <div class="ticket-item"><small>Boarding</small><b id="ticketBoarding"></b></div>
+            <div class="ticket-item"><small>Gate</small><b id="ticketGate"></b></div>
+            <div class="ticket-item"><small>Seat</small><b id="ticketSeat"></b></div>
+            <div class="ticket-item"><small>Class</small><b id="ticketClass"></b></div>
+            <div class="ticket-item"><small>Baggage</small><b id="ticketBaggage"></b></div>
+            <div class="ticket-item"><small>Extras</small><b id="ticketExtras"></b></div>
+            <div class="ticket-item"><small>Price</small><b id="ticketPrice"></b></div>
           </div>
 
           <div class="qr-panel">
             <img id="qrCode" alt="Boarding pass QR code">
-
-            <a id="downloadQr" class="download-button" href="#" download="boarding-pass-qr.png">
-              Download boarding pass QR
-            </a>
+            <a id="downloadQr" class="download-button" href="#" download="boarding-pass-qr.png">Download boarding pass QR</a>
           </div>
         </div>
       </div>
@@ -458,7 +351,7 @@
       "London Stansted": "STN",
       "London Heathrow": "LHR",
       "London Gatwick": "LGW",
-"Manchester Airport": "MAN",
+      "Manchester Airport": "MAN",
       "New York JFK": "JFK",
       "Tokyo Haneda": "HND",
       "Dubai International": "DXB",
@@ -497,7 +390,7 @@
         page.classList.remove("active");
       });
 
-      document.querySelectorAll(".progress div").forEach(function(dot) {
+document.querySelectorAll(".progress div").forEach(function(dot) {
         dot.classList.remove("active");
       });
 
@@ -542,11 +435,11 @@
       const base = routeBase(from, to);
 
       const flights = [
-        { time: "06:15", name: "Saver", add: 0, status: "Cheapest" },
-        { time: "09:40", name: "Standard", add: 18, status: "On time" },
-        { time: "13:25", name: "Afternoon", add: 31, status: "Few seats left" },
-        { time: "17:50", name: "Emirates Gold Deal", add: 25, status: "Best deal" },
-        { time: "21:10", name: "Night Flight", add: 12, status: "On time" }
+        {time:"06:15", name:"Saver", add:0, status:"Cheapest"},
+        {time:"09:40", name:"Standard", add:18, status:"On time"},
+        {time:"13:25", name:"Afternoon", add:31, status:"Few seats left"},
+        {time:"17:50", name:"Emirates Gold Deal", add:25, status:"Best deal"},
+        {time:"21:10", name:"Night Flight", add:12, status:"On time"}
       ];
 
       flights.forEach(function(flight, index) {
@@ -560,7 +453,7 @@
         flight.from = from;
         flight.to = to;
         flight.date = date;
-        flight.gate = randomFrom(["A1", "A2", "B4", "C3", "D6", "E8"]);
+        flight.gate = randomFrom(["A1","A2","B4","C3","D6","E8"]);
 
         card.innerHTML =
           '<div>' +
@@ -579,7 +472,7 @@
 
           card.classList.add("selected");
           selectedFlight = flight;
-updateSummary();
+          updateSummary();
         };
 
         box.appendChild(card);
@@ -626,8 +519,7 @@ updateSummary();
       if (bag === "Cabin bag") return 18;
       if (bag === "Checked bag") return 35;
       if (bag === "Two checked bags") return 65;
-
-      return 0;
+return 0;
     }
 
     function getSeatFare() {
@@ -695,7 +587,7 @@ updateSummary();
 
     function buildSeatMap() {
       const seatMap = document.getElementById("seatMap");
-      const letters = ["A", "B", "C", "D", "E", "F"];
+      const letters = ["A","B","C","D","E","F"];
 
       for (let row = 1; row <= 6; row++) {
         const rowEl = document.createElement("div");
@@ -721,7 +613,7 @@ updateSummary();
           seat.textContent = letter;
           seat.dataset.seat = seatCode;
 
-if (takenSeats.includes(seatCode)) {
+          if (takenSeats.includes(seatCode)) {
             seat.classList.add("taken");
           } else {
             seat.onclick = function() {
@@ -758,7 +650,7 @@ if (takenSeats.includes(seatCode)) {
       showPage(5);
     }
 
-    function getBoardingTime(flightTime) {
+function getBoardingTime(flightTime) {
       const parts = flightTime.split(":");
       let hours = Number(parts[0]);
       let minutes = Number(parts[1]) - 30;
@@ -832,7 +724,7 @@ if (takenSeats.includes(seatCode)) {
 
       document.getElementById("qrCode").src = qrUrl;
       document.getElementById("downloadQr").href = qrUrl;
-document.getElementById("downloadQr").download = code + "-qr.png";
+      document.getElementById("downloadQr").download = code + "-qr.png";
 
       document.getElementById("ticket").classList.remove("hidden");
       document.getElementById("noTicket").classList.add("hidden");

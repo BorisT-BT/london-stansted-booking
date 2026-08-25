@@ -41,11 +41,10 @@
     .flight-card.deal { border-color: #facc15; background: linear-gradient(135deg, #fff7ed, #fef3c7); box-shadow: 0 0 0 4px #facc1540, 0 12px 24px #7f1d1d25; position: relative; }
     .deal-badge { display: inline-block; background: #b91c1c; color: white; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 900; margin: 2px; }
     .flight-price { font-size: 24px; font-weight: 900; color: #b91c1c; }
-.pill { display: inline-block; background: #e0f2fe; color: #075985; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 800; margin: 2px; }
+    .pill { display: inline-block; background: #e0f2fe; color: #075985; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 800; margin: 2px; }
     .good-pill { background: #dcfce7; color: #166534; }
     .warn-pill { background: #fef3c7; color: #92400e; }
-    .fake-warning { background: #fff7ed; border: 2px solid #fed7aa; color: #9a3412; border-radius: 14px; padding: 12px; margin-top: 10px; font-weight: 800; }
-    .extras { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.extras { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .extra { border: 2px solid #e2e8f0; border-radius: 14px; padding: 12px; background: #f8fafc; cursor: pointer; }
     .extra input { width: auto; margin-right: 8px; }
     .seat-map { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; padding: 12px; margin-top: 8px; }
@@ -85,14 +84,14 @@
     @media (max-width: 600px) {
       .top-bar { padding: 10px; }
       .hero { padding: 24px 10px 52px; }
-h1 { font-size: 30px; line-height: 1.1; }
+      h1 { font-size: 30px; line-height: 1.1; }
       .container { margin: -30px auto 18px; padding: 0 10px; }
       .card { padding: 15px; border-radius: 16px; }
       .progress { grid-template-columns: 1fr; }
       .row, .extras { grid-template-columns: 1fr; gap: 0; }
       input, select, button, a.download-button { font-size: 18px; padding: 14px; }
       .flight-card { grid-template-columns: 1fr; }
-      .seat-row { grid-template-columns: 24px repeat(3, 1fr) 12px repeat(3, 1fr); gap: 4px; }
+.seat-row { grid-template-columns: 24px repeat(3, 1fr) 12px repeat(3, 1fr); gap: 4px; }
       .seat { font-size: 12px; padding: 9px 0; }
       #qrCode { width: 260px; height: 260px; max-width: 100%; }
     }
@@ -136,7 +135,6 @@ h1 { font-size: 30px; line-height: 1.1; }
           <div class="row">
             <div>
               <label>From</label>
-
               <select id="fromAirport" onchange="searchFlights()">
                 <option value="London Stansted">London Stansted</option>
                 <option value="London Heathrow">London Heathrow</option>
@@ -151,7 +149,6 @@ h1 { font-size: 30px; line-height: 1.1; }
 
             <div>
               <label>To</label>
-
               <select id="toAirport" onchange="searchFlights()">
                 <option value="">Choose destination airport</option>
                 <option value="London Heathrow">London Heathrow</option>
@@ -173,7 +170,6 @@ h1 { font-size: 30px; line-height: 1.1; }
 
             <div>
               <label>Passengers</label>
-
               <select id="passengerCount" onchange="updateSummary()">
                 <option value="1">1 passenger</option>
                 <option value="2">2 passengers</option>
@@ -184,13 +180,11 @@ h1 { font-size: 30px; line-height: 1.1; }
           </div>
 
           <button class="secondary" onclick="searchFlights()">Search available flights</button>
-
           <div id="flightResults" class="flight-results"></div>
-
           <button onclick="goPassengerPage()">Continue to passenger details</button>
         </section>
 
-<section id="page2" class="page">
+        <section id="page2" class="page">
           <h2 class="step-title">2. Passenger details</h2>
 
           <div class="row">
@@ -205,7 +199,7 @@ h1 { font-size: 30px; line-height: 1.1; }
             </div>
           </div>
 
-          <div class="row">
+<div class="row">
             <div>
               <label>Passport number</label>
               <input id="passport" placeholder="123456789">
@@ -227,7 +221,6 @@ h1 { font-size: 30px; line-height: 1.1; }
           <div class="row">
             <div>
               <label>Class</label>
-
               <select id="flightClass" onchange="updateSummary()">
                 <option value="Economy">Economy</option>
                 <option value="Business">Business</option>
@@ -237,7 +230,6 @@ h1 { font-size: 30px; line-height: 1.1; }
 
             <div>
               <label>Baggage</label>
-
               <select id="baggage" onchange="updateSummary()">
                 <option value="Small bag only">Small bag only</option>
                 <option value="Cabin bag">Cabin bag</option>
@@ -288,16 +280,12 @@ h1 { font-size: 30px; line-height: 1.1; }
         </section>
 
         <section id="page4" class="page">
-          <h2 class="step-title">4. Pretend payment</h2>
-
-          <div class="fake-warning">
-            This is fake for roleplay. Do NOT type real card details. Use silly/test numbers only.
-          </div>
+          <h2 class="step-title">4. Payment</h2>
 
           <label>Name on card</label>
-          <input id="cardName" placeholder="BORIS TEST">
+          <input id="cardName" placeholder="Name on card">
 
-          <label>Fake card number</label>
+          <label>Card number</label>
           <input id="cardNumber" placeholder="4242 4242 4242 4242">
 
           <div class="row">
@@ -307,12 +295,12 @@ h1 { font-size: 30px; line-height: 1.1; }
             </div>
 
             <div>
-<label>CVV</label>
+              <label>CVV</label>
               <input id="cvv" placeholder="123">
             </div>
           </div>
 
-          <button onclick="confirmBooking()">Pay fake money and confirm booking</button>
+          <button onclick="confirmBooking()">Pay and confirm booking</button>
           <button class="back" onclick="showPage(3)">Back to extras</button>
         </section>
 
@@ -323,7 +311,7 @@ h1 { font-size: 30px; line-height: 1.1; }
 
           <p>Your boarding pass is ready on the right. Download the QR code and show it to staff.</p>
 
-          <button class="secondary" onclick="window.print()">Print / save page</button>
+<button class="secondary" onclick="window.print()">Print / save page</button>
           <button class="back" onclick="showPage(1)">Book another flight</button>
         </section>
       </div>
@@ -394,7 +382,6 @@ h1 { font-size: 30px; line-height: 1.1; }
           </div>
 
           <div class="passenger-name" id="ticketName"></div>
-
           <p class="ticket-code" id="ticketCode"></p>
 
           <div class="ticket-grid">
@@ -449,7 +436,7 @@ h1 { font-size: 30px; line-height: 1.1; }
             </div>
           </div>
 
-<div class="qr-panel">
+          <div class="qr-panel">
             <img id="qrCode" alt="Boarding pass QR code">
 
             <a id="downloadQr" class="download-button" href="#" download="boarding-pass-qr.png">
@@ -471,7 +458,7 @@ h1 { font-size: 30px; line-height: 1.1; }
       "London Stansted": "STN",
       "London Heathrow": "LHR",
       "London Gatwick": "LGW",
-      "Manchester Airport": "MAN",
+"Manchester Airport": "MAN",
       "New York JFK": "JFK",
       "Tokyo Haneda": "HND",
       "Dubai International": "DXB",
@@ -579,7 +566,7 @@ h1 { font-size: 30px; line-height: 1.1; }
           '<div>' +
             (isDeal ? '<span class="deal-badge">⭐️ EMIRATES GOLD DEAL</span><br>' : '') +
             '<b>' + flight.time + ' ' + flight.name + '</b><br>' +
-'<span class="pill">' + flight.number + '</span>' +
+            '<span class="pill">' + flight.number + '</span>' +
             '<span class="pill good-pill">' + flight.status + '</span><br>' +
             '<span class="small">' + from + ' → ' + to + '</span>' +
           '</div>' +
@@ -592,7 +579,7 @@ h1 { font-size: 30px; line-height: 1.1; }
 
           card.classList.add("selected");
           selectedFlight = flight;
-          updateSummary();
+updateSummary();
         };
 
         box.appendChild(card);
@@ -716,7 +703,7 @@ h1 { font-size: 30px; line-height: 1.1; }
 
         const rowNumber = document.createElement("div");
         rowNumber.className = "row-number";
-rowNumber.textContent = row;
+        rowNumber.textContent = row;
         rowEl.appendChild(rowNumber);
 
         letters.forEach(function(letter, index) {
@@ -734,7 +721,7 @@ rowNumber.textContent = row;
           seat.textContent = letter;
           seat.dataset.seat = seatCode;
 
-          if (takenSeats.includes(seatCode)) {
+if (takenSeats.includes(seatCode)) {
             seat.classList.add("taken");
           } else {
             seat.onclick = function() {
@@ -763,7 +750,7 @@ rowNumber.textContent = row;
       const cvv = document.getElementById("cvv").value.trim();
 
       if (!cardName || !cardNumber || !expiry || !cvv) {
-        alert("Fill in the pretend payment boxes. Do not use a real card.");
+        alert("Fill in the payment boxes.");
         return;
       }
 
@@ -835,7 +822,7 @@ rowNumber.textContent = row;
 
       document.getElementById("ticketFlight").textContent = selectedFlight.number;
       document.getElementById("ticketDate").textContent = selectedFlight.date;
-document.getElementById("ticketBoarding").textContent = boardingTime;
+      document.getElementById("ticketBoarding").textContent = boardingTime;
       document.getElementById("ticketGate").textContent = selectedFlight.gate;
       document.getElementById("ticketSeat").textContent = selectedSeat;
       document.getElementById("ticketClass").textContent = flightClass;
@@ -845,7 +832,7 @@ document.getElementById("ticketBoarding").textContent = boardingTime;
 
       document.getElementById("qrCode").src = qrUrl;
       document.getElementById("downloadQr").href = qrUrl;
-      document.getElementById("downloadQr").download = code + "-qr.png";
+document.getElementById("downloadQr").download = code + "-qr.png";
 
       document.getElementById("ticket").classList.remove("hidden");
       document.getElementById("noTicket").classList.add("hidden");

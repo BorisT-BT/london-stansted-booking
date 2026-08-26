@@ -2,137 +2,446 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Customer - London Stansted Booking</title>
+  <title>Customer - Emirates Style Booking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f1e8;color:#24140f}.top-bar{background:#5b0b0b;color:white;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:4px solid #d4af37}.brand{font-size:24px;font-weight:900}.top-links a{color:white;background:#7f1d1d;border:1px solid #d4af37;border-radius:999px;padding:7px 12px;text-decoration:none;margin:3px;display:inline-block;font-size:14px}.hero{color:white;text-align:center;padding:34px 16px 62px;background:linear-gradient(135deg,#4a0505,#7f1d1d,#d4af37)}h1{margin:0;font-size:44px}.subtitle{font-size:18px;margin-bottom:0}.container{max-width:1120px;margin:-38px auto 28px;padding:0 16px;display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}.card{background:#fffdf8;border:1px solid #ead7a4;border-radius:22px;padding:20px;box-shadow:0 12px 30px #3b1f1420;margin-bottom:18px}.card h2,.card h3{margin-top:0}.progress{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}.progress div{background:#f3e7c4;color:#5b0b0b;padding:8px 6px;border-radius:999px;text-align:center;font-size:12px;font-weight:900}.progress div.active{background:#7f1d1d;color:white;border:2px solid #d4af37}.step-title{color:#7f1d1d;border-bottom:1px solid #ead7a4;padding-bottom:10px}label{display:block;margin-top:12px;font-weight:800}input,select,button,a.download-button{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:2px solid #cbd5e1;font-size:16px}input:focus,select:focus{outline:none;border-color:#7f1d1d;box-shadow:0 0 0 3px #f3e7c4}button,a.download-button{background:#7f1d1d;color:white;border:none;font-weight:900;cursor:pointer;text-align:center;text-decoration:none;display:block}button:hover,a.download-button:hover{background:#5b0b0b}.secondary{background:#b8860b}.secondary:hover{background:#8b6508}.back{background:#64748b}.back:hover{background:#475569}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.page{display:none}.page.active{display:block}.small{font-size:14px;color:#6b4e2e}.hidden{display:none}.flight-results{display:grid;gap:12px;margin-top:14px}.flight-card{border:2px solid #ead7a4;background:#fffaf0;border-radius:16px;padding:14px;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.flight-card:hover{border-color:#d4af37;background:#fff3cd}.flight-card.selected{border-color:#7f1d1d;background:#f8e7c2}.flight-price{font-size:24px;font-weight:900;color:#7f1d1d}.pill{display:inline-block;background:#f3e7c4;color:#5b0b0b;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;margin:2px}.good-pill{background:#fff7d6;color:#7a5b00}.extras{display:grid;grid-template-columns:1fr 1fr;gap:10px}.extra{border:2px solid #ead7a4;border-radius:14px;padding:12px;background:#fffaf0;cursor:pointer}.extra input{width:auto;margin-right:8px}.menu-category{margin-top:18px;border-top:1px solid #ead7a4;padding-top:14px}.menu-category h3{margin:0 0 8px;color:#7f1d1d}.menu-help{margin:0 0 10px;color:#6b4e2e;font-size:14px}.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.menu-section-title{grid-column:1/-1;margin:10px 0 0;padding:9px 11px;border-radius:12px;background:#5b0b0b;color:#fff7d6;border-bottom:3px solid #d4af37;font-weight:900}.menu-item{border:2px solid #ead7a4;border-radius:18px;padding:12px;background:linear-gradient(180deg,#fff,#fff8e7);cursor:pointer;min-height:92px;display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:start}.menu-item:hover{border-color:#d4af37;background:#fff3cd;transform:translateY(-1px);box-shadow:0 8px 20px
-#5b0b0b18}.menu-item input{width:auto;margin:4px 0 0}.menu-emoji{font-size:29px;line-height:1}.menu-title{display:block;font-weight:900;color:#24140f}.menu-desc{display:block;margin-top:4px;color:#6b4e2e;font-size:12px;line-height:1.25}.menu-price{color:#7f1d1d;font-weight:900;white-space:nowrap}.menu-tag{display:inline-block;margin-top:6px;padding:3px 7px;border-radius:999px;background:#dcfce7;color:#166534;font-size:11px;font-weight:900}.drink-tag{background:#f3e7c4;color:#5b0b0b}.seat-map{background:#fffaf0;border:2px solid #ead7a4;border-radius:16px;padding:14px;margin-top:8px}.sofa-map{display:grid;grid-template-columns:1fr 1fr .9fr;grid-template-rows:88px 78px 118px;grid-template-areas:"a1 a2 b1" "gap gap b1" "c1 c1 c1";gap:10px}.sofa-seat{border:4px solid #16f3b3;background:#111827;color:#16f3b3;border-radius:18px;cursor:pointer;text-align:center;font-size:34px;font-weight:900;user-select:none;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 2px #00000055}.sofa-seat:hover{background:#1f2937;transform:translateY(-1px)}.sofa-seat.selected{background:#7f1d1d;color:white;border-color:#d4af37}.sofa-a1{grid-area:a1}.sofa-a2{grid-area:a2}.sofa-b1{grid-area:b1}.sofa-c1{grid-area:c1}.sofa-gap{grid-area:gap;border-top:5px solid #16f3b3;align-self:center;height:1px}.payment-panel{background:linear-gradient(180deg,#fffdf8,#f8eed7);border:2px solid #d4af37;border-radius:18px;padding:16px;box-shadow:inset 0 0 0 1px #ffffff99}.payment-lock{background:#5b0b0b;color:white;border-bottom:3px solid #d4af37;border-radius:12px;padding:12px;font-weight:900;text-align:center;margin-bottom:10px}.price-box{background:#fff8e7;border:2px solid #d4af37;border-radius:16px;padding:14px}.price-line{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #ead7a4;padding:8px 0}.price-line:last-child{border-bottom:none;font-size:24px;font-weight:900;color:#7f1d1d}.ticket{border:3px dashed #5b0b0b;border-radius:16px;padding:15px;background:#fffaf0;margin-top:10px}.boarding-strip{background:#5b0b0b;color:white;border-radius:12px;padding:10px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:900;border-bottom:3px solid #d4af37}.ticket-code{font-size:22px;font-weight:900;background:#fde68a;padding:10px;border-radius:10px;text-align:center}#qrCode{display:block;margin:15px auto;width:220px;height:220px}.confirmation{background:#dcfce7;color:#166534;border-radius:14px;padding:12px;font-weight:900;margin-top:12px}@media(max-width:850px){.container{grid-template-columns:1fr}}@media(max-width:600px){.top-bar{padding:10px}.hero{padding:24px 10px 52px}h1{font-size:30px;line-height:1.1}.container{margin:-30px auto 18px;padding:0 10px}.card{padding:15px;border-radius:16px}.progress{grid-template-columns:1fr}.row,.extras,.menu-grid{grid-template-columns:1fr;gap:0}input,select,button,a.download-button{font-size:18px;padding:14px}.flight-card{grid-template-columns:1fr}.sofa-map{grid-template-columns:1fr 1fr;grid-template-rows:80px 80px 110px;grid-template-areas:"a1 a2" "b1 b1" "c1 c1"}.sofa-seat{font-size:28px}#qrCode{width:260px;height:260px;max-width:100%}}
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #eaf2ff; color: #102033; }
+    .top-bar { background: #7f1d1d; color: white; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .brand { font-size: 24px; font-weight: 900; }
+    .top-links a { color: white; background: #991b1b; border: 1px solid #facc15; border-radius: 999px; padding: 7px 12px; text-decoration: none; margin: 3px; display: inline-block; font-size: 14px; }
+    .hero { color: white; text-align: center; padding: 34px 16px 62px; background: linear-gradient(135deg, #7f1d1d, #dc2626, #facc15); }
+    h1 { margin: 0; font-size: 44px; }
+    .subtitle { font-size: 18px; margin-bottom: 0; }
+    .container { max-width: 1120px; margin: -38px auto 28px; padding: 0 16px; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 18px; align-items: start; }
+    .card { background: white; border: 1px solid #dbeafe; border-radius: 22px; padding: 20px; box-shadow: 0 12px 30px #0f172a20; margin-bottom: 18px; }
+    .card h2, .card h3 { margin-top: 0; }
+    .step-intro { background: #fff7ed; border: 2px solid #facc15; color: #7f1d1d; border-radius: 16px; padding: 12px; margin-bottom: 12px; font-weight: 900; text-align: center; }
+    .progress { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 14px; }
+    .progress div { background: #fee2e2; color: #7f1d1d; padding: 8px 6px; border-radius: 999px; text-align: center; font-size: 12px; font-weight: 900; }
+    .progress div.active { background: #b91c1c; color: white; }
+    .step-title { color: #b91c1c; border-bottom: 1px solid #dbeafe; padding-bottom: 10px; }
+    label { display: block; margin-top: 12px; font-weight: 800; }
+    input, select, button, a.download-button { width: 100%; padding: 12px; margin-top: 6px; border-radius: 12px; border: 2px solid #cbd5e1; font-size: 16px; }
+    input:focus, select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px #bfdbfe; }
+    button, a.download-button { background: #f97316; color: white; border: none; font-weight: 900; cursor: pointer; text-align: center; text-decoration: none; display: block; }
+    button:hover, a.download-button:hover { background: #ea580c; }
+    .secondary { background: #2563eb; }
+    .secondary:hover { background: #1d4ed8; }
+    .back { background: #64748b; }
+    .back:hover { background: #475569; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .flight-results { display: grid; gap: 12px; margin-top: 14px; }
+    .flight-card { border: 2px solid #dbeafe; background: #f8fbff; border-radius: 16px; padding: 14px; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    .flight-card:hover { border-color: #93c5fd; background: #eff6ff; }
+    .flight-card.selected { border-color: #b91c1c; background: #fee2e2; }
+    .flight-card.deal { border-color: #facc15; background: linear-gradient(135deg, #fff7ed, #fef3c7); box-shadow: 0 0 0 4px #facc1540, 0 12px 24px #7f1d1d25; position: relative; }
+    .deal-badge { display: inline-block; background: #b91c1c; color: white; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 900; margin: 2px; }
+    .flight-price { font-size: 24px; font-weight: 900; color: #b91c1c; }
+    .pill { display: inline-block; background: #e0f2fe; color: #075985; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 800; margin: 2px; }
+    .good-pill { background: #dcfce7; color: #166534; }
+    .warn-pill { background: #fef3c7; color: #92400e; }
+.extras { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .extra { border: 2px solid #e2e8f0; border-radius: 14px; padding: 12px; background: #f8fafc; cursor: pointer; }
+    .extra input { width: auto; margin-right: 8px; }
+    .seat-map { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; padding: 12px; margin-top: 8px; }
+    .plane-nose { width: 90px; height: 30px; background: #c7d2fe; border-radius: 50% 50% 8px 8px; margin: 0 auto 10px; text-align: center; line-height: 30px; font-size: 12px; font-weight: 900; color: #3730a3; }
+    .seat-row { display: grid; grid-template-columns: 28px repeat(3, 1fr) 18px repeat(3, 1fr); gap: 6px; align-items: center; margin: 6px 0; }
+    .row-number { text-align: center; font-size: 13px; font-weight: 900; color: #475569; }
+    .aisle { text-align: center; color: #94a3b8; }
+    .seat { border: 2px solid #93c5fd; background: white; color: #1e3a8a; padding: 8px 0; border-radius: 8px; font-size: 13px; cursor: pointer; text-align: center; font-weight: 900; user-select: none; }
+    .seat:hover { background: #dbeafe; }
+    .seat.selected { background: #2563eb; color: white; border-color: #1d4ed8; }
+    .seat.taken { background: #e5e7eb; border-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; text-decoration: line-through; }
+    .price-box { background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 16px; padding: 14px; }
+    .price-line { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid #dbeafe; padding: 8px 0; }
+    .price-line:last-child { border-bottom: none; font-size: 24px; font-weight: 900; color: #1d4ed8; }
+    .ticket { border: 0; border-radius: 20px; overflow: hidden; background: white; margin-top: 10px; box-shadow: 0 12px 28px #0f172a25; }
+    .boarding-strip { background: linear-gradient(135deg, #7f1d1d, #b91c1c); color: white; padding: 14px; display: flex; justify-content: space-between; gap: 10px; font-size: 13px; font-weight: 900; letter-spacing: 1px; }
+    .route-big { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; text-align: center; padding: 16px 10px 10px; }
+    .airport-code { font-size: 38px; font-weight: 900; color: #0f172a; }
+    .airport-name { font-size: 11px; color: #64748b; font-weight: 800; }
+    .plane-line { color: #2563eb; font-size: 26px; font-weight: 900; }
+    .passenger-name { font-size: 22px; font-weight: 900; color: #7f1d1d; text-align: center; padding: 8px 12px; }
+    .ticket-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+    .ticket-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 9px; }
+    .ticket-item small { display: block; color: #64748b; font-weight: 900; font-size: 10px; text-transform: uppercase; }
+    .ticket-item b { font-size: 16px; color: #0f172a; }
+    .ticket-code { font-size: 18px; font-weight: 900; background: #fde68a; padding: 10px; border-radius: 12px; text-align: center; margin: 12px; }
+    .qr-panel { border-top: 2px dashed #cbd5e1; padding: 12px; text-align: center; background: #f8fafc; }
+    #qrCode { display: block; margin: 8px auto 12px; width: 210px; height: 210px; }
+    .small { font-size: 14px; color: #475569; }
+    .hidden { display: none; }
+    .confirmation { background: #dcfce7; color: #166534; border-radius: 14px; padding: 12px; font-weight: 900; margin-top: 12px; }
+
+    @media (max-width: 850px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .top-bar { padding: 10px; }
+      .hero { padding: 24px 10px 52px; }
+      h1 { font-size: 30px; line-height: 1.1; }
+      .container { margin: -30px auto 18px; padding: 0 10px; }
+      .card { padding: 15px; border-radius: 16px; }
+      .progress { grid-template-columns: 1fr; }
+      .row, .extras { grid-template-columns: 1fr; gap: 0; }
+      input, select, button, a.download-button { font-size: 18px; padding: 14px; }
+      .flight-card { grid-template-columns: 1fr; }
+.seat-row { grid-template-columns: 24px repeat(3, 1fr) 12px repeat(3, 1fr); gap: 4px; }
+      .seat { font-size: 12px; padding: 9px 0; }
+      #qrCode { width: 260px; height: 260px; max-width: 100%; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="top-bar"><div class="brand">✈️ Emirates | London Stansted</div><div class="top-links"><a href="customer.html">Customer Booking</a><a href="staff.html">Staff Scanner</a></div></div>
-  <div class="hero"><h1>Emirates-style flight booking</h1><p class="subtitle">A luxury booking flow: flight, passenger, dining, payment, confirmation.</p></div>
+  <div class="top-bar">
+    <div class="brand">✈️ Emirates Style Booking</div>
+
+    <div class="top-links">
+      <a href="customer.html">Customer Booking</a>
+      <a href="staff.html">Staff Scanner</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Book your Emirates-style flight</h1>
+    <p class="subtitle">Let’s take you step by step through a luxury pretend airport booking.</p>
+  </div>
+
   <div class="container">
-    <main><div class="card">
-      <div class="progress"><div id="dot1" class="active">1 Flight</div><div id="dot2">2 Passenger</div><div id="dot3">3 Extras</div><div id="dot4">4 Payment</div><div id="dot5">5 Confirm</div></div>
+    <main>
+      <div class="card">
+        <div class="step-intro">Let’s take you step by step</div>
 
-      <section id="page1" class="page active">
-        <h2 class="step-title">1. Flight results</h2>
-        <label>Passenger name</label><input id="passengerName" placeholder="Passenger name">
-        <div class="row">
-<div><label>From</label><select id="fromAirport" onchange="searchFlights()"><option>London Stansted</option><option>London Heathrow</option><option>London Gatwick</option><option>Manchester Airport</option><option>New York JFK</option><option>Tokyo Haneda</option><option>Dubai International</option><option>Australia Sydney</option></select></div>
-          <div><label>To</label><select id="toAirport" onchange="searchFlights()"><option value="">Choose destination airport</option><option>London Heathrow</option><option>London Gatwick</option><option>Manchester Airport</option><option>New York JFK</option><option>Tokyo Haneda</option><option>Dubai International</option><option>Australia Sydney</option></select></div>
-        </div>
-        <div class="row">
-          <div><label>Travel date</label><input id="flightDate" type="date" onchange="searchFlights()"></div>
-          <div><label>Passengers</label><select id="passengerCount" onchange="updateSummary()"><option value="1">1 passenger</option><option value="2">2 passengers</option><option value="3">3 passengers</option><option value="4">4 passengers</option></select></div>
-        </div>
-        <button class="secondary" onclick="searchFlights()">Search available flights</button>
-        <div id="flightResults" class="flight-results"></div>
-        <button onclick="goPassengerPage()">Continue to passenger details</button>
-      </section>
-
-      <section id="page2" class="page">
-        <h2 class="step-title">2. Passenger details</h2>
-        <div class="row">
-          <div><label>Email</label><input id="email" placeholder="email@example.com"></div>
-          <div><label>Phone number</label><input id="phone" placeholder="07123 456789"></div>
-        </div>
-        <div class="row">
-          <div><label>Passport number</label><input id="passport" placeholder="123456789"></div>
-          <div><label>Date of birth</label><input id="dob" type="date"></div>
-        </div>
-        <button onclick="showPage(3)">Continue to extras</button>
-        <button class="back" onclick="showPage(1)">Back to flights</button>
-      </section>
-
-      <section id="page3" class="page">
-        <h2 class="step-title">3. Extras, dining and seat selection</h2>
-        <div class="row">
-          <div><label>Class</label><select id="flightClass" onchange="updateSummary()"><option>Economy</option><option>Business</option><option>First Class</option></select></div>
-          <div><label>Baggage</label><select id="baggage" onchange="updateSummary()"><option>Small bag only</option><option>Cabin bag</option><option>Checked bag</option><option>Two checked bags</option></select></div>
+        <div class="progress">
+          <div id="dot1" class="active">1 - FLIGHT</div>
+          <div id="dot2">2 - PASSENGER</div>
+          <div id="dot3">3 - EXTRAS</div>
+          <div id="dot4">4 - PAYMENT</div>
+          <div id="dot5">5 - CONFIRM</div>
         </div>
 
-        <h3>Paid extras</h3>
-        <div class="extras" id="paidExtras"></div>
+        <section id="page1" class="page active">
+          <h2 class="step-title">1. Flight results</h2>
 
-        <div class="menu-category">
-          <h3>Emirates-style dining pre-order</h3>
-          <p class="menu-help">Choose meals and snacks. They will be added to the ticket extras and total price.</p>
-          <div class="menu-grid" id="foodGrid"></div>
-        </div>
+          <label>Passenger name</label>
+          <input id="passengerName" placeholder="Passenger name">
 
-        <div class="menu-category">
-          <h3>Drink selection</h3>
-          <p class="menu-help">Choose drinks and mocktails for your journey.</p>
-          <div class="menu-grid" id="drinkGrid"></div>
-        </div>
-
-        <h3>Seat selection</h3>
-        <p class="small">Pick your sofa-style seat: A1 on the left, A2 in the middle, B1 on the right, and C1 as the big front table/seat area.</p>
-        <div class="seat-map" id="seatMap"></div>
-        <button onclick="goPaymentPage()">Continue to payment</button>
-        <button class="back" onclick="showPage(2)">Back to passenger details</button>
-      </section>
-
-      <section id="page4" class="page">
-        <h2 class="step-title">4. Payment</h2>
-        <div class="payment-panel">
-          <div class="payment-lock">🔒 Secure checkout</div>
-          <p class="small">Enter your payment details below to complete your booking.</p>
-          <label>Name on card</label><input id="cardName" placeholder="Name exactly as shown on card">
-<label>Card number</label><input id="cardNumber" placeholder="1234 5678 9012 3456">
           <div class="row">
-            <div><label>Expiry</label><input id="expiry" placeholder="MM/YY"></div>
-            <div><label>CVV</label><input id="cvv" placeholder="123"></div>
-          </div>
-          <button onclick="confirmBooking()">Pay and confirm booking</button>
-        </div>
-        <button class="back" onclick="showPage(3)">Back to extras</button>
-      </section>
+            <div>
+              <label>From</label>
+              <select id="fromAirport" onchange="searchFlights()">
+                <option value="London Stansted">London Stansted</option>
+                <option value="London Heathrow">London Heathrow</option>
+                <option value="London Gatwick">London Gatwick</option>
+                <option value="Manchester Airport">Manchester Airport</option>
+                <option value="New York JFK">New York JFK</option>
+                <option value="Tokyo Haneda">Tokyo Haneda</option>
+                <option value="Dubai International">Dubai International</option>
+                <option value="Australia Sydney">Australia Sydney</option>
+              </select>
+            </div>
 
-      <section id="page5" class="page">
-        <h2 class="step-title">5. Booking confirmation</h2>
-        <div class="confirmation">✅ Booking confirmed!</div>
-        <p>Your boarding pass is ready on the right. Download the QR code and show it to staff.</p>
-        <button class="secondary" onclick="window.print()">Print / save page</button>
-        <button class="back" onclick="showPage(1)">Book another flight</button>
-      </section>
-    </div></main>
+            <div>
+              <label>To</label>
+              <select id="toAirport" onchange="searchFlights()">
+                <option value="">Choose destination airport</option>
+                <option value="London Heathrow">London Heathrow</option>
+                <option value="London Gatwick">London Gatwick</option>
+                <option value="Manchester Airport">Manchester Airport</option>
+                <option value="New York JFK">New York JFK</option>
+                <option value="Tokyo Haneda">Tokyo Haneda</option>
+                <option value="Dubai International">Dubai International</option>
+                <option value="Australia Sydney">Australia Sydney</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label>Travel date</label>
+              <input id="flightDate" type="date" onchange="searchFlights()">
+            </div>
+
+            <div>
+              <label>Passengers</label>
+              <select id="passengerCount" onchange="updateSummary()">
+                <option value="1">1 passenger</option>
+                <option value="2">2 passengers</option>
+                <option value="3">3 passengers</option>
+                <option value="4">4 passengers</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="secondary" onclick="searchFlights()">Search available flights</button>
+          <div id="flightResults" class="flight-results"></div>
+          <button onclick="goPassengerPage()">Continue to passenger details</button>
+        </section>
+
+        <section id="page2" class="page">
+          <h2 class="step-title">2. Passenger details</h2>
+
+          <div class="row">
+            <div>
+              <label>Email</label>
+              <input id="email" placeholder="pretend@email.com">
+            </div>
+
+            <div>
+              <label>Phone number</label>
+              <input id="phone" placeholder="07123 456789">
+            </div>
+          </div>
+
+<div class="row">
+            <div>
+              <label>Passport number</label>
+              <input id="passport" placeholder="123456789">
+            </div>
+
+            <div>
+              <label>Date of birth</label>
+              <input id="dob" type="date">
+            </div>
+          </div>
+
+          <button onclick="showPage(3)">Continue to extras</button>
+          <button class="back" onclick="showPage(1)">Back to flights</button>
+        </section>
+
+        <section id="page3" class="page">
+          <h2 class="step-title">3. Extras and seat selection</h2>
+
+          <div class="row">
+            <div>
+              <label>Class</label>
+              <select id="flightClass" onchange="updateSummary()">
+                <option value="Economy">Economy</option>
+                <option value="Business">Business</option>
+                <option value="First Class">First Class</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Baggage</label>
+              <select id="baggage" onchange="updateSummary()">
+                <option value="Small bag only">Small bag only</option>
+                <option value="Cabin bag">Cabin bag</option>
+                <option value="Checked bag">Checked bag</option>
+                <option value="Two checked bags">Two checked bags</option>
+              </select>
+            </div>
+          </div>
+
+          <h3>Paid extras</h3>
+
+          <div class="extras">
+            <label class="extra">
+              <input type="checkbox" class="extraBox" value="Priority boarding" data-price="9" onchange="updateSummary()">
+              Priority boarding +£9
+            </label>
+
+            <label class="extra">
+              <input type="checkbox" class="extraBox" value="Fast track security" data-price="12" onchange="updateSummary()">
+              Fast track security +£12
+            </label>
+
+            <label class="extra">
+              <input type="checkbox" class="extraBox" value="Lounge access" data-price="35" onchange="updateSummary()">
+              Lounge access +£35
+            </label>
+
+            <label class="extra">
+              <input type="checkbox" class="extraBox" value="Travel insurance" data-price="14" onchange="updateSummary()">
+              Travel insurance +£14
+            </label>
+
+            <label class="extra">
+              <input type="checkbox" class="extraBox" value="Extra legroom seat" data-price="20" onchange="updateSummary()">
+              Extra legroom seat +£20
+            </label>
+          </div>
+
+          <h3>Seat selection</h3>
+          <p class="small">Pick your seat. Rows 1–2 cost more because they are near the front.</p>
+
+          <div class="seat-map" id="seatMap">
+            <div class="plane-nose">FRONT</div>
+          </div>
+
+          <button onclick="goPaymentPage()">Continue to payment</button>
+          <button class="back" onclick="showPage(2)">Back to passenger details</button>
+        </section>
+
+        <section id="page4" class="page">
+          <h2 class="step-title">4. Payment</h2>
+
+          <label>Name on card</label>
+          <input id="cardName" placeholder="Name on card">
+
+          <label>Card number</label>
+          <input id="cardNumber" placeholder="4242 4242 4242 4242">
+
+          <div class="row">
+            <div>
+              <label>Expiry</label>
+              <input id="expiry" placeholder="12/30">
+            </div>
+
+            <div>
+              <label>CVV</label>
+              <input id="cvv" placeholder="123">
+            </div>
+          </div>
+
+          <button onclick="confirmBooking()">Pay and confirm booking</button>
+          <button class="back" onclick="showPage(3)">Back to extras</button>
+        </section>
+
+        <section id="page5" class="page">
+          <h2 class="step-title">5. Booking confirmation</h2>
+
+          <div id="confirmation" class="confirmation">✅ Booking confirmed!</div>
+
+          <p>Your boarding pass is ready on the right. Download the QR code and show it to staff.</p>
+<button class="secondary" onclick="window.print()">Print / save page</button>
+          <button class="back" onclick="showPage(1)">Book another flight</button>
+        </section>
+      </div>
+    </main>
 
     <aside>
       <div class="card">
         <h2>Trip Summary</h2>
+
         <p id="chosenFlightText" class="small">No flight selected yet.</p>
+
         <div class="price-box">
-          <div class="price-line"><span>Base fare</span><span id="baseFare">£0.00</span></div>
-          <div class="price-line"><span>Class upgrade</span><span id="classFare">£0.00</span></div>
-          <div class="price-line"><span>Baggage</span><span id="bagFare">£0.00</span></div>
-          <div class="price-line"><span>Seat choice</span><span id="seatFare">£0.00</span></div>
-          <div class="price-line"><span>Extras / dining</span><span id="extrasFare">£0.00</span></div>
-          <div class="price-line"><span>Total</span><span id="totalFare">£0.00</span></div>
+          <div class="price-line">
+            <span>Base fare</span>
+            <span id="baseFare">£0.00</span>
+          </div>
+
+          <div class="price-line">
+            <span>Class upgrade</span>
+            <span id="classFare">£0.00</span>
+          </div>
+
+          <div class="price-line">
+            <span>Baggage</span>
+            <span id="bagFare">£0.00</span>
+          </div>
+
+          <div class="price-line">
+            <span>Seat choice</span>
+            <span id="seatFare">£0.00</span>
+          </div>
+
+          <div class="price-line">
+            <span>Extras</span>
+            <span id="extrasFare">£0.00</span>
+          </div>
+
+          <div class="price-line">
+            <span>Total</span>
+            <span id="totalFare">£0.00</span>
+          </div>
         </div>
       </div>
 
       <div class="card">
         <h2>Boarding Pass</h2>
-        <p id="noTicket">No boarding pass yet.</p>
+
+        <p id="noTicket">No Emirates-style boarding pass yet.</p>
+
         <div id="ticket" class="ticket hidden">
-          <div class="boarding-strip"><span>BOARDING PASS</span><span>EMIRATES STYLE</span></div>
+          <div class="boarding-strip">
+            <span>BOARDING PASS</span>
+            <span>EMIRATES</span>
+          </div>
+
+          <div class="route-big">
+            <div>
+              <div class="airport-code" id="ticketFromCode">STN</div>
+              <div class="airport-name" id="ticketFromName">London Stansted</div>
+            </div>
+
+            <div class="plane-line">✈️</div>
+
+            <div>
+              <div class="airport-code" id="ticketToCode">AIR</div>
+              <div class="airport-name" id="ticketToName">Destination</div>
+            </div>
+          </div>
+
+          <div class="passenger-name" id="ticketName"></div>
           <p class="ticket-code" id="ticketCode"></p>
-          <p><b>Booking ref:</b> <span id="ticketRef"></span></p>
-          <p><b>Name:</b> <span id="ticketName"></span></p>
-          <p><b>Route:</b> <span id="ticketRoute"></span></p>
-          <p><b>Flight:</b> <span id="ticketFlight"></span></p>
-          <p><b>Date/time:</b> <span id="ticketDateTime"></span></p>
-          <p><b>Gate:</b> <span id="ticketGate"></span></p>
-          <p><b>Seat:</b> <span id="ticketSeat"></span></p>
-          <p><b>Class:</b> <span id="ticketClass"></span></p>
-          <p><b>Baggage:</b> <span id="ticketBaggage"></span></p>
-          <p><b>Extras / dining:</b> <span id="ticketExtras"></span></p>
-          <p><b>Price:</b> <span id="ticketPrice"></span></p>
-          <img id="qrCode" alt="Boarding pass QR code">
-          <a id="downloadQr" class="download-button" href="#" download="boarding-pass-qr.png">Download boarding pass QR</a>
+
+          <div class="ticket-grid">
+            <div class="ticket-item">
+              <small>Booking ref</small>
+              <b id="ticketRef"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Flight</small>
+              <b id="ticketFlight"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Date</small>
+              <b id="ticketDate"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Boarding</small>
+              <b id="ticketBoarding"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Gate</small>
+              <b id="ticketGate"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Seat</small>
+              <b id="ticketSeat"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Class</small>
+              <b id="ticketClass"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Baggage</small>
+              <b id="ticketBaggage"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Extras</small>
+              <b id="ticketExtras"></b>
+            </div>
+
+            <div class="ticket-item">
+              <small>Price</small>
+              <b id="ticketPrice"></b>
+            </div>
+          </div>
+
+          <div class="qr-panel">
+            <img id="qrCode" alt="Boarding pass QR code">
+
+            <a id="downloadQr" class="download-button" href="#" download="boarding-pass-qr.png">
+              Download boarding pass QR
+            </a>
+          </div>
         </div>
       </div>
     </aside>
@@ -142,160 +451,150 @@
     let selectedSeat = "";
     let selectedFlight = null;
 
-    const airportCodes = {"London Stansted":"STN","London Heathrow":"LHR","London Gatwick":"LGW","Manchester Airport":"MAN","New York JFK":"JFK","Tokyo Haneda":"HND","Dubai International":"DXB","Australia Sydney":"SYD"};
+    const takenSeats = ["1A", "1F", "2C", "3D", "4A", "4B", "5E", "6F"];
 
-    const paidExtras = [
-      ["Priority boarding",9],
-      ["Fast track security",12],
-      ["Lounge access",35],
-      ["Travel insurance",14],
-      ["Extra legroom seat",20]
-    ];
+    const airportCodes = {
+      "London Stansted": "STN",
+      "London Heathrow": "LHR",
+      "London Gatwick": "LGW",
 
-    const foodSections = [
-      ["🍽️ Starters and light meals",[
-        ["🍅","Tomato and basil soup","Warm tomato soup with basil.",6],
-        ["🥗","Mozzarella and tomato salad","Fresh tomato and mozzarella salad.",7],
-        ["🥖","Garlic bread","Toasty garlic bread side.",4]
-      ]],
-      ["🍛 Main meals",[
-        ["🥩","Steak and roast potatoes","Premium hot meal.",16],
-        ["🐟","Lemon and herb salmon","Salmon with lemon and herbs.",15],
-        ["🍝","Creamy tomato and mozzarella pasta","Creamy pasta with mozzarella.",12],
-["🍛","Vegetarian vegetable tikka and basmati rice","Vegetarian curry with rice.",13,"Vegetarian"],
-        ["🧀","Vegetarian cheese plate","Cheese selection plate.",9,"Vegetarian"]
-      ]],
-      ["🍰 Desserts",[
-        ["🍫","Bvlgari chocolate delight","Fancy chocolate dessert.",8],
-        ["🍰","New York cheesecake","Classic cheesecake slice.",7],
-        ["🍓","Seasonal fresh fruit","Fresh fruit bowl.",5],
-        ["🧁","Fresh fruit mini muffins","Mini muffins with fruit.",5]
-      ]],
-      ["🍿 Snacks",[
-        ["🥔","Crisps","Crunchy snack bag.",3],
-        ["🥨","Chocolate pretzels","Sweet and salty pretzels.",4],
-        ["🧀","Cheese and crackers","Classic cheese and crackers.",5],
-        ["🍿","Popcorn","Airport movie snack.",3],
-        ["🍪","Biscuits","Tea-time biscuits.",3]
-      ]]
-    ];
+"Manchester Airport": "MAN",
+      "New York JFK": "JFK",
+      "Tokyo Haneda": "HND",
+      "Dubai International": "DXB",
+      "Australia Sydney": "SYD"
+    };
 
-    const drinkSections = [
-      ["🥤 Soft drinks",[
-        ["🧃","Orange juice","Chilled orange juice.",3,"Refreshment"],
-        ["💧","Water","Still water bottle.",2,"Refreshment"],
-        ["🥤","Coca-Cola","Classic cola can.",3,"Refreshment"],
-        ["🥤","Coca-Cola Zero","Zero sugar cola.",3,"Refreshment"]
-      ]],
-      ["🍹 Mocktails",[
-        ["🍓","Berry fizz mocktail","Sparkly berry drink.",5,"Mocktail"],
-        ["🍍","Tropical delight mocktail","Tropical fruity mocktail.",5,"Mocktail"],
-        ["🥒","Cucumber cooler mocktail","Cool cucumber drink.",5,"Mocktail"],
-        ["🌅","Sunset punch mocktail","Orange sunset punch.",5,"Mocktail"],
-        ["🍋","Lemon rosemary spritz mocktail","Lemon spritz with rosemary.",5,"Mocktail"]
-      ]]
-    ];
-
-    function money(amount){return "£" + amount.toFixed(2)}
-    function safeText(text){return String(text).replaceAll("|","-").replaceAll("~","-").replaceAll("¬","-")}
-    function airportCode(name){return airportCodes[name] || "AIR"}
-    function randomFrom(list){return list[Math.floor(Math.random() * list.length)]}
-    function makeRef(){return "STN" + Math.floor(100000 + Math.random() * 900000)}
-    function makeTicketCode(){return "LSB-" + Math.floor(1000 + Math.random() * 9000) + "-" + randomFrom(["AX","BT","SK","QR","ZX"])}
-
-    function showPage(number){
-      document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-      document.querySelectorAll(".progress div").forEach(d=>d.classList.remove("active"));
-      document.getElementById("page"+number).classList.add("active");
-      document.getElementById("dot"+number).classList.add("active");
-      window.scrollTo({top:0,behavior:"smooth"});
+    function money(amount) {
+      return "£" + amount.toFixed(2);
     }
 
-    function routeBase(from,to){
-      const route=from+"|"+to;
-      if(route.includes("Australia Sydney"))return 799;
-      if(route.includes("Tokyo Haneda"))return 689;
-      if(route.includes("New York JFK"))return 429;
-      if(route.includes("Dubai International"))return 359;
-      if(route.includes("Manchester Airport"))return 64;
+    function safeText(text) {
+      return String(text)
+        .replaceAll("|", "-")
+        .replaceAll("~", "-")
+        .replaceAll("¬", "-");
+    }
+
+    function airportCode(name) {
+      return airportCodes[name] || "AIR";
+    }
+
+    function randomFrom(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function makeRef() {
+      return "STN" + Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function makeTicketCode() {
+      return "LSB-" + Math.floor(1000 + Math.random() * 9000) + "-" + randomFrom(["AX", "BT", "SK", "QR", "ZX"]);
+    }
+
+    function showPage(number) {
+      document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+      });
+
+      document.querySelectorAll(".progress div").forEach(function(dot) {
+        dot.classList.remove("active");
+      });
+
+      document.getElementById("page" + number).classList.add("active");
+      document.getElementById("dot" + number).classList.add("active");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function routeBase(from, to) {
+      const route = from + "|" + to;
+
+      if (route.includes("Australia Sydney")) return 799;
+      if (route.includes("Tokyo Haneda")) return 689;
+      if (route.includes("New York JFK")) return 429;
+      if (route.includes("Dubai International")) return 359;
+      if (route.includes("Manchester Airport")) return 64;
+
       return 49;
     }
 
-    function renderExtras(){
-      document.getElementById("paidExtras").innerHTML = paidExtras.map(x =>
-        `<label class="extra"><input type="checkbox" class="extraBox" value="${x[0]}" data-price="${x[1]}" onchange="updateSummary()"> ${x[0]} +£${x[1]}</label>`
-      ).join("");
-    }
+    function searchFlights() {
+      const from = document.getElementById("fromAirport").value;
+      const to = document.getElementById("toAirport").value;
+      const date = document.getElementById("flightDate").value;
+      const box = document.getElementById("flightResults");
 
-    function menuItem(item){
-      const tag = item[4] ? `<span class="menu-tag">${item[4]}</span>` : "";
-      return `<label class="menu-item"><input type="checkbox" class="extraBox" value="${item[1]}" data-price="${item[3]}" onchange="updateSummary()"><span class="menu-emoji">${item[0]}</span><span><span class="menu-title">${item[1]}</span><span class="menu-desc">${item[2]}</span>${tag}</span><span class="menu-price">£${item[3]}</span></label>`;
-    }
-
-    function renderMenu(id,sections){
-      document.getElementById(id).innerHTML = sections.map(s =>
-        `<div class="menu-section-title">${s[0]}</div>` + s[1].map(menuItem).join("")
-      ).join("");
-    }
-
-    function searchFlights(){
-      const from=fromAirport.value,to=toAirport.value,date=flightDate.value,box=flightResults;
-      box.innerHTML="";
-      selectedFlight=null;
+      box.innerHTML = "";
+      selectedFlight = null;
       updateSummary();
 
-if(!from||!to||!date){
-        box.innerHTML='<p class="small">Choose a destination and date, then 5 flight options will appear.</p>';
+      if (!from || !to || !date) {
+        box.innerHTML = '<p class="small">Choose a destination and date, then 5 flight options will appear.</p>';
         return;
       }
 
-      if(from===to){
-        box.innerHTML='<p class="small">Choose two different airports.</p>';
+      if (from === to) {
+        box.innerHTML = '<p class="small">Choose two different airports.</p>';
         return;
       }
 
-      const base=routeBase(from,to);
-      [
-        {time:"06:15",name:"Saver",add:0,status:"Cheapest"},
-        {time:"09:40",name:"Standard",add:18,status:"On time"},
-        {time:"13:25",name:"Afternoon",add:31,status:"Few seats left"},
-        {time:"17:50",name:"Flexi",add:45,status:"Popular"},
-        {time:"21:10",name:"Night Flight",add:12,status:"On time"}
-      ].forEach((flight,index)=>{
-        const card=document.createElement("div");
-        card.className="flight-card";
-        flight.price=base+flight.add;
-        flight.number="LS"+(200+index)+airportCode(to);
-        flight.from=from;
-        flight.to=to;
-        flight.date=date;
-        flight.gate=randomFrom(["A1","A2","B4","C3","D6","E8"]);
+      const base = routeBase(from, to);
+
+      const flights = [
+        { time: "06:15", name: "Saver", add: 0, status: "Cheapest" },
+        { time: "09:40", name: "Standard", add: 18, status: "On time" },
+        { time: "13:25", name: "Afternoon", add: 31, status: "Few seats left" },
+        { time: "17:50", name: "Emirates Gold Deal", add: 25, status: "Best deal" },
+        { time: "21:10", name: "Night Flight", add: 12, status: "On time" }
+      ];
+
+      flights.forEach(function(flight, index) {
+        const card = document.createElement("div");
+        const isDeal = flight.status === "Best deal";
+
+        card.className = isDeal ? "flight-card deal" : "flight-card";
+
+        flight.price = base + flight.add;
+        flight.number = "EK" + (200 + index) + airportCode(to);
+        flight.from = from;
+        flight.to = to;
+        flight.date = date;
+        flight.gate = randomFrom(["A1", "A2", "B4", "C3", "D6", "E8"]);
 
         card.innerHTML =
-          '<div><b>'+flight.time+' '+flight.name+'</b><br>' +
-          '<span class="pill">'+flight.number+'</span>' +
-          '<span class="pill good-pill">'+flight.status+'</span><br>' +
-          '<span class="small">'+from+' → '+to+'</span></div>' +
-          '<div class="flight-price">'+money(flight.price)+'</div>';
+          '<div>' +
+            (isDeal ? '<span class="deal-badge">⭐️ EMIRATES GOLD DEAL</span><br>' : '') +
+            '<b>' + flight.time + ' ' + flight.name + '</b><br>' +
+            '<span class="pill">' + flight.number + '</span>' +
+            '<span class="pill good-pill">' + flight.status + '</span><br>' +
+            '<span class="small">' + from + ' → ' + to + '</span>' +
+          '</div>' +
+          '<div class="flight-price">' + money(flight.price) + '</div>';
 
-        card.onclick=function(){
-          document.querySelectorAll(".flight-card.selected").forEach(old=>old.classList.remove("selected"));
+        card.onclick = function() {
+          document.querySelectorAll(".flight-card.selected").forEach(function(old) {
+            old.classList.remove("selected");
+          });
+
           card.classList.add("selected");
-          selectedFlight=flight;
-          updateSummary();
+          selectedFlight = flight;
+updateSummary();
         };
 
         box.appendChild(card);
       });
     }
 
-    function goPassengerPage(){
-      if(!passengerName.value.trim()){
+    function goPassengerPage() {
+      const name = document.getElementById("passengerName").value.trim();
+
+      if (!name) {
         alert("Type a passenger name first.");
         return;
       }
 
-      if(!selectedFlight){
+      if (!selectedFlight) {
         alert("Choose one of the flight results first.");
         return;
       }
@@ -303,8 +602,8 @@ if(!from||!to||!date){
       showPage(2);
     }
 
-    function goPaymentPage(){
-      if(!selectedSeat){
+    function goPaymentPage() {
+      if (!selectedSeat) {
         alert("Choose a seat first.");
         return;
       }
@@ -312,109 +611,146 @@ if(!from||!to||!date){
       showPage(4);
     }
 
-    function getClassFare(){
-      if(flightClass.value==="Business")return 120;
-      if(flightClass.value==="First Class")return 260;
+    function getClassFare() {
+      const flightClass = document.getElementById("flightClass").value;
+
+      if (flightClass === "Business") return 120;
+      if (flightClass === "First Class") return 260;
+
       return 0;
     }
 
-    function getBagFare(){
-      if(baggage.value==="Cabin bag")return 18;
-      if(baggage.value==="Checked bag")return 35;
-      if(baggage.value==="Two checked bags")return 65;
+    function getBagFare() {
+      const bag = document.getElementById("baggage").value;
+
+      if (bag === "Cabin bag") return 18;
+      if (bag === "Checked bag") return 35;
+      if (bag === "Two checked bags") return 65;
+
       return 0;
     }
 
-    function getSeatFare(){
-      if(!selectedSeat)return 0;
-      if(selectedSeat==="C1")return 24;
-      if(selectedSeat==="B1")return 12;
+    function getSeatFare() {
+      if (!selectedSeat) {
+        return 0;
+      }
+
+      const row = parseInt(selectedSeat, 10);
+
+      if (row <= 2) return 24;
+      if (selectedSeat.endsWith("A") || selectedSeat.endsWith("F")) return 12;
+
       return 7;
     }
 
-    function getExtras(){
-      const extras=[];
-      let price=0;
+    function getExtras() {
+      const extras = [];
+      let price = 0;
 
-      document.querySelectorAll(".extraBox:checked").forEach(box=>{
+      document.querySelectorAll(".extraBox:checked").forEach(function(box) {
         extras.push(box.value);
         price += Number(box.dataset.price);
       });
 
-      return {names:extras,price};
-    }
-
-    function calculatePrice(){
-      const count=Number(passengerCount.value);
-      const base=selectedFlight ? selectedFlight.price * count : 0;
-      const classFare=getClassFare() * count;
-      const bagFare=getBagFare() * count;
-      const seatFare=getSeatFare() * count;
-      const extras=getExtras();
-      const extrasFare=extras.price * count;
-
       return {
-        base,
-        classFare,
-        bagFare,
-        seatFare,
-        extrasFare,
-        total:base+classFare+bagFare+seatFare+extrasFare,
-        extras
+        names: extras,
+        price: price
       };
     }
 
-    function updateSummary(){
-      const p=calculatePrice();
+    function calculatePrice() {
+      const passengerCount = Number(document.getElementById("passengerCount").value);
+      const base = selectedFlight ? selectedFlight.price * passengerCount : 0;
+      const classFare = getClassFare() * passengerCount;
+      const bagFare = getBagFare() * passengerCount;
+      const seatFare = getSeatFare() * passengerCount;
+      const extras = getExtras();
+      const extrasFare = extras.price * passengerCount;
 
-      baseFare.textContent=money(p.base);
-      classFare.textContent=money(p.classFare);
-      bagFare.textContent=money(p.bagFare);
-      seatFare.textContent=money(p.seatFare);
-      extrasFare.textContent=money(p.extrasFare);
-      totalFare.textContent=money(p.total);
+      return {
+        base: base,
+        classFare: classFare,
+        bagFare: bagFare,
+        seatFare: seatFare,
+        extrasFare: extrasFare,
+        total: base + classFare + bagFare + seatFare + extrasFare,
+        extras: extras
+      };
+    }
 
-      chosenFlightText.textContent = selectedFlight
-        ? selectedFlight.number+" at "+selectedFlight.time+" — "+selectedFlight.from+" to "+selectedFlight.to
+    function updateSummary() {
+      const price = calculatePrice();
+
+      document.getElementById("baseFare").textContent = money(price.base);
+      document.getElementById("classFare").textContent = money(price.classFare);
+      document.getElementById("bagFare").textContent = money(price.bagFare);
+      document.getElementById("seatFare").textContent = money(price.seatFare);
+      document.getElementById("extrasFare").textContent = money(price.extrasFare);
+      document.getElementById("totalFare").textContent = money(price.total);
+
+      document.getElementById("chosenFlightText").textContent = selectedFlight
+        ? selectedFlight.number + " at " + selectedFlight.time + " — " + selectedFlight.from + " to " + selectedFlight.to
         : "No flight selected yet.";
     }
 
-    function buildSeatMap(){
-      seatMap.innerHTML="";
+    function buildSeatMap() {
+      const seatMap = document.getElementById("seatMap");
+      const letters = ["A", "B", "C", "D", "E", "F"];
 
-const sofaMap=document.createElement("div");
-      sofaMap.className="sofa-map";
+      for (let row = 1; row <= 6; row++) {
+        const rowEl = document.createElement("div");
+        rowEl.className = "seat-row";
 
-      [
-        {code:"A1",className:"sofa-a1"},
-        {code:"A2",className:"sofa-a2"},
-        {code:"B1",className:"sofa-b1"},
-        {code:"C1",className:"sofa-c1"}
-      ].forEach(item=>{
-        const seat=document.createElement("div");
-        seat.className="sofa-seat "+item.className;
-        seat.textContent=item.code;
+        const rowNumber = document.createElement("div");
+        rowNumber.className = "row-number";
+        rowNumber.textContent = row;
+        rowEl.appendChild(rowNumber);
 
-        seat.onclick=function(){
-          selectedSeat=item.code;
-          document.querySelectorAll(".sofa-seat.selected").forEach(old=>old.classList.remove("selected"));
-          seat.classList.add("selected");
-          updateSummary();
-        };
+        letters.forEach(function(letter, index) {
+          if (index === 3) {
+            const aisle = document.createElement("div");
+            aisle.className = "aisle";
+            aisle.textContent = "|";
+            rowEl.appendChild(aisle);
+          }
 
-        sofaMap.appendChild(seat);
-      });
+          const seatCode = row + letter;
+          const seat = document.createElement("div");
 
-      const gap=document.createElement("div");
-      gap.className="sofa-gap";
-      sofaMap.appendChild(gap);
+          seat.className = "seat";
+          seat.textContent = letter;
+          seat.dataset.seat = seatCode;
 
-      seatMap.appendChild(sofaMap);
+if (takenSeats.includes(seatCode)) {
+            seat.classList.add("taken");
+          } else {
+            seat.onclick = function() {
+              selectedSeat = seatCode;
+
+              document.querySelectorAll(".seat.selected").forEach(function(oldSeat) {
+                oldSeat.classList.remove("selected");
+              });
+
+              seat.classList.add("selected");
+              updateSummary();
+            };
+          }
+
+          rowEl.appendChild(seat);
+        });
+
+        seatMap.appendChild(rowEl);
+      }
     }
 
-    function confirmBooking(){
-      if(!cardName.value.trim() || !cardNumber.value.trim() || !expiry.value.trim() || !cvv.value.trim()){
-        alert("Please complete all payment boxes.");
+    function confirmBooking() {
+      const cardName = document.getElementById("cardName").value.trim();
+      const cardNumber = document.getElementById("cardNumber").value.trim();
+      const expiry = document.getElementById("expiry").value.trim();
+      const cvv = document.getElementById("cvv").value.trim();
+
+      if (!cardName || !cardNumber || !expiry || !cvv) {
+        alert("Fill in the payment boxes.");
         return;
       }
 
@@ -422,17 +758,37 @@ const sofaMap=document.createElement("div");
       showPage(5);
     }
 
-    function createBoardingPass(){
-      const name=passengerName.value.trim();
-      const extras=getExtras();
-      const extrasText=extras.names.length ? extras.names.join(", ") : "None";
-      const price=calculatePrice();
-      const code=makeTicketCode();
-      const ref=makeRef();
-      const route=airportCode(selectedFlight.from)+" → "+airportCode(selectedFlight.to);
-      const priceText=money(price.total);
+    function getBoardingTime(flightTime) {
+      const parts = flightTime.split(":");
+      let hours = Number(parts[0]);
+      let minutes = Number(parts[1]) - 30;
 
-      const qrData=[
+      if (minutes < 0) {
+        minutes += 60;
+        hours -= 1;
+      }
+
+      if (hours < 0) {
+        hours = 23;
+      }
+
+      return String(hours).padStart(2, "0") + ":" + String(minutes).padStart(2, "0");
+    }
+
+    function createBoardingPass() {
+      const name = document.getElementById("passengerName").value.trim();
+      const flightClass = document.getElementById("flightClass").value;
+      const baggage = document.getElementById("baggage").value;
+      const passport = document.getElementById("passport").value.trim() || "Not supplied";
+      const extras = getExtras();
+      const extrasText = extras.names.length ? extras.names.join(", ") : "None";
+      const price = calculatePrice();
+      const code = makeTicketCode();
+      const ref = makeRef();
+      const route = airportCode(selectedFlight.from) + " → " + airportCode(selectedFlight.to);
+      const priceText = money(price.total);
+
+      const qrData = [
         "LSB2",
         code,
         ref,
@@ -445,38 +801,43 @@ const sofaMap=document.createElement("div");
         selectedFlight.time,
         selectedFlight.gate,
         selectedSeat,
-        flightClass.value,
-        baggage.value,
+        flightClass,
+        baggage,
         extrasText,
         priceText,
-        passport.value.trim() || "Not supplied"
+        passport
       ].map(safeText).join("~");
 
-      const qrUrl="https://api.qrserver.com/v1/create-qr-code/?size=350x350&data="+encodeURIComponent(qrData);
+      const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" + encodeURIComponent(qrData);
+      const boardingTime = getBoardingTime(selectedFlight.time);
 
-      ticketCode.textContent=code;
-      ticketRef.textContent=ref;
-      ticketName.textContent=name;
-      ticketRoute.textContent=route;
-      ticketFlight.textContent=selectedFlight.number;
-      ticketDateTime.textContent=selectedFlight.date+" at "+selectedFlight.time;
-      ticketGate.textContent=selectedFlight.gate;
-      ticketSeat.textContent=selectedSeat;
-      ticketClass.textContent=flightClass.value;
-      ticketBaggage.textContent=baggage.value;
-      ticketExtras.textContent=extrasText;
-      ticketPrice.textContent=priceText;
-      qrCode.src=qrUrl;
-      downloadQr.href=qrUrl;
-      downloadQr.download=code+"-qr.png";
+      document.getElementById("ticketCode").textContent = code;
+      document.getElementById("ticketRef").textContent = ref;
+      document.getElementById("ticketName").textContent = name;
 
-      ticket.classList.remove("hidden");
-      noTicket.classList.add("hidden");
+      document.getElementById("ticketFromCode").textContent = airportCode(selectedFlight.from);
+      document.getElementById("ticketToCode").textContent = airportCode(selectedFlight.to);
+      document.getElementById("ticketFromName").textContent = selectedFlight.from;
+      document.getElementById("ticketToName").textContent = selectedFlight.to;
+
+      document.getElementById("ticketFlight").textContent = selectedFlight.number;
+      document.getElementById("ticketDate").textContent = selectedFlight.date;
+      document.getElementById("ticketBoarding").textContent = boardingTime;
+      document.getElementById("ticketGate").textContent = selectedFlight.gate;
+      document.getElementById("ticketSeat").textContent = selectedSeat;
+      document.getElementById("ticketClass").textContent = flightClass;
+      document.getElementById("ticketBaggage").textContent = baggage;
+      document.getElementById("ticketExtras").textContent = extrasText;
+      document.getElementById("ticketPrice").textContent = priceText;
+
+      document.getElementById("qrCode").src = qrUrl;
+      document.getElementById("downloadQr").href = qrUrl;
+document.getElementById("downloadQr").download = code + "-qr.png";
+
+      document.getElementById("ticket").classList.remove("hidden");
+      document.getElementById("noTicket").classList.add("hidden");
     }
 
-    renderExtras();
-    renderMenu("foodGrid",foodSections);
-    renderMenu("drinkGrid",drinkSections);
     buildSeatMap();
     searchFlights();
   </script>

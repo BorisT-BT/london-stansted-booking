@@ -1,1 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Security Heatmap Scanner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #08111f;
+      color: white;
+    }
+
+    .top-bar {
+      background: #020617;
+      border-bottom: 2px solid #38bdf8;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 900;
+      color: #e0f2fe;
+    }
+
+    .nav a {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      border-radius: 999px;
+      padding: 8px 12px;
+      margin: 3px;
+      font-size: 14px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 28px 14px 40px;
+      background:
+        radial-gradient(circle at 20% 20%, #38bdf855, transparent 30%),
+        radial-gradient(circle at 80% 10%, #22c55e44, transparent 35%),
+        linear-gradient(135deg, #0f172a, #1e3a8a, #020617);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 42px;
+    }
+
+    .subtitle {
+      color: #bae6fd;
+      font-weight: 800;
+    }
+
+    .warning {
+      max-width: 900px;
+      margin: 12px auto 0;
+      background: #fef3c7;
+      color: #92400e;
+      border: 2px solid #facc15;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 900;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: -22px auto 28px;
+      padding: 0 14px;
+      display: grid;
+      grid-template-columns: 1fr 0.85fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 16px 40px #0008;
+      margin-bottom: 18px;
+    }
+
+    .scanner-stage {
+      background: #020617;
+      border: 2px solid #38bdf8;
+      border-radius: 22px;
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(#38bdf81f 1px, transparent 1px),
+        linear-gradient(90deg, #38bdf81f 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.6;
+    }
+
+    .scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -40px;
+      height: 34px;
+      background: linear-gradient(180deg, transparent, #38bdf8cc, transparent);
+      box-shadow: 0 0 26px #38bdf8;
+      opacity: 0;
+    }
+
+    .scanner-stage.scanning .scan-line {
+      opacity: 1;
+      animation: scanMove 2.4s linear infinite;
+    }
+
+    @keyframes scanMove {
+      from { top: -40px; }
+      to { top: 100%; }
+    }
+
+    .person {
+      width: 240px;
+      height: 470px;
+      position: relative;
+      filter: drop-shadow(0 0 22px #38bdf888);
+    }
+
+    .head, .body, .left-arm, .right-arm, .left-leg, .right-leg {
+      position: absolute;
+      background: linear-gradient(180deg, #dbeafe, #60a5fa);
+      border: 3px solid #bfdbfe;
+      box-shadow: inset 0 0 24px #0284c744;
+    }
+
+    .head {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      left: 79px;
+      top: 8px;
+    }
+
+    .body {
+      width: 112px;
+      height: 190px;
+      border-radius: 54px 54px 42px 42px;
+      left: 64px;
+      top: 100px;
+    }
+
+    .left-arm, .right-arm {
+      width: 42px;
+      height: 170px;
+      border-radius: 999px;
+      top: 114px;
+    }
+
+    .left-arm {
+      left: 22px;
+      transform: rotate(10deg);
+    }
+
+    .right-arm {
+      right: 22px;
+      transform: rotate(-10deg);
+    }
+
+    .left-leg, .right-leg {
+      width: 48px;
+      height: 172px;
+      border-radius: 999px;
+top: 285px;
+    }
+
+    .left-leg { left: 66px; }
+    .right-leg { right: 66px; }
+
+    .heat-dot {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #020617;
+      border: 3px solid white;
+      animation: pulse 0.85s infinite alternate;
+    }
+
+    .heat-green {
+      background: #22c55e;
+      box-shadow: 0 0 28px #22c55e;
+    }
+
+    .heat-yellow {
+      background: #facc15;
+      box-shadow: 0 0 28px #facc15;
+    }
+
+    .heat-red {
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 0 34px #ef4444;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(0.92); opacity: 0.82; }
+      to { transform: scale(1.1); opacity: 1; }
+    }
+
+    button, input, select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 13px;
+      border: 2px solid #334155;
+      font-size: 16px;
+    }
+
+    input, select {
+      background: #020617;
+      color: white;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-weight: 900;
+      color: white;
+      background: #2563eb;
+    }
+
+    button:hover { filter: brightness(1.12); }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .start { background: #16a34a; }
+    .reset { background: #64748b; }
+    .alarm { background: #dc2626; }
+    .secondary { background: #7c3aed; }
+
+    .status-box {
+      text-align: center;
+      border-radius: 20px;
+      padding: 18px;
+      background: #020617;
+      border: 2px solid #334155;
+    }
+
+    .big-status {
+      font-size: 40px;
+      font-weight: 900;
+      margin: 8px 0;
+    }
+
+    .clear { color: #22c55e; text-shadow: 0 0 18px #22c55e; }
+    .check { color: #facc15; text-shadow: 0 0 18px #facc15; }
+    .found { color: #ef4444; text-shadow: 0 0 18px #ef4444; }
+    .ready { color: #38bdf8; text-shadow: 0 0 18px #38bdf8; }
+
+    .report-line {
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 11px;
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .log {
+      height: 180px;
+      overflow: auto;
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 12px;
+      font-family: Consolas, monospace;
+      color: #bae6fd;
+      font-size: 14px;
+    }
+
+    .small {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-weight: 900;
+      color: #e0f2fe;
+    }
+
+    @media (max-width: 850px) {
+      .container { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+      .scanner-stage { min-height: 500px; }
+      .person { transform: scale(0.9); }
+    }
+
+    @media (max-width: 560px) {
+      .controls { grid-template-columns: 1fr; }
+      .big-status { font-size: 30px; }
+      .person { transform: scale(0.78); }
+      .scanner-stage { min-height: 430px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="brand">🛃 Airport Security Heatmap</div>
+    <div class="nav">
+      <a href="customer.html">Customer</a>
+      <a href="staff.html">Staff Scanner</a>
+      <a href="security.html">Security</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>TSA-Style Heatmap Scanner</h1>
+    <p class="subtitle">Pretend airport security scanner for roleplay check-in.</p>
+    <div class="warning">ROLEPLAY ONLY: this is a fake scanner game page. It does not give real security advice.</div>
+  </div>
+
+  <div class="container">
+    <main>
+      <div class="card">
+        <h2>Scanner Chamber</h2>
+        <p class="small">Choose a mode, then press Start Scan. The heatmap result is random unless you choose a special mode.</p>
+
+        <div class="scanner-stage" id="scannerStage">
+          <div class="grid-lines"></div>
+          <div class="scan-line"></div>
+
+          <div class="person" id="person">
+            <div class="head"></div>
+<div class="body"></div>
+            <div class="left-arm"></div>
+            <div class="right-arm"></div>
+            <div class="left-leg"></div>
+            <div class="right-leg"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="start" onclick="startScan()">▶️ Start Scan</button>
+          <button class="reset" onclick="resetScanner()">↻ Reset Scanner</button>
+          <button class="secondary" onclick="playChime()">🔊 Security Chime</button>
+          <button class="alarm" onclick="playAlarm()">🚨 Alarm Test</button>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="card">
+        <h2>Passenger Setup</h2>
+
+        <label>Passenger name</label>
+        <input id="passengerName" placeholder="Passenger name">
+
+        <label>Scan mode</label>
+        <select id="scanMode">
+          <option value="random">Random result</option>
+          <option value="clear">Force CLEAR</option>
+          <option value="check">Force SECONDARY CHECK</option>
+          <option value="found">Force ITEM FOUND</option>
+        </select>
+
+        <label>Security lane</label>
+        <select id="lane">
+          <option>Lane A1</option>
+          <option>Lane A2</option>
+          <option>Lane B1</option>
+          <option>Fast Track Lane</option>
+          <option>Family Lane</option>
+        </select>
+      </div>
+
+      <div class="card status-box">
+        <h2>Result</h2>
+        <div id="bigStatus" class="big-status ready">READY</div>
+        <p id="statusText" class="small">Waiting for scanner.</p>
+      </div>
+
+      <div class="card">
+        <h2>Security Report</h2>
+        <div class="report-line"><span>Passenger</span><b id="reportName">Not scanned</b></div>
+        <div class="report-line"><span>Lane</span><b id="reportLane">-</b></div>
+        <div class="report-line"><span>Scan ID</span><b id="reportId">-</b></div>
+        <div class="report-line"><span>Heat zones</span><b id="reportZones">-</b></div>
+        <div class="report-line"><span>Action</span><b id="reportAction">-</b></div>
+      </div>
+
+      <div class="card">
+        <h2>Operations Log</h2>
+        <div id="log" class="log">SYSTEM READY<br></div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const heatPositions = [
+      { x: 93, y: 45, label: "HEAD" },
+      { x: 70, y: 155, label: "LEFT ARM" },
+      { x: 124, y: 160, label: "CHEST" },
+      { x: 175, y: 155, label: "RIGHT ARM" },
+      { x: 120, y: 240, label: "POCKET" },
+      { x: 88, y: 340, label: "LEFT LEG" },
+      { x: 150, y: 340, label: "RIGHT LEG" }
+    ];
+
+    function logLine(text) {
+      const log = document.getElementById("log");
+      const time = new Date().toLocaleTimeString();
+      log.innerHTML += "[" + time + "] " + text + "<br>";
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function makeScanId() {
+      return "SEC-" + Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function clearHeatDots() {
+      document.querySelectorAll(".heat-dot").forEach(function(dot) {
+        dot.remove();
+      });
+    }
+
+    function makeDot(position, colour, symbol) {
+      const dot = document.createElement("div");
+      dot.className = "heat-dot heat-" + colour;
+      dot.style.left = position.x + "px";
+      dot.style.top = position.y + "px";
+      dot.textContent = symbol;
+      document.getElementById("person").appendChild(dot);
+      return position.label;
+    }
+
+    function chooseResult() {
+      const mode = document.getElementById("scanMode").value;
+
+      if (mode !== "random") {
+        return mode;
+      }
+
+      const roll = Math.random();
+
+      if (roll < 0.55) return "clear";
+      if (roll < 0.85) return "check";
+      return "found";
+    }
+
+    function startScan() {
+      resetVisualOnly();
+
+      const scannerStage = document.getElementById("scannerStage");
+      const passengerName = document.getElementById("passengerName").value.trim() || "Unknown passenger";
+const lane = document.getElementById("lane").value;
+
+      scannerStage.classList.add("scanning");
+      setStatus("SCANNING", "ready", "Scanner moving. Please wait...");
+      logLine("SCAN STARTED for " + passengerName + " in " + lane);
+      playChime();
+
+      setTimeout(function() {
+        scannerStage.classList.remove("scanning");
+        finishScan(passengerName, lane);
+      }, 2600);
+    }
+
+    function finishScan(passengerName, lane) {
+      const result = chooseResult();
+      const scanId = makeScanId();
+      let zones = [];
+      let action = "";
+
+      if (result === "clear") {
+        zones.push(makeDot(randomItem(heatPositions), "green", "✓"));
+        setStatus("CLEAR", "clear", "Passenger may continue to the gate area.");
+        action = "Continue to gate";
+        logLine("RESULT CLEAR — passenger released");
+        playSuccess();
+      }
+
+      if (result === "check") {
+        zones.push(makeDot(randomItem(heatPositions), "yellow", "!"));
+        zones.push(makeDot(randomItem(heatPositions), "green", "✓"));
+        setStatus("SECONDARY CHECK", "check", "Ask passenger for a pretend pocket/bag check.");
+        action = "Secondary check";
+        logLine("RESULT SECONDARY CHECK — yellow heat zone found");
+        playChime();
+      }
+
+      if (result === "found") {
+        zones.push(makeDot(randomItem(heatPositions), "red", "!"));
+        zones.push(makeDot(randomItem(heatPositions), "yellow", "!"));
+        setStatus("ITEM FOUND", "found", "Pretend item detected. Staff must investigate.");
+        action = "Stop and inspect";
+        logLine("RESULT ITEM FOUND — red heat zone found");
+        playAlarm();
+      }
+
+      document.getElementById("reportName").textContent = passengerName;
+      document.getElementById("reportLane").textContent = lane;
+      document.getElementById("reportId").textContent = scanId;
+      document.getElementById("reportZones").textContent = zones.join(", ");
+      document.getElementById("reportAction").textContent = action;
+    }
+
+    function setStatus(main, colourClass, text) {
+      const bigStatus = document.getElementById("bigStatus");
+      bigStatus.className = "big-status " + colourClass;
+      bigStatus.textContent = main;
+      document.getElementById("statusText").textContent = text;
+    }
+
+    function resetVisualOnly() {
+      clearHeatDots();
+      document.getElementById("scannerStage").classList.remove("scanning");
+    }
+
+    function resetScanner() {
+      resetVisualOnly();
+      setStatus("READY", "ready", "Waiting for scanner.");
+      document.getElementById("reportName").textContent = "Not scanned";
+      document.getElementById("reportLane").textContent = "-";
+      document.getElementById("reportId").textContent = "-";
+      document.getElementById("reportZones").textContent = "-";
+      document.getElementById("reportAction").textContent = "-";
+      logLine("SCANNER RESET");
+    }
+
+    function beep(frequency, duration, type) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+      if (!AudioContext) {
+        return;
+      }
+
+      const audio = new AudioContext();
+      const osc = audio.createOscillator();
+      const gain = audio.createGain();
+
+      osc.type = type || "sine";
+      osc.frequency.value = frequency;
+      gain.gain.value = 0.08;
+
+      osc.connect(gain);
+      gain.connect(audio.destination);
+      osc.start();
+
+      setTimeout(function() {
+        osc.stop();
+        audio.close();
+      }, duration);
+    }
+
+    function playChime() {
+      beep(740, 120, "sine");
+      setTimeout(function() { beep(980, 120, "sine"); }, 150);
+    }
+
+    function playSuccess() {
+      beep(660, 90, "sine");
+      setTimeout(function() { beep(880, 90, "sine"); }, 110);
+      setTimeout(function() { beep(1100, 120, "sine"); }, 220);
+    }
+
+    function playAlarm() {
+      beep(240, 180, "square");
+      setTimeout(function() { beep(240, 180, "square"); }, 230);
+      setTimeout(function() { beep(240, 180, "square"); }, 460);
+    }
+  </script>
+</body>
+</html>

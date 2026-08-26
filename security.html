@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Airport Security Console</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Airport Body Scanner Console</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(14, 165, 233, 0.20), transparent 30%),
-        linear-gradient(135deg, #0f172a, #1e293b 45%, #334155);
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.22), transparent 32%),
+        linear-gradient(135deg, #020617, #0f172a 48%, #1e293b);
       color: #e5e7eb;
-      min-height: 100vh;
     }
 
-    .top-bar {
+    .top {
       background: rgba(2, 6, 23, 0.94);
-      color: white;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
       padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: 0 10px 30px #00000055;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
     }
 
     .brand {
@@ -40,15 +40,15 @@
 
     .nav a {
       color: #e5e7eb;
-      background: rgba(30, 41, 59, 0.9);
-      border: 1px solid rgba(125, 211, 252, 0.55);
-      border-radius: 8px;
-      padding: 8px 12px;
       text-decoration: none;
       display: inline-block;
+      padding: 8px 12px;
       margin: 3px;
-      font-size: 14px;
+      border-radius: 8px;
+      background: #1e293b;
+      border: 1px solid rgba(56, 189, 248, 0.65);
       font-weight: 800;
+      font-size: 14px;
     }
 
     .hero {
@@ -64,25 +64,25 @@
     }
 
     .subtitle {
-      font-weight: 700;
-      color: #cbd5e1;
       margin: 8px 0 12px;
+      color: #cbd5e1;
+      font-weight: 700;
     }
 
-    .roleplay-note {
+    .note {
       display: inline-block;
-      background: rgba(250, 204, 21, 0.12);
-      border: 1px solid rgba(250, 204, 21, 0.70);
+      padding: 8px 13px;
+      border-radius: 9px;
+      border: 1px solid rgba(250, 204, 21, 0.65);
+      background: rgba(250, 204, 21, 0.10);
       color: #fde68a;
-      border-radius: 8px;
-      padding: 8px 14px;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 14px;
     }
 
     .dashboard {
       max-width: 1250px;
-      margin: 18px auto 34px;
+      margin: 18px auto 36px;
       padding: 0 14px;
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
@@ -94,22 +94,22 @@
       background: rgba(15, 23, 42, 0.88);
       border: 1px solid rgba(148, 163, 184, 0.34);
       border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
       overflow: hidden;
     }
 
     .panel-title {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
       padding: 13px 16px;
       background: rgba(2, 6, 23, 0.72);
       border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: #f8fafc;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #f8fafc;
     }
 
     .status-pill {
@@ -119,14 +119,15 @@
       color: #93c5fd;
       border: 1px solid rgba(147, 197, 253, 0.35);
       font-size: 12px;
+      white-space: nowrap;
     }
 
-    .body-console {
+    .scanner-shell {
       padding: 14px;
       display: grid;
       grid-template-columns: 90px 1fr 100px;
       gap: 12px;
-      min-height: 540px;
+      min-height: 560px;
     }
 
     .control-rail {
@@ -141,11 +142,12 @@
     }
 
     .rail-button {
-      background: #e5e7eb;
-      color: #111827;
+      width: 100%;
       border: 0;
       border-radius: 8px;
       padding: 13px 8px;
+      background: #e5e7eb;
+      color: #111827;
       font-size: 12px;
       font-weight: 900;
       cursor: pointer;
@@ -158,44 +160,46 @@
     }
 
     .scan-stage {
-background: #dbe3ee;
+      background: #dbe3ee;
       border: 1px solid rgba(226, 232, 240, 0.50);
       border-radius: 12px;
       position: relative;
-      overflow: hidden;
+overflow: hidden;
       display: grid;
       place-items: center;
       box-shadow: inset 0 0 40px rgba(15, 23, 42, 0.25);
     }
 
-    .scan-grid {
+    .scan-stage::before {
+      content: "";
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(51,65,85,0.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(51,65,85,0.10) 1px, transparent 1px);
+        linear-gradient(rgba(51, 65, 85, 0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(51, 65, 85, 0.10) 1px, transparent 1px);
       background-size: 26px 26px;
+      z-index: 1;
     }
 
-    .moving-line {
+    .scan-line {
       position: absolute;
       left: 0;
       right: 0;
-      top: -40px;
-      height: 34px;
-      background: linear-gradient(180deg, transparent, rgba(14,165,233,0.70), transparent);
-      box-shadow: 0 0 22px #38bdf8;
+      top: -44px;
+      height: 36px;
+      background: linear-gradient(180deg, transparent, rgba(14, 165, 233, 0.82), transparent);
+      box-shadow: 0 0 24px #38bdf8;
       opacity: 0;
       z-index: 4;
     }
 
-    .scanning .moving-line {
+    .scanning .scan-line {
       opacity: 1;
-      animation: moveLine 2.1s linear infinite;
+      animation: scanDown 2.1s linear infinite;
     }
 
-    @keyframes moveLine {
-      from { top: -40px; }
+    @keyframes scanDown {
+      from { top: -44px; }
       to { top: 100%; }
     }
 
@@ -212,19 +216,19 @@ background: #dbe3ee;
 
     .body-svg {
       width: 100%;
-      max-height: 405px;
-      opacity: 0.82;
-      filter: drop-shadow(0 0 8px rgba(30,41,59,0.34));
+      max-height: 425px;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 8px rgba(30, 41, 59, 0.40));
     }
 
     .heat-dot {
-      animation: pulse 0.7s infinite alternate;
+      animation: pulse 0.72s infinite alternate;
       transform-origin: center;
     }
 
     @keyframes pulse {
-      from { opacity: 0.70; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1.10); }
+      from { opacity: 0.66; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1.12); }
     }
 
     .result-badge {
@@ -238,7 +242,7 @@ background: #dbe3ee;
       font-size: 62px;
       font-weight: 900;
       color: white;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.32);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.36);
       opacity: 0;
       transform: scale(0.3);
       transition: 0.35s;
@@ -261,14 +265,14 @@ background: #dbe3ee;
     }
 
     .tiny-control {
-      background: rgba(30, 41, 59, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.30);
       height: 30px;
       border-radius: 6px;
-      font-size: 10px;
-      color: #cbd5e1;
       display: grid;
       place-items: center;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.30);
+      color: #cbd5e1;
+      font-size: 10px;
       font-weight: 900;
     }
 
@@ -285,9 +289,9 @@ background: #dbe3ee;
       display: block;
       margin-top: 12px;
       margin-bottom: 5px;
-      font-weight: 900;
       color: #cbd5e1;
       font-size: 13px;
+      font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -333,28 +337,36 @@ background: #dbe3ee;
       border: 1px solid rgba(148, 163, 184, 0.30);
     }
 
+    .status-card h3 {
+      margin: 0;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 14px;
+    }
+
     .big-status {
       font-size: 31px;
       font-weight: 900;
-      margin: 6px 0;
+      margin: 8px 0 4px;
     }
 
     .ready-text { color: #60a5fa; }
     .clear-text { color: #34d399; }
     .check-text { color: #fbbf24; }
-    .stop-text { color: #f87171; }
+.stop-text { color: #f87171; }
 
     .report-line {
       display: flex;
-justify-content: space-between;
+      justify-content: space-between;
       gap: 10px;
       padding: 9px;
       background: rgba(2, 6, 23, 0.35);
       border: 1px solid rgba(148, 163, 184, 0.22);
       border-radius: 10px;
       margin-top: 7px;
-      font-size: 14px;
       color: #cbd5e1;
+      font-size: 14px;
     }
 
     .report-line b {
@@ -362,8 +374,19 @@ justify-content: space-between;
       text-align: right;
     }
 
+    .mini-note {
+      margin: 0 0 12px;
+      padding: 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      background: rgba(250, 204, 21, 0.10);
+      color: #fde68a;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
     .log {
-      height: 130px;
+      height: 150px;
       overflow: auto;
       margin-top: 10px;
       background: #020617;
@@ -372,330 +395,45 @@ justify-content: space-between;
       padding: 10px;
       font-family: Consolas, monospace;
       font-size: 12px;
-      border: 1px solid rgba(125, 211, 252, 0.20);
-    }
-
-    .lower-grid {
-      max-width: 1250px;
-      margin: 0 auto 34px;
-      padding: 0 14px;
-      display: grid;
-      grid-template-columns: 0.82fr 1.18fr;
-      gap: 18px;
-    }
-
-    .passport-result {
-      margin-top: 12px;
-      border-radius: 14px;
-      padding: 14px;
-      text-align: center;
-      background: rgba(37, 99, 235, 0.14);
-      border: 1px solid rgba(147, 197, 253, 0.35);
-      font-weight: 900;
-      font-size: 20px;
-      color: #93c5fd;
-    }
-
-    .mini-warning {
-      color: #fde68a;
-      background: rgba(250, 204, 21, 0.10);
-      border: 1px solid rgba(250, 204, 21, 0.45);
-      padding: 8px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .xray-console {
-      padding: 16px;
-    }
-
-    .xray-screen {
-      background: #020617;
-      border-radius: 16px;
-      border: 2px solid rgba(14, 165, 233, 0.5);
-      box-shadow: inset 0 0 35px rgba(14, 165, 233, 0.18), 0 0 28px rgba(14, 165, 233, 0.12);
-      padding: 14px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .xray-header {
-      display: flex;
-      justify-content: space-between;
-      color: #7dd3fc;
-      font-weight: 900;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .belt {
-      height: 235px;
-      border-radius: 13px;
-      background:
-        linear-gradient(90deg, rgba(14,165,233,0.08), transparent 25%, rgba(14,165,233,0.08)),
-        repeating-linear-gradient(90deg, #1e293b 0 24px, #0f172a 24px 48px);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.28);
-    }
-
-    .xray-gate {
-      position: absolute;
-      top: 14px;
-      bottom: 14px;
-      left: 48%;
-      width: 90px;
-      transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.90);
-      border: 2px solid #38bdf8;
-      border-radius: 12px;
-      box-shadow: 0 0 25px #38bdf8;
-      z-index: 5;
-      display: grid;
-      place-items: center;
-      color: #bae6fd;
-      font-weight: 900;
-      font-size: 12px;
-    }
-
-    .xray-bag {
-      position: absolute;
-      left: -260px;
-      top: 22px;
-      width: 238px;
-      height: 188px;
-      border-radius: 22px;
-      border: 4px solid rgba(34, 197, 94, 0.65);
-      background:
-        radial-gradient(circle at 24% 62%, rgba(2, 132, 199, 0.95) 0 12px, rgba(2, 132, 199, 0.35) 13px 36px, transparent 37px),
-        radial-gradient(circle at 49% 55%, rgba(250, 204, 21, 0.92) 0 9px, rgba(249, 115, 22, 0.58) 10px 27px, transparent 28px),
-        radial-gradient(circle at 67% 50%, rgba(239, 68, 68, 0.80) 0 14px, rgba(249, 115, 22, 0.42) 15px 34px, transparent 35px),
-        linear-gradient(100deg, rgba(251, 146, 60, 0.90), rgba(253, 186, 116, 0.80), rgba(249, 115, 22, 0.72));
-      box-shadow: 0 0 22px rgba(251, 146, 60, 0.45);
-      opacity: 0.96;
-      z-index: 3;
-    }
-
-    .xray-bag::before {
-      content: "";
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      top: 21px;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(34, 197, 94, 0.70);
-      box-shadow: 0 0 10px rgba(34,197,94,0.50);
-    }
-
-    .xray-bag::after {
-      content: "";
-      position: absolute;
-      left: 28px;
-      top: 72px;
-      width: 82px;
-      height: 70px;
-      border-radius: 10px;
-      background: rgba(30, 64, 175, 0.75);
-      box-shadow:
-74px -18px 0 rgba(14, 165, 233, 0.68),
-        112px 24px 0 rgba(59, 130, 246, 0.58),
-        34px 48px 0 rgba(15, 23, 42, 0.60);
-    }
-
-    .wire {
-      position: absolute;
-      width: 120px;
-      height: 60px;
-      border: 3px solid rgba(21, 128, 61, 0.75);
-      border-left: none;
-      border-bottom: none;
-      border-radius: 50%;
-      z-index: 4;
-    }
-
-    .wire.w1 {
-      left: -210px;
-      top: 70px;
-    }
-
-    .wire.w2 {
-      left: -135px;
-      top: 105px;
-      transform: rotate(38deg);
-    }
-
-    .wire.w3 {
-      left: -78px;
-      top: 58px;
-      transform: rotate(-18deg);
-    }
-
-    .belt.scanning-bag .xray-bag {
-      animation: bagMove 3.0s linear forwards;
-    }
-
-    .belt.scanning-bag .wire {
-      animation: wireMove 3.0s linear forwards;
-    }
-
-    @keyframes bagMove {
-      from { left: -260px; }
-      to { left: calc(100% + 40px); }
-    }
-
-    @keyframes wireMove {
-      from { transform: translateX(0); }
-      to { transform: translateX(calc(100vw + 360px)); }
-    }
-
-    .scan-beam {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 48%;
-      width: 24px;
-      transform: translateX(-50%);
-      background: linear-gradient(90deg, transparent, rgba(125,211,252,0.35), transparent);
-      opacity: 0;
-      z-index: 4;
-    }
-
-    .belt.scanning-bag .scan-beam {
-      opacity: 1;
-      animation: beamPulse 0.5s infinite alternate;
-    }
-
-    @keyframes beamPulse {
-      from { filter: brightness(1); }
-      to { filter: brightness(2); }
-    }
-
-    .xray-items {
-      margin-top: 10px;
-      min-height: 35px;
-    }
-
-    .xray-item {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 7px;
-      margin: 4px;
-      font-weight: 900;
-      background: rgba(14, 165, 233, 0.16);
-      color: #7dd3fc;
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      font-size: 13px;
-    }
-
-    .xray-popup {
-      position: absolute;
-      inset: 12px;
-      z-index: 20;
-      display: grid;
-      place-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.86);
-      transition: opacity 0.28s ease, transform 0.28s ease;
-    }
-
-    .xray-popup.show {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    .xray-popup-card {
-      width: min(100%, 620px);
-      background: rgba(2, 6, 23, 0.96);
-      border: 2px solid rgba(125, 211, 252, 0.70);
-      border-radius: 16px;
-      box-shadow: 0 0 40px rgba(14, 165, 233, 0.38), 0 22px 55px rgba(0,0,0,0.55);
-      overflow: hidden;
-    }
-
-    .xray-popup-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      background: rgba(15, 23, 42, 0.96);
-      color: #7dd3fc;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 12px;
-    }
-
-    .close-popup {
-      width: auto;
-      margin: 0;
-      padding: 6px 10px;
-      border-radius: 7px;
-      background: #334155;
-      color: #e5e7eb;
-      font-size: 12px;
-    }
-
-    .xray-photo {
-      display: block;
-      width: 100%;
-      max-height: 360px;
-      object-fit: contain;
-      background: white;
-    }
-
-    .xray-popup-footer {
-      padding: 9px 12px;
-      color: #cbd5e1;
-      font-size: 13px;
-      background: rgba(2, 6, 23, 0.92);
+      border: 1px solid rgba(125, 211, 252, 0.22);
     }
 
     @media (max-width: 980px) {
-      .dashboard,
-      .lower-grid {
+      .dashboard {
         grid-template-columns: 1fr;
-      }
-
-      .tablet-wrap {
-        transform: none;
       }
     }
 
     @media (max-width: 650px) {
       h1 { font-size: 28px; }
-      .body-console { grid-template-columns: 68px 1fr 72px; gap: 7px; padding: 8px; }
+      .scanner-shell {
+        grid-template-columns: 68px 1fr 72px;
+        gap: 7px;
+        padding: 8px;
+        min-height: 470px;
+      }
       .control-rail { padding: 6px; }
       .rail-button { padding: 10px 4px; font-size: 10px; }
       .people { gap: 7px; padding: 8px; }
       .result-badge { width: 82px; height: 82px; font-size: 44px; }
       .bottom-controls { grid-template-columns: repeat(4, 1fr); }
-      .belt { height: 210px; }
-      .xray-bag { width: 205px; height: 162px; }
     }
   </style>
 </head>
-
 <body>
-<div class="top-bar">
-    <div class="brand">Airport Security Console</div>
+  <div class="top">
+    <div class="brand">Airport Body Scanner</div>
     <div class="nav">
       <a href="customer.html">Customer</a>
       <a href="staff.html">Staff Scanner</a>
-      <a href="security.html">Security</a>
+      <a href="security.html">Body Scanner</a>
     </div>
   </div>
 
   <div class="hero">
-    <h1>Security Screening Console</h1>
-    <p class="subtitle">Professional-style body scan, document check, and X-ray bag heatmap.</p>
-    <div class="roleplay-note">Pretend airport roleplay only — not real security advice.</div>
+    <h1>Body Scanner Console</h1>
+    <p class="subtitle">A serious-looking pretend airport body scanner for roleplay.</p>
+    <div class="note">Pretend roleplay only — not real security advice.</div>
   </div>
 
   <div class="dashboard">
@@ -705,14 +443,13 @@ justify-content: space-between;
         <span id="topStatus" class="status-pill">READY</span>
       </div>
 
-      <div class="body-console">
+      <div class="scanner-shell">
         <div class="control-rail">
           <button class="rail-button" onclick="startScan()">SCAN</button>
         </div>
 
         <div class="scan-stage" id="scanArea">
-          <div class="scan-grid"></div>
-          <div class="moving-line"></div>
+          <div class="scan-line"></div>
           <div id="resultBadge" class="result-badge badge-clear">✓</div>
 
           <div class="people">
@@ -733,7 +470,7 @@ justify-content: space-between;
               <path d="M113 92 C138 70 147 43 148 16" stroke="#7d8798" stroke-width="22" stroke-linecap="round" fill="none"/>
               <circle cx="85" cy="44" r="25" fill="#7d8798"/>
               <rect x="55" y="82" width="60" height="122" rx="24" fill="#7d8798"/>
-              <rect x="58" y="190" width="26" height="126" rx="13" fill="#7d8798"/>
+<rect x="58" y="190" width="26" height="126" rx="13" fill="#7d8798"/>
               <rect x="86" y="190" width="26" height="126" rx="13" fill="#7d8798"/>
               <circle id="dotB1" class="heat-dot" cx="85" cy="130" r="0" fill="#10b981"/>
               <circle id="dotB2" class="heat-dot" cx="88" cy="174" r="0" fill="#f59e0b"/>
@@ -767,11 +504,13 @@ justify-content: space-between;
           <span>Operator Panel</span>
         </div>
 
+        <p class="mini-note">Baggage check removed. This page now focuses only on the pretend body scanner.</p>
+
         <label>Passenger name</label>
         <input id="passengerName" placeholder="Passenger name">
 
         <label>Scan result mode</label>
-<select id="scanMode">
+        <select id="scanMode">
           <option value="random">Random</option>
           <option value="clear">Force Clear</option>
           <option value="check">Force Review</option>
@@ -787,14 +526,12 @@ justify-content: space-between;
         </select>
 
         <button class="green" onclick="startScan()">Start Body Scan</button>
-        <button class="purple" onclick="runPassportCheck()">Check Passport</button>
-        <button class="orange" onclick="startBagScan()">Scan Bag</button>
-        <button class="grey" onclick="resetScanner()">Reset All</button>
+        <button class="grey" onclick="resetScanner()">Reset Scanner</button>
 
         <div class="status-card">
           <h3>Result</h3>
           <div id="bigStatus" class="big-status ready-text">READY</div>
-          <p id="resultText">Waiting for scan.</p>
+          <p id="resultText">Waiting for body scan.</p>
         </div>
       </section>
 
@@ -828,87 +565,8 @@ justify-content: space-between;
     </aside>
   </div>
 
-  <div class="lower-grid">
-    <section class="panel card">
-      <div class="panel-title">
-        <span>Document Check</span>
-      </div>
-
-      <p class="mini-warning">Pretend check only. Use fake names and fake passport numbers.</p>
-
-      <label>Passport name</label>
-      <input id="passportName" placeholder="Name on passport">
-
-      <label>Passport number</label>
-      <input id="passportNumber" placeholder="P123456789">
-
-      <label>Document type</label>
-      <select id="documentType">
-        <option>UK Passport</option>
-        <option>EU Passport</option>
-        <option>US Passport</option>
-        <option>Boarding ID Card</option>
-      </select>
-
-      <button class="purple" onclick="runPassportCheck()">Run Passport Check</button>
-      <div id="passportResult" class="passport-result">PASSPORT READY</div>
-    </section>
-
-    <section class="panel xray-console">
-      <div class="panel-title">
-        <span>X-ray Bag Heatmap</span>
-        <span id="bagResult" class="status-pill">WAITING</span>
-      </div>
-
-      <p class="mini-warning">Pretend X-ray only. The orange/blue/green image is a fake heatmap for roleplay.</p>
-
-      <div class="xray-screen">
-        <div class="xray-header">
-          <span>BAGGAGE DENSITY VIEW</span>
-          <span id="xrayMode">READY</span>
-        </div>
-
-        <div class="belt" id="belt">
-          <div class="scan-beam"></div>
-          <div class="xray-gate">X-RAY</div>
-          <div class="xray-bag" id="bag"></div>
-          <div class="wire w1"></div>
-          <div class="wire w2"></div>
-          <div class="wire w3"></div>
-        </div>
-
-        <div class="xray-popup" id="xrayPopup">
-          <div class="xray-popup-card">
-            <div class="xray-popup-header">
-              <span>Live X-ray Image</span>
-              <button class="close-popup" onclick="hideXrayPopup()">CLOSE</button>
-            </div>
-
-            <img class="xray-photo" src="assets/xray-bag-heatmap.jpg" alt="X-ray heatmap of a suitcase">
-
-            <div class="xray-popup-footer">
-              Baggage density heatmap displayed when the bag reaches the scanner.
-            </div>
-          </div>
-        </div>
-
-        <div class="xray-items" id="bagItems">No bag scanned.</div>
-      </div>
-
-      <button class="orange" onclick="startBagScan()">Start Bag Scan</button>
-<button class="green" onclick="forceBagClear()">Force Bag Clear</button>
-      <button class="red" onclick="forceBagCheck()">Force Bag Review</button>
-
-      <div class="report-line">
-        <span>Bag action</span>
-        <b id="bagAction">-</b>
-      </div>
-    </section>
-  </div>
-
   <script>
     let forcedResult = "";
-    let forcedBag = "";
 
     function updateClock() {
       document.getElementById("topTime").textContent = new Date().toLocaleTimeString();
@@ -940,7 +598,7 @@ justify-content: space-between;
 
       const roll = Math.random();
 
-      if (roll < 0.62) return "clear";
+if (roll < 0.62) return "clear";
       if (roll < 0.88) return "check";
       return "stop";
     }
@@ -1002,148 +660,6 @@ justify-content: space-between;
       document.getElementById("reportAction").textContent = action;
     }
 
-    function runPassportCheck() {
-      const passenger = document.getElementById("passengerName").value.trim();
-      const passportName = document.getElementById("passportName").value.trim();
-      const passportNumber = document.getElementById("passportNumber").value.trim();
-      const documentType = document.getElementById("documentType").value;
-      const result = document.getElementById("passportResult");
-
-      if (!passportName || !passportNumber) {
-        result.textContent = "TYPE PASSPORT DETAILS FIRST";
-        result.style.background = "rgba(250, 204, 21, 0.14)";
-        result.style.color = "#fde68a";
-        result.style.borderColor = "rgba(250, 204, 21, 0.55)";
-        logLine("PASSPORT CHECK needs details");
-        return;
-      }
-
-if (passenger && passportName.toLowerCase() !== passenger.toLowerCase()) {
-        result.textContent = "NAME REVIEW REQUIRED";
-        result.style.background = "rgba(250, 204, 21, 0.14)";
-        result.style.color = "#fde68a";
-        result.style.borderColor = "rgba(250, 204, 21, 0.55)";
-        setStatus("DOC REVIEW", "check-text", "Passenger name and passport name are different.");
-        logLine("PASSPORT REVIEW for " + passportName + " using " + documentType);
-        chimeSound();
-        return;
-      }
-
-      result.textContent = "DOCUMENT VALID ✓";
-      result.style.background = "rgba(5, 150, 105, 0.15)";
-      result.style.color = "#34d399";
-      result.style.borderColor = "rgba(52, 211, 153, 0.45)";
-
-      setStatus("DOC OK", "clear-text", "Document check passed.");
-      document.getElementById("reportPassenger").textContent = passportName;
-      document.getElementById("reportAction").textContent = "Document checked";
-
-      logLine("PASSPORT OK for " + passportName + " using " + documentType);
-      successSound();
-    }
-
-    function startBagScan() {
-      const belt = document.getElementById("belt");
-
-      belt.classList.remove("scanning-bag");
-
-      /* This line restarts the animation properly */
-      void belt.offsetWidth;
-
-      belt.classList.add("scanning-bag");
-
-      document.getElementById("bagResult").textContent = "SCANNING";
-      document.getElementById("xrayMode").textContent = "ANALYSING DENSITY";
-      document.getElementById("bagItems").textContent = "Generating X-ray heatmap...";
-      document.getElementById("bagAction").textContent = "Wait";
-
-      setStatus("BAG SCAN", "ready-text", "Bag is moving through the X-ray heatmap scanner.");
-      logLine("BAG HEATMAP SCAN STARTED");
-      chimeSound();
-
-      setTimeout(showXrayPopup, 1450);
-      setTimeout(finishBagScan, 3050);
-    }
-
-    function finishBagScan() {
-      const safeItems = [
-        "Laptop shape",
-        "Books",
-        "Keys",
-        "Headphones",
-        "Cable bundle",
-        "Clothing density"
-      ];
-
-      const reviewItems = [
-        "Liquid bottle shape",
-        "Dense metal block",
-        "Unclear object",
-        "Large aerosol shape",
-        "Unknown dense area"
-      ];
-
-      let needsCheck = false;
-
-      if (forcedBag === "clear") {
-        needsCheck = false;
-      } else if (forcedBag === "check") {
-        needsCheck = true;
-      } else {
-        needsCheck = Math.random() > 0.62;
-      }
-
-      forcedBag = "";
-
-      const item1 = safeItems[Math.floor(Math.random() * safeItems.length)];
-      const item2 = safeItems[Math.floor(Math.random() * safeItems.length)];
-      const item3 = needsCheck
-        ? reviewItems[Math.floor(Math.random() * reviewItems.length)]
-        : safeItems[Math.floor(Math.random() * safeItems.length)];
-
-      document.getElementById("bagItems").innerHTML =
-        '<span class="xray-item">' + item1 + '</span>' +
-        '<span class="xray-item">' + item2 + '</span>' +
-        '<span class="xray-item">' + item3 + '</span>';
-
-      if (needsCheck) {
-        document.getElementById("bagResult").textContent = "REVIEW";
-        document.getElementById("xrayMode").textContent = "DENSITY REVIEW";
-        document.getElementById("bagAction").textContent = "Open bag for pretend review";
-
-        setStatus("BAG REVIEW", "check-text", "X-ray heatmap needs a pretend bag review.");
-        logLine("BAG HEATMAP REVIEW required");
-        alarmSound();
-      } else {
-        document.getElementById("bagResult").textContent = "CLEAR";
-        document.getElementById("xrayMode").textContent = "BAG CLEAR";
-        document.getElementById("bagAction").textContent = "Bag can continue";
-
-        setStatus("BAG CLEAR", "clear-text", "Bag can continue to the gate.");
-        logLine("BAG HEATMAP CLEAR result shown");
-        successSound();
-      }
-    }
-
-    function showXrayPopup() {
-      document.getElementById("xrayPopup").classList.add("show");
-      logLine("LIVE X-RAY IMAGE DISPLAYED");
-    }
-
-    function hideXrayPopup() {
-document.getElementById("xrayPopup").classList.remove("show");
-    }
-
-    function forceBagClear() {
-      forcedBag = "clear";
-      startBagScan();
-    }
-
-    function forceBagCheck() {
-      forcedBag = "check";
-      startBagScan();
-    }
-
     function setStatus(status, className, text) {
       const bigStatus = document.getElementById("bigStatus");
       bigStatus.className = "big-status " + className;
@@ -1196,33 +712,21 @@ document.getElementById("xrayPopup").classList.remove("show");
       document.getElementById("scanArea").classList.remove("scanning");
       document.getElementById("topStatus").textContent = "READY";
 
-      setStatus("READY", "ready-text", "Waiting for scan.");
+      setStatus("READY", "ready-text", "Waiting for body scan.");
 
       document.getElementById("reportPassenger").textContent = "-";
       document.getElementById("reportLane").textContent = "-";
       document.getElementById("reportId").textContent = "-";
       document.getElementById("reportAction").textContent = "-";
 
-      document.getElementById("passportResult").textContent = "PASSPORT READY";
-      document.getElementById("passportResult").style.background = "rgba(37, 99, 235, 0.14)";
-      document.getElementById("passportResult").style.color = "#93c5fd";
-      document.getElementById("passportResult").style.borderColor = "rgba(147, 197, 253, 0.35)";
-
-      hideXrayPopup();
-
-      document.getElementById("bagResult").textContent = "WAITING";
-      document.getElementById("xrayMode").textContent = "READY";
-      document.getElementById("bagItems").textContent = "No bag scanned.";
-      document.getElementById("bagAction").textContent = "-";
-
-      logLine("ALL SYSTEMS RESET");
+      logLine("BODY SCANNER RESET");
     }
 
     function beep(frequency, duration, type) {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!AudioContext) return;
 
-      const audio = new AudioContext();
+const audio = new AudioContext();
       const osc = audio.createOscillator();
       const gain = audio.createGain();
 

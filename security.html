@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Security Heatmap Scanner</title>
+  <title>Airport Security Console</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -10,302 +10,275 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #08111f;
-      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.20), transparent 30%),
+        linear-gradient(135deg, #0f172a, #1e293b 45%, #334155);
+      color: #e5e7eb;
+      min-height: 100vh;
     }
 
     .top-bar {
-      background: #020617;
-      border-bottom: 2px solid #38bdf8;
-      padding: 12px 16px;
+      background: rgba(2, 6, 23, 0.94);
+      color: white;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 10px 30px #00000055;
     }
 
     .brand {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
-      color: #e0f2fe;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .nav a {
-      display: inline-block;
-      color: white;
-      text-decoration: none;
-      background: #0f172a;
-      border: 1px solid #38bdf8;
-      border-radius: 999px;
+      color: #e5e7eb;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(125, 211, 252, 0.55);
+      border-radius: 8px;
       padding: 8px 12px;
+      text-decoration: none;
+      display: inline-block;
       margin: 3px;
       font-size: 14px;
+      font-weight: 800;
     }
 
     .hero {
       text-align: center;
-      padding: 28px 14px 40px;
-      background:
-        radial-gradient(circle at 20% 20%, #38bdf855, transparent 30%),
-        radial-gradient(circle at 80% 10%, #22c55e44, transparent 35%),
-        linear-gradient(135deg, #0f172a, #1e3a8a, #020617);
+      padding: 26px 12px 12px;
     }
 
     h1 {
       margin: 0;
-      font-size: 42px;
+      font-size: 38px;
+      color: #f8fafc;
+      letter-spacing: 0.03em;
     }
 
     .subtitle {
-      color: #bae6fd;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin: 8px 0 12px;
+    }
+
+    .roleplay-note {
+      display: inline-block;
+      background: rgba(250, 204, 21, 0.12);
+      border: 1px solid rgba(250, 204, 21, 0.70);
+      color: #fde68a;
+      border-radius: 8px;
+      padding: 8px 14px;
       font-weight: 800;
+      font-size: 14px;
     }
 
-    .warning {
-      max-width: 900px;
-      margin: 12px auto 0;
-      background: #fef3c7;
-      color: #92400e;
-      border: 2px solid #facc15;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-weight: 900;
-    }
-
-    .container {
-      max-width: 1180px;
-      margin: -22px auto 28px;
+    .dashboard {
+      max-width: 1250px;
+      margin: 18px auto 34px;
       padding: 0 14px;
       display: grid;
-      grid-template-columns: 1fr 0.85fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 18px;
       align-items: start;
     }
 
-    .card {
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 16px 40px #0008;
-      margin-bottom: 18px;
+    .panel {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.34);
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      overflow: hidden;
     }
 
-    .scanner-stage {
-      background: #020617;
-      border: 2px solid #38bdf8;
-      border-radius: 22px;
-      min-height: 560px;
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 16px;
+      background: rgba(2, 6, 23, 0.72);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #f8fafc;
+    }
+
+    .status-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.18);
+      color: #93c5fd;
+      border: 1px solid rgba(147, 197, 253, 0.35);
+      font-size: 12px;
+    }
+
+    .body-console {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 90px 1fr 100px;
+      gap: 12px;
+      min-height: 540px;
+    }
+
+    .control-rail {
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .rail-button {
+      background: #e5e7eb;
+      color: #111827;
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 8px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .rail-button.dark {
+      background: #334155;
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.40);
+    }
+
+    .scan-stage {
+background: #dbe3ee;
+      border: 1px solid rgba(226, 232, 240, 0.50);
+      border-radius: 12px;
       position: relative;
       overflow: hidden;
       display: grid;
       place-items: center;
+      box-shadow: inset 0 0 40px rgba(15, 23, 42, 0.25);
     }
 
-    .grid-lines {
+    .scan-grid {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(#38bdf81f 1px, transparent 1px),
-        linear-gradient(90deg, #38bdf81f 1px, transparent 1px);
-      background-size: 34px 34px;
-      opacity: 0.6;
+        linear-gradient(rgba(51,65,85,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(51,65,85,0.10) 1px, transparent 1px);
+      background-size: 26px 26px;
     }
 
-    .scan-line {
+    .moving-line {
       position: absolute;
       left: 0;
       right: 0;
       top: -40px;
       height: 34px;
-      background: linear-gradient(180deg, transparent, #38bdf8cc, transparent);
-      box-shadow: 0 0 26px #38bdf8;
+      background: linear-gradient(180deg, transparent, rgba(14,165,233,0.70), transparent);
+      box-shadow: 0 0 22px #38bdf8;
       opacity: 0;
+      z-index: 4;
     }
 
-    .scanner-stage.scanning .scan-line {
+    .scanning .moving-line {
       opacity: 1;
-      animation: scanMove 2.4s linear infinite;
+      animation: moveLine 2.1s linear infinite;
     }
 
-    @keyframes scanMove {
+    @keyframes moveLine {
       from { top: -40px; }
       to { top: 100%; }
     }
 
-    .person {
-      width: 240px;
-      height: 470px;
+    .people {
       position: relative;
-      filter: drop-shadow(0 0 22px #38bdf888);
+      z-index: 2;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      padding: 18px;
+      align-items: center;
     }
 
-    .head, .body, .left-arm, .right-arm, .left-leg, .right-leg {
-      position: absolute;
-      background: linear-gradient(180deg, #dbeafe, #60a5fa);
-      border: 3px solid #bfdbfe;
-      box-shadow: inset 0 0 24px #0284c744;
+    .body-svg {
+      width: 100%;
+      max-height: 405px;
+      opacity: 0.82;
+      filter: drop-shadow(0 0 8px rgba(30,41,59,0.34));
     }
-
-    .head {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      left: 79px;
-      top: 8px;
-    }
-
-    .body {
-      width: 112px;
-      height: 190px;
-      border-radius: 54px 54px 42px 42px;
-      left: 64px;
-      top: 100px;
-    }
-
-    .left-arm, .right-arm {
-      width: 42px;
-      height: 170px;
-      border-radius: 999px;
-      top: 114px;
-    }
-
-    .left-arm {
-      left: 22px;
-      transform: rotate(10deg);
-    }
-
-    .right-arm {
-      right: 22px;
-      transform: rotate(-10deg);
-    }
-
-    .left-leg, .right-leg {
-      width: 48px;
-      height: 172px;
-      border-radius: 999px;
-top: 285px;
-    }
-
-    .left-leg { left: 66px; }
-    .right-leg { right: 66px; }
 
     .heat-dot {
-      position: absolute;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      color: #020617;
-      border: 3px solid white;
-      animation: pulse 0.85s infinite alternate;
-    }
-
-    .heat-green {
-      background: #22c55e;
-      box-shadow: 0 0 28px #22c55e;
-    }
-
-    .heat-yellow {
-      background: #facc15;
-      box-shadow: 0 0 28px #facc15;
-    }
-
-    .heat-red {
-      background: #ef4444;
-      color: white;
-      box-shadow: 0 0 34px #ef4444;
+      animation: pulse 0.7s infinite alternate;
+      transform-origin: center;
     }
 
     @keyframes pulse {
-      from { transform: scale(0.92); opacity: 0.82; }
-      to { transform: scale(1.1); opacity: 1; }
+      from { opacity: 0.70; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1.10); }
     }
 
-    button, input, select {
-      width: 100%;
-      padding: 13px;
-      border-radius: 13px;
-      border: 2px solid #334155;
-      font-size: 16px;
-    }
-
-    input, select {
-      background: #020617;
-      color: white;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      font-weight: 900;
-      color: white;
-      background: #2563eb;
-    }
-
-    button:hover { filter: brightness(1.12); }
-
-    .controls {
+    .result-badge {
+      position: absolute;
+      z-index: 8;
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .start { background: #16a34a; }
-    .reset { background: #64748b; }
-    .alarm { background: #dc2626; }
-    .secondary { background: #7c3aed; }
-
-    .status-box {
-      text-align: center;
-      border-radius: 20px;
-      padding: 18px;
-      background: #020617;
-      border: 2px solid #334155;
-    }
-
-    .big-status {
-      font-size: 40px;
+      place-items: center;
+      font-size: 62px;
       font-weight: 900;
-      margin: 8px 0;
+      color: white;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.32);
+      opacity: 0;
+      transform: scale(0.3);
+      transition: 0.35s;
     }
 
-    .clear { color: #22c55e; text-shadow: 0 0 18px #22c55e; }
-    .check { color: #facc15; text-shadow: 0 0 18px #facc15; }
-    .found { color: #ef4444; text-shadow: 0 0 18px #ef4444; }
-    .ready { color: #38bdf8; text-shadow: 0 0 18px #38bdf8; }
-
-    .report-line {
-      background: #020617;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      padding: 11px;
-      margin: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
+    .result-badge.show {
+      opacity: 1;
+      transform: scale(1);
     }
 
-    .log {
-      height: 180px;
-      overflow: auto;
-      background: #020617;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      padding: 12px;
-      font-family: Consolas, monospace;
-      color: #bae6fd;
-      font-size: 14px;
+    .badge-clear { background: #10b981; }
+    .badge-check { background: #f59e0b; }
+    .badge-stop { background: #ef4444; }
+
+    .bottom-controls {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+      padding: 10px 14px 14px;
     }
 
-    .small {
+    .tiny-control {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.30);
+      height: 30px;
+      border-radius: 6px;
+      font-size: 10px;
       color: #cbd5e1;
-      font-size: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      padding: 16px;
     }
 
     label {
@@ -313,28 +286,405 @@ top: 285px;
       margin-top: 12px;
       margin-bottom: 5px;
       font-weight: 900;
-      color: #e0f2fe;
+      color: #cbd5e1;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    @media (max-width: 850px) {
-      .container { grid-template-columns: 1fr; }
-      h1 { font-size: 32px; }
-      .scanner-stage { min-height: 500px; }
-      .person { transform: scale(0.9); }
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 15px;
     }
 
-    @media (max-width: 560px) {
-      .controls { grid-template-columns: 1fr; }
-      .big-status { font-size: 30px; }
-      .person { transform: scale(0.78); }
-      .scanner-stage { min-height: 430px; }
+    input,
+    select {
+      background: rgba(15, 23, 42, 0.72);
+      color: #f8fafc;
+      outline: none;
+    }
+
+    button {
+      border: 0;
+      background: #2563eb;
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 9px;
+    }
+
+    .green { background: #059669; }
+    .grey { background: #475569; }
+    .red { background: #dc2626; }
+    .purple { background: #7c3aed; }
+    .orange { background: #ea580c; }
+
+    .status-card {
+      margin-top: 14px;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      background: rgba(2, 6, 23, 0.45);
+      border: 1px solid rgba(148, 163, 184, 0.30);
+    }
+
+    .big-status {
+      font-size: 31px;
+      font-weight: 900;
+      margin: 6px 0;
+    }
+
+    .ready-text { color: #60a5fa; }
+    .clear-text { color: #34d399; }
+    .check-text { color: #fbbf24; }
+    .stop-text { color: #f87171; }
+
+    .report-line {
+      display: flex;
+justify-content: space-between;
+      gap: 10px;
+      padding: 9px;
+      background: rgba(2, 6, 23, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 10px;
+      margin-top: 7px;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    .report-line b {
+      color: #f8fafc;
+      text-align: right;
+    }
+
+    .log {
+      height: 130px;
+      overflow: auto;
+      margin-top: 10px;
+      background: #020617;
+      color: #7dd3fc;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      border: 1px solid rgba(125, 211, 252, 0.20);
+    }
+
+    .lower-grid {
+      max-width: 1250px;
+      margin: 0 auto 34px;
+      padding: 0 14px;
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 18px;
+    }
+
+    .passport-result {
+      margin-top: 12px;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      background: rgba(37, 99, 235, 0.14);
+      border: 1px solid rgba(147, 197, 253, 0.35);
+      font-weight: 900;
+      font-size: 20px;
+      color: #93c5fd;
+    }
+
+    .mini-warning {
+      color: #fde68a;
+      background: rgba(250, 204, 21, 0.10);
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      padding: 8px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .xray-console {
+      padding: 16px;
+    }
+
+    .xray-screen {
+      background: #020617;
+      border-radius: 16px;
+      border: 2px solid rgba(14, 165, 233, 0.5);
+      box-shadow: inset 0 0 35px rgba(14, 165, 233, 0.18), 0 0 28px rgba(14, 165, 233, 0.12);
+      padding: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .xray-header {
+      display: flex;
+      justify-content: space-between;
+      color: #7dd3fc;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .belt {
+      height: 235px;
+      border-radius: 13px;
+      background:
+        linear-gradient(90deg, rgba(14,165,233,0.08), transparent 25%, rgba(14,165,233,0.08)),
+        repeating-linear-gradient(90deg, #1e293b 0 24px, #0f172a 24px 48px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    .xray-gate {
+      position: absolute;
+      top: 14px;
+      bottom: 14px;
+      left: 48%;
+      width: 90px;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.90);
+      border: 2px solid #38bdf8;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #38bdf8;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      color: #bae6fd;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .xray-bag {
+      position: absolute;
+      left: -260px;
+      top: 22px;
+      width: 238px;
+      height: 188px;
+      border-radius: 22px;
+      border: 4px solid rgba(34, 197, 94, 0.65);
+      background:
+        radial-gradient(circle at 24% 62%, rgba(2, 132, 199, 0.95) 0 12px, rgba(2, 132, 199, 0.35) 13px 36px, transparent 37px),
+        radial-gradient(circle at 49% 55%, rgba(250, 204, 21, 0.92) 0 9px, rgba(249, 115, 22, 0.58) 10px 27px, transparent 28px),
+        radial-gradient(circle at 67% 50%, rgba(239, 68, 68, 0.80) 0 14px, rgba(249, 115, 22, 0.42) 15px 34px, transparent 35px),
+        linear-gradient(100deg, rgba(251, 146, 60, 0.90), rgba(253, 186, 116, 0.80), rgba(249, 115, 22, 0.72));
+      box-shadow: 0 0 22px rgba(251, 146, 60, 0.45);
+      opacity: 0.96;
+      z-index: 3;
+    }
+
+    .xray-bag::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 21px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.70);
+      box-shadow: 0 0 10px rgba(34,197,94,0.50);
+    }
+
+    .xray-bag::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      top: 72px;
+      width: 82px;
+      height: 70px;
+      border-radius: 10px;
+      background: rgba(30, 64, 175, 0.75);
+      box-shadow:
+74px -18px 0 rgba(14, 165, 233, 0.68),
+        112px 24px 0 rgba(59, 130, 246, 0.58),
+        34px 48px 0 rgba(15, 23, 42, 0.60);
+    }
+
+    .wire {
+      position: absolute;
+      width: 120px;
+      height: 60px;
+      border: 3px solid rgba(21, 128, 61, 0.75);
+      border-left: none;
+      border-bottom: none;
+      border-radius: 50%;
+      z-index: 4;
+    }
+
+    .wire.w1 {
+      left: -210px;
+      top: 70px;
+    }
+
+    .wire.w2 {
+      left: -135px;
+      top: 105px;
+      transform: rotate(38deg);
+    }
+
+    .wire.w3 {
+      left: -78px;
+      top: 58px;
+      transform: rotate(-18deg);
+    }
+
+    .belt.scanning-bag .xray-bag {
+      animation: bagMove 3.0s linear forwards;
+    }
+
+    .belt.scanning-bag .wire {
+      animation: wireMove 3.0s linear forwards;
+    }
+
+    @keyframes bagMove {
+      from { left: -260px; }
+      to { left: calc(100% + 40px); }
+    }
+
+    @keyframes wireMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(100vw + 360px)); }
+    }
+
+    .scan-beam {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 48%;
+      width: 24px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, rgba(125,211,252,0.35), transparent);
+      opacity: 0;
+      z-index: 4;
+    }
+
+    .belt.scanning-bag .scan-beam {
+      opacity: 1;
+      animation: beamPulse 0.5s infinite alternate;
+    }
+
+    @keyframes beamPulse {
+      from { filter: brightness(1); }
+      to { filter: brightness(2); }
+    }
+
+    .xray-items {
+      margin-top: 10px;
+      min-height: 35px;
+    }
+
+    .xray-item {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 7px;
+      margin: 4px;
+      font-weight: 900;
+      background: rgba(14, 165, 233, 0.16);
+      color: #7dd3fc;
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      font-size: 13px;
+    }
+
+    .xray-popup {
+      position: absolute;
+      inset: 12px;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.86);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .xray-popup.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .xray-popup-card {
+      width: min(100%, 620px);
+      background: rgba(2, 6, 23, 0.96);
+      border: 2px solid rgba(125, 211, 252, 0.70);
+      border-radius: 16px;
+      box-shadow: 0 0 40px rgba(14, 165, 233, 0.38), 0 22px 55px rgba(0,0,0,0.55);
+      overflow: hidden;
+    }
+
+    .xray-popup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(15, 23, 42, 0.96);
+      color: #7dd3fc;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .close-popup {
+      width: auto;
+      margin: 0;
+      padding: 6px 10px;
+      border-radius: 7px;
+      background: #334155;
+      color: #e5e7eb;
+      font-size: 12px;
+    }
+
+    .xray-photo {
+      display: block;
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      background: white;
+    }
+
+    .xray-popup-footer {
+      padding: 9px 12px;
+      color: #cbd5e1;
+      font-size: 13px;
+      background: rgba(2, 6, 23, 0.92);
+    }
+
+    @media (max-width: 980px) {
+      .dashboard,
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tablet-wrap {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      h1 { font-size: 28px; }
+      .body-console { grid-template-columns: 68px 1fr 72px; gap: 7px; padding: 8px; }
+      .control-rail { padding: 6px; }
+      .rail-button { padding: 10px 4px; font-size: 10px; }
+      .people { gap: 7px; padding: 8px; }
+      .result-badge { width: 82px; height: 82px; font-size: 44px; }
+      .bottom-controls { grid-template-columns: repeat(4, 1fr); }
+      .belt { height: 210px; }
+      .xray-bag { width: 205px; height: 162px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="top-bar">
-    <div class="brand">🛃 Airport Security Heatmap</div>
+<div class="top-bar">
+    <div class="brand">Airport Security Console</div>
     <div class="nav">
       <a href="customer.html">Customer</a>
       <a href="staff.html">Staff Scanner</a>
@@ -343,97 +693,229 @@ top: 285px;
   </div>
 
   <div class="hero">
-    <h1>TSA-Style Heatmap Scanner</h1>
-    <p class="subtitle">Pretend airport security scanner for roleplay check-in.</p>
-    <div class="warning">ROLEPLAY ONLY: this is a fake scanner game page. It does not give real security advice.</div>
+    <h1>Security Screening Console</h1>
+    <p class="subtitle">Professional-style body scan, document check, and X-ray bag heatmap.</p>
+    <div class="roleplay-note">Pretend airport roleplay only — not real security advice.</div>
   </div>
 
-  <div class="container">
-    <main>
-      <div class="card">
-        <h2>Scanner Chamber</h2>
-        <p class="small">Choose a mode, then press Start Scan. The heatmap result is random unless you choose a special mode.</p>
+  <div class="dashboard">
+    <main class="panel">
+      <div class="panel-title">
+        <span>Body Scanner</span>
+        <span id="topStatus" class="status-pill">READY</span>
+      </div>
 
-        <div class="scanner-stage" id="scannerStage">
-          <div class="grid-lines"></div>
-          <div class="scan-line"></div>
+      <div class="body-console">
+        <div class="control-rail">
+          <button class="rail-button" onclick="startScan()">SCAN</button>
+        </div>
 
-          <div class="person" id="person">
-            <div class="head"></div>
-<div class="body"></div>
-            <div class="left-arm"></div>
-            <div class="right-arm"></div>
-            <div class="left-leg"></div>
-            <div class="right-leg"></div>
+        <div class="scan-stage" id="scanArea">
+          <div class="scan-grid"></div>
+          <div class="moving-line"></div>
+          <div id="resultBadge" class="result-badge badge-clear">✓</div>
+
+          <div class="people">
+            <svg class="body-svg" viewBox="0 0 170 360" aria-label="front body scan">
+              <path d="M57 92 C32 70 23 43 22 16" stroke="#8b96a8" stroke-width="22" stroke-linecap="round" fill="none"/>
+              <path d="M113 92 C138 70 147 43 148 16" stroke="#8b96a8" stroke-width="22" stroke-linecap="round" fill="none"/>
+              <circle cx="85" cy="44" r="25" fill="#8b96a8"/>
+              <rect x="55" y="82" width="60" height="122" rx="24" fill="#8b96a8"/>
+              <rect x="58" y="190" width="26" height="126" rx="13" fill="#8b96a8"/>
+              <rect x="86" y="190" width="26" height="126" rx="13" fill="#8b96a8"/>
+              <circle id="dotA1" class="heat-dot" cx="85" cy="130" r="0" fill="#10b981"/>
+              <circle id="dotA2" class="heat-dot" cx="82" cy="174" r="0" fill="#f59e0b"/>
+              <circle id="dotA3" class="heat-dot" cx="104" cy="248" r="0" fill="#ef4444"/>
+            </svg>
+
+            <svg class="body-svg" viewBox="0 0 170 360" aria-label="back body scan">
+              <path d="M57 92 C32 70 23 43 22 16" stroke="#7d8798" stroke-width="22" stroke-linecap="round" fill="none"/>
+              <path d="M113 92 C138 70 147 43 148 16" stroke="#7d8798" stroke-width="22" stroke-linecap="round" fill="none"/>
+              <circle cx="85" cy="44" r="25" fill="#7d8798"/>
+              <rect x="55" y="82" width="60" height="122" rx="24" fill="#7d8798"/>
+              <rect x="58" y="190" width="26" height="126" rx="13" fill="#7d8798"/>
+              <rect x="86" y="190" width="26" height="126" rx="13" fill="#7d8798"/>
+              <circle id="dotB1" class="heat-dot" cx="85" cy="130" r="0" fill="#10b981"/>
+              <circle id="dotB2" class="heat-dot" cx="88" cy="174" r="0" fill="#f59e0b"/>
+              <circle id="dotB3" class="heat-dot" cx="66" cy="248" r="0" fill="#ef4444"/>
+            </svg>
           </div>
         </div>
 
-        <div class="controls">
-          <button class="start" onclick="startScan()">▶️ Start Scan</button>
-          <button class="reset" onclick="resetScanner()">↻ Reset Scanner</button>
-          <button class="secondary" onclick="playChime()">🔊 Security Chime</button>
-          <button class="alarm" onclick="playAlarm()">🚨 Alarm Test</button>
+        <div class="control-rail">
+          <button class="rail-button dark" onclick="forceClear()">CLEAR</button>
+          <button class="rail-button dark" onclick="forceCheck()">REVIEW</button>
+          <button class="rail-button dark" onclick="forceStop()">STOP</button>
         </div>
+      </div>
+
+      <div class="bottom-controls">
+        <div class="tiny-control">FRONT</div>
+        <div class="tiny-control">BACK</div>
+        <div class="tiny-control">THERMAL</div>
+        <div class="tiny-control">DENSITY</div>
+        <div class="tiny-control">LANE A</div>
+        <div class="tiny-control">SAVE</div>
+        <div class="tiny-control">PRINT</div>
+        <div class="tiny-control" id="topTime">--:--</div>
       </div>
     </main>
 
-    <aside>
-      <div class="card">
-        <h2>Passenger Setup</h2>
+    <aside class="side-stack">
+      <section class="panel card">
+        <div class="panel-title">
+          <span>Operator Panel</span>
+        </div>
 
         <label>Passenger name</label>
         <input id="passengerName" placeholder="Passenger name">
 
-        <label>Scan mode</label>
-        <select id="scanMode">
-          <option value="random">Random result</option>
-          <option value="clear">Force CLEAR</option>
-          <option value="check">Force SECONDARY CHECK</option>
-          <option value="found">Force ITEM FOUND</option>
+        <label>Scan result mode</label>
+<select id="scanMode">
+          <option value="random">Random</option>
+          <option value="clear">Force Clear</option>
+          <option value="check">Force Review</option>
+          <option value="stop">Force Stop</option>
         </select>
 
-        <label>Security lane</label>
-        <select id="lane">
-          <option>Lane A1</option>
-          <option>Lane A2</option>
-          <option>Lane B1</option>
+        <label>Lane</label>
+        <select id="laneName">
+          <option>Security Lane A</option>
+          <option>Security Lane B</option>
           <option>Fast Track Lane</option>
           <option>Family Lane</option>
         </select>
-      </div>
 
-      <div class="card status-box">
-        <h2>Result</h2>
-        <div id="bigStatus" class="big-status ready">READY</div>
-        <p id="statusText" class="small">Waiting for scanner.</p>
-      </div>
+        <button class="green" onclick="startScan()">Start Body Scan</button>
+        <button class="purple" onclick="runPassportCheck()">Check Passport</button>
+        <button class="orange" onclick="startBagScan()">Scan Bag</button>
+        <button class="grey" onclick="resetScanner()">Reset All</button>
 
-      <div class="card">
-        <h2>Security Report</h2>
-        <div class="report-line"><span>Passenger</span><b id="reportName">Not scanned</b></div>
-        <div class="report-line"><span>Lane</span><b id="reportLane">-</b></div>
-        <div class="report-line"><span>Scan ID</span><b id="reportId">-</b></div>
-        <div class="report-line"><span>Heat zones</span><b id="reportZones">-</b></div>
-        <div class="report-line"><span>Action</span><b id="reportAction">-</b></div>
-      </div>
+        <div class="status-card">
+          <h3>Result</h3>
+          <div id="bigStatus" class="big-status ready-text">READY</div>
+          <p id="resultText">Waiting for scan.</p>
+        </div>
+      </section>
 
-      <div class="card">
-        <h2>Operations Log</h2>
+      <section class="panel card">
+        <div class="panel-title">
+          <span>Security Report</span>
+        </div>
+
+        <div class="report-line">
+          <span>Passenger</span>
+          <b id="reportPassenger">-</b>
+        </div>
+
+        <div class="report-line">
+          <span>Lane</span>
+          <b id="reportLane">-</b>
+        </div>
+
+        <div class="report-line">
+          <span>Scan ID</span>
+          <b id="reportId">-</b>
+        </div>
+
+        <div class="report-line">
+          <span>Action</span>
+          <b id="reportAction">-</b>
+        </div>
+
         <div id="log" class="log">SYSTEM READY<br></div>
-      </div>
+      </section>
     </aside>
   </div>
 
+  <div class="lower-grid">
+    <section class="panel card">
+      <div class="panel-title">
+        <span>Document Check</span>
+      </div>
+
+      <p class="mini-warning">Pretend check only. Use fake names and fake passport numbers.</p>
+
+      <label>Passport name</label>
+      <input id="passportName" placeholder="Name on passport">
+
+      <label>Passport number</label>
+      <input id="passportNumber" placeholder="P123456789">
+
+      <label>Document type</label>
+      <select id="documentType">
+        <option>UK Passport</option>
+        <option>EU Passport</option>
+        <option>US Passport</option>
+        <option>Boarding ID Card</option>
+      </select>
+
+      <button class="purple" onclick="runPassportCheck()">Run Passport Check</button>
+      <div id="passportResult" class="passport-result">PASSPORT READY</div>
+    </section>
+
+    <section class="panel xray-console">
+      <div class="panel-title">
+        <span>X-ray Bag Heatmap</span>
+        <span id="bagResult" class="status-pill">WAITING</span>
+      </div>
+
+      <p class="mini-warning">Pretend X-ray only. The orange/blue/green image is a fake heatmap for roleplay.</p>
+
+      <div class="xray-screen">
+        <div class="xray-header">
+          <span>BAGGAGE DENSITY VIEW</span>
+          <span id="xrayMode">READY</span>
+        </div>
+
+        <div class="belt" id="belt">
+          <div class="scan-beam"></div>
+          <div class="xray-gate">X-RAY</div>
+          <div class="xray-bag" id="bag"></div>
+          <div class="wire w1"></div>
+          <div class="wire w2"></div>
+          <div class="wire w3"></div>
+        </div>
+
+        <div class="xray-popup" id="xrayPopup">
+          <div class="xray-popup-card">
+            <div class="xray-popup-header">
+              <span>Live X-ray Image</span>
+              <button class="close-popup" onclick="hideXrayPopup()">CLOSE</button>
+            </div>
+
+            <img class="xray-photo" src="assets/xray-bag-heatmap.jpg" alt="X-ray heatmap of a suitcase">
+
+            <div class="xray-popup-footer">
+              Baggage density heatmap displayed when the bag reaches the scanner.
+            </div>
+          </div>
+        </div>
+
+        <div class="xray-items" id="bagItems">No bag scanned.</div>
+      </div>
+
+      <button class="orange" onclick="startBagScan()">Start Bag Scan</button>
+<button class="green" onclick="forceBagClear()">Force Bag Clear</button>
+      <button class="red" onclick="forceBagCheck()">Force Bag Review</button>
+
+      <div class="report-line">
+        <span>Bag action</span>
+        <b id="bagAction">-</b>
+      </div>
+    </section>
+  </div>
+
   <script>
-    const heatPositions = [
-      { x: 93, y: 45, label: "HEAD" },
-      { x: 70, y: 155, label: "LEFT ARM" },
-      { x: 124, y: 160, label: "CHEST" },
-      { x: 175, y: 155, label: "RIGHT ARM" },
-      { x: 120, y: 240, label: "POCKET" },
-      { x: 88, y: 340, label: "LEFT LEG" },
-      { x: 150, y: 340, label: "RIGHT LEG" }
-    ];
+    let forcedResult = "";
+    let forcedBag = "";
+
+    function updateClock() {
+      document.getElementById("topTime").textContent = new Date().toLocaleTimeString();
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
 
     function logLine(text) {
       const log = document.getElementById("log");
@@ -442,130 +924,303 @@ top: 285px;
       log.scrollTop = log.scrollHeight;
     }
 
-    function makeScanId() {
+    function scanId() {
       return "SEC-" + Math.floor(100000 + Math.random() * 900000);
     }
 
-    function randomItem(list) {
-      return list[Math.floor(Math.random() * list.length)];
-    }
-
-    function clearHeatDots() {
-      document.querySelectorAll(".heat-dot").forEach(function(dot) {
-        dot.remove();
-      });
-    }
-
-    function makeDot(position, colour, symbol) {
-      const dot = document.createElement("div");
-      dot.className = "heat-dot heat-" + colour;
-      dot.style.left = position.x + "px";
-      dot.style.top = position.y + "px";
-      dot.textContent = symbol;
-      document.getElementById("person").appendChild(dot);
-      return position.label;
-    }
-
     function chooseResult() {
-      const mode = document.getElementById("scanMode").value;
-
-      if (mode !== "random") {
-        return mode;
+      if (forcedResult) {
+        const answer = forcedResult;
+        forcedResult = "";
+        return answer;
       }
+
+      const mode = document.getElementById("scanMode").value;
+      if (mode !== "random") return mode;
 
       const roll = Math.random();
 
-      if (roll < 0.55) return "clear";
-      if (roll < 0.85) return "check";
-      return "found";
+      if (roll < 0.62) return "clear";
+      if (roll < 0.88) return "check";
+      return "stop";
     }
 
     function startScan() {
-      resetVisualOnly();
+      hideDots();
+      hideBadge();
 
-      const scannerStage = document.getElementById("scannerStage");
-      const passengerName = document.getElementById("passengerName").value.trim() || "Unknown passenger";
-const lane = document.getElementById("lane").value;
+      setStatus("SCANNING", "ready-text", "Passenger must hold still.");
+      document.getElementById("topStatus").textContent = "SCANNING";
+      document.getElementById("scanArea").classList.add("scanning");
 
-      scannerStage.classList.add("scanning");
-      setStatus("SCANNING", "ready", "Scanner moving. Please wait...");
-      logLine("SCAN STARTED for " + passengerName + " in " + lane);
-      playChime();
+      logLine("BODY SCAN STARTED");
+      chimeSound();
 
       setTimeout(function() {
-        scannerStage.classList.remove("scanning");
-        finishScan(passengerName, lane);
-      }, 2600);
+        document.getElementById("scanArea").classList.remove("scanning");
+        finishScan(chooseResult());
+      }, 2300);
     }
 
-    function finishScan(passengerName, lane) {
-      const result = chooseResult();
-      const scanId = makeScanId();
-      let zones = [];
+    function finishScan(result) {
+      const passenger = document.getElementById("passengerName").value.trim() || "Unknown passenger";
+      const lane = document.getElementById("laneName").value;
+      const id = scanId();
       let action = "";
 
       if (result === "clear") {
-        zones.push(makeDot(randomItem(heatPositions), "green", "✓"));
-        setStatus("CLEAR", "clear", "Passenger may continue to the gate area.");
+        showDots(["dotA1", "dotB1"], 18);
+        showBadge("✓", "badge-clear");
+        setStatus("CLEAR", "clear-text", "Passenger may continue.");
         action = "Continue to gate";
-        logLine("RESULT CLEAR — passenger released");
-        playSuccess();
+        successSound();
+        logLine("BODY CLEAR result shown");
       }
 
       if (result === "check") {
-        zones.push(makeDot(randomItem(heatPositions), "yellow", "!"));
-        zones.push(makeDot(randomItem(heatPositions), "green", "✓"));
-        setStatus("SECONDARY CHECK", "check", "Ask passenger for a pretend pocket/bag check.");
-        action = "Secondary check";
-        logLine("RESULT SECONDARY CHECK — yellow heat zone found");
-        playChime();
+        showDots(["dotA2", "dotB2"], 16);
+        showBadge("!", "badge-check");
+        setStatus("REVIEW", "check-text", "Pretend secondary review required.");
+        action = "Secondary review";
+        chimeSound();
+        logLine("BODY REVIEW result shown");
       }
 
-      if (result === "found") {
-        zones.push(makeDot(randomItem(heatPositions), "red", "!"));
-        zones.push(makeDot(randomItem(heatPositions), "yellow", "!"));
-        setStatus("ITEM FOUND", "found", "Pretend item detected. Staff must investigate.");
+      if (result === "stop") {
+        showDots(["dotA3", "dotB3"], 18);
+        showBadge("!", "badge-stop");
+        setStatus("STOP", "stop-text", "Pretend item found. Staff must inspect.");
         action = "Stop and inspect";
-        logLine("RESULT ITEM FOUND — red heat zone found");
-        playAlarm();
+        alarmSound();
+        logLine("BODY STOP result shown");
       }
 
-      document.getElementById("reportName").textContent = passengerName;
+      document.getElementById("topStatus").textContent = result.toUpperCase();
+      document.getElementById("reportPassenger").textContent = passenger;
       document.getElementById("reportLane").textContent = lane;
-      document.getElementById("reportId").textContent = scanId;
-      document.getElementById("reportZones").textContent = zones.join(", ");
+      document.getElementById("reportId").textContent = id;
       document.getElementById("reportAction").textContent = action;
     }
 
-    function setStatus(main, colourClass, text) {
-      const bigStatus = document.getElementById("bigStatus");
-      bigStatus.className = "big-status " + colourClass;
-      bigStatus.textContent = main;
-      document.getElementById("statusText").textContent = text;
+    function runPassportCheck() {
+      const passenger = document.getElementById("passengerName").value.trim();
+      const passportName = document.getElementById("passportName").value.trim();
+      const passportNumber = document.getElementById("passportNumber").value.trim();
+      const documentType = document.getElementById("documentType").value;
+      const result = document.getElementById("passportResult");
+
+      if (!passportName || !passportNumber) {
+        result.textContent = "TYPE PASSPORT DETAILS FIRST";
+        result.style.background = "rgba(250, 204, 21, 0.14)";
+        result.style.color = "#fde68a";
+        result.style.borderColor = "rgba(250, 204, 21, 0.55)";
+        logLine("PASSPORT CHECK needs details");
+        return;
+      }
+
+if (passenger && passportName.toLowerCase() !== passenger.toLowerCase()) {
+        result.textContent = "NAME REVIEW REQUIRED";
+        result.style.background = "rgba(250, 204, 21, 0.14)";
+        result.style.color = "#fde68a";
+        result.style.borderColor = "rgba(250, 204, 21, 0.55)";
+        setStatus("DOC REVIEW", "check-text", "Passenger name and passport name are different.");
+        logLine("PASSPORT REVIEW for " + passportName + " using " + documentType);
+        chimeSound();
+        return;
+      }
+
+      result.textContent = "DOCUMENT VALID ✓";
+      result.style.background = "rgba(5, 150, 105, 0.15)";
+      result.style.color = "#34d399";
+      result.style.borderColor = "rgba(52, 211, 153, 0.45)";
+
+      setStatus("DOC OK", "clear-text", "Document check passed.");
+      document.getElementById("reportPassenger").textContent = passportName;
+      document.getElementById("reportAction").textContent = "Document checked";
+
+      logLine("PASSPORT OK for " + passportName + " using " + documentType);
+      successSound();
     }
 
-    function resetVisualOnly() {
-      clearHeatDots();
-      document.getElementById("scannerStage").classList.remove("scanning");
+    function startBagScan() {
+      const belt = document.getElementById("belt");
+
+      belt.classList.remove("scanning-bag");
+
+      /* This line restarts the animation properly */
+      void belt.offsetWidth;
+
+      belt.classList.add("scanning-bag");
+
+      document.getElementById("bagResult").textContent = "SCANNING";
+      document.getElementById("xrayMode").textContent = "ANALYSING DENSITY";
+      document.getElementById("bagItems").textContent = "Generating X-ray heatmap...";
+      document.getElementById("bagAction").textContent = "Wait";
+
+      setStatus("BAG SCAN", "ready-text", "Bag is moving through the X-ray heatmap scanner.");
+      logLine("BAG HEATMAP SCAN STARTED");
+      chimeSound();
+
+      setTimeout(showXrayPopup, 1450);
+      setTimeout(finishBagScan, 3050);
+    }
+
+    function finishBagScan() {
+      const safeItems = [
+        "Laptop shape",
+        "Books",
+        "Keys",
+        "Headphones",
+        "Cable bundle",
+        "Clothing density"
+      ];
+
+      const reviewItems = [
+        "Liquid bottle shape",
+        "Dense metal block",
+        "Unclear object",
+        "Large aerosol shape",
+        "Unknown dense area"
+      ];
+
+      let needsCheck = false;
+
+      if (forcedBag === "clear") {
+        needsCheck = false;
+      } else if (forcedBag === "check") {
+        needsCheck = true;
+      } else {
+        needsCheck = Math.random() > 0.62;
+      }
+
+      forcedBag = "";
+
+      const item1 = safeItems[Math.floor(Math.random() * safeItems.length)];
+      const item2 = safeItems[Math.floor(Math.random() * safeItems.length)];
+      const item3 = needsCheck
+        ? reviewItems[Math.floor(Math.random() * reviewItems.length)]
+        : safeItems[Math.floor(Math.random() * safeItems.length)];
+
+      document.getElementById("bagItems").innerHTML =
+        '<span class="xray-item">' + item1 + '</span>' +
+        '<span class="xray-item">' + item2 + '</span>' +
+        '<span class="xray-item">' + item3 + '</span>';
+
+      if (needsCheck) {
+        document.getElementById("bagResult").textContent = "REVIEW";
+        document.getElementById("xrayMode").textContent = "DENSITY REVIEW";
+        document.getElementById("bagAction").textContent = "Open bag for pretend review";
+
+        setStatus("BAG REVIEW", "check-text", "X-ray heatmap needs a pretend bag review.");
+        logLine("BAG HEATMAP REVIEW required");
+        alarmSound();
+      } else {
+        document.getElementById("bagResult").textContent = "CLEAR";
+        document.getElementById("xrayMode").textContent = "BAG CLEAR";
+        document.getElementById("bagAction").textContent = "Bag can continue";
+
+        setStatus("BAG CLEAR", "clear-text", "Bag can continue to the gate.");
+        logLine("BAG HEATMAP CLEAR result shown");
+        successSound();
+      }
+    }
+
+    function showXrayPopup() {
+      document.getElementById("xrayPopup").classList.add("show");
+      logLine("LIVE X-RAY IMAGE DISPLAYED");
+    }
+
+    function hideXrayPopup() {
+document.getElementById("xrayPopup").classList.remove("show");
+    }
+
+    function forceBagClear() {
+      forcedBag = "clear";
+      startBagScan();
+    }
+
+    function forceBagCheck() {
+      forcedBag = "check";
+      startBagScan();
+    }
+
+    function setStatus(status, className, text) {
+      const bigStatus = document.getElementById("bigStatus");
+      bigStatus.className = "big-status " + className;
+      bigStatus.textContent = status;
+      document.getElementById("resultText").textContent = text;
+    }
+
+    function showDots(ids, radius) {
+      ids.forEach(function(id) {
+        document.getElementById(id).setAttribute("r", radius);
+      });
+    }
+
+    function hideDots() {
+      ["dotA1", "dotA2", "dotA3", "dotB1", "dotB2", "dotB3"].forEach(function(id) {
+        document.getElementById(id).setAttribute("r", 0);
+      });
+    }
+
+    function showBadge(text, badgeClass) {
+      const badge = document.getElementById("resultBadge");
+      badge.textContent = text;
+      badge.className = "result-badge " + badgeClass + " show";
+    }
+
+    function hideBadge() {
+      const badge = document.getElementById("resultBadge");
+      badge.className = "result-badge badge-clear";
+    }
+
+    function forceClear() {
+      forcedResult = "clear";
+      startScan();
+    }
+
+    function forceCheck() {
+      forcedResult = "check";
+      startScan();
+    }
+
+    function forceStop() {
+      forcedResult = "stop";
+      startScan();
     }
 
     function resetScanner() {
-      resetVisualOnly();
-      setStatus("READY", "ready", "Waiting for scanner.");
-      document.getElementById("reportName").textContent = "Not scanned";
+      hideDots();
+      hideBadge();
+
+      document.getElementById("scanArea").classList.remove("scanning");
+      document.getElementById("topStatus").textContent = "READY";
+
+      setStatus("READY", "ready-text", "Waiting for scan.");
+
+      document.getElementById("reportPassenger").textContent = "-";
       document.getElementById("reportLane").textContent = "-";
       document.getElementById("reportId").textContent = "-";
-      document.getElementById("reportZones").textContent = "-";
       document.getElementById("reportAction").textContent = "-";
-      logLine("SCANNER RESET");
+
+      document.getElementById("passportResult").textContent = "PASSPORT READY";
+      document.getElementById("passportResult").style.background = "rgba(37, 99, 235, 0.14)";
+      document.getElementById("passportResult").style.color = "#93c5fd";
+      document.getElementById("passportResult").style.borderColor = "rgba(147, 197, 253, 0.35)";
+
+      hideXrayPopup();
+
+      document.getElementById("bagResult").textContent = "WAITING";
+      document.getElementById("xrayMode").textContent = "READY";
+      document.getElementById("bagItems").textContent = "No bag scanned.";
+      document.getElementById("bagAction").textContent = "-";
+
+      logLine("ALL SYSTEMS RESET");
     }
 
     function beep(frequency, duration, type) {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
-
-      if (!AudioContext) {
-        return;
-      }
+      if (!AudioContext) return;
 
       const audio = new AudioContext();
       const osc = audio.createOscillator();
@@ -573,7 +1228,7 @@ const lane = document.getElementById("lane").value;
 
       osc.type = type || "sine";
       osc.frequency.value = frequency;
-      gain.gain.value = 0.08;
+      gain.gain.value = 0.055;
 
       osc.connect(gain);
       gain.connect(audio.destination);
@@ -585,21 +1240,31 @@ const lane = document.getElementById("lane").value;
       }, duration);
     }
 
-    function playChime() {
-      beep(740, 120, "sine");
-      setTimeout(function() { beep(980, 120, "sine"); }, 150);
+    function chimeSound() {
+      beep(740, 90, "sine");
+      setTimeout(function() {
+        beep(920, 90, "sine");
+      }, 120);
     }
 
-    function playSuccess() {
-      beep(660, 90, "sine");
-      setTimeout(function() { beep(880, 90, "sine"); }, 110);
-      setTimeout(function() { beep(1100, 120, "sine"); }, 220);
+    function successSound() {
+      beep(700, 80, "sine");
+      setTimeout(function() {
+        beep(960, 80, "sine");
+      }, 100);
+      setTimeout(function() {
+        beep(1180, 90, "sine");
+      }, 200);
     }
 
-    function playAlarm() {
-      beep(240, 180, "square");
-      setTimeout(function() { beep(240, 180, "square"); }, 230);
-      setTimeout(function() { beep(240, 180, "square"); }, 460);
+    function alarmSound() {
+      beep(230, 150, "square");
+      setTimeout(function() {
+        beep(230, 150, "square");
+      }, 200);
+      setTimeout(function() {
+        beep(230, 150, "square");
+      }, 400);
     }
   </script>
 </body>

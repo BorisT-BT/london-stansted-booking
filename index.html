@@ -3,44 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emirates Style Sky Dining</title>
+  <title>Stansted Sky Dining</title>
   <style>
     * {
       box-sizing: border-box;
+    }
+
+    :root {
+      --red: #7f1d1d;
+      --deep-red: #4a0505;
+      --gold: #d4af37;
+      --cream: #fffaf0;
+      --soft-cream: #f7f1e8;
+      --ink: #24140f;
+      --muted: #76614a;
+      --line: #ead7a4;
+      --green: #15803d;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
-      color: #2b2118;
+      color: var(--ink);
       background:
-        linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)),
+        linear-gradient(rgba(247, 241, 232, 0.92), rgba(247, 241, 232, 0.94)),
         url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
     }
 
     .top-bar {
-      background: #b00020;
+      background: var(--deep-red);
       color: white;
-      padding: 10px 20px;
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
+      padding: 12px 16px;
+      border-bottom: 4px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .top-links a {
+      color: white;
+      background: var(--red);
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      padding: 8px 12px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 800;
     }
 
     .app {
       width: min(1120px, 94vw);
       margin: 0 auto;
-      padding: 28px 0 50px;
+      padding: 22px 0 42px;
     }
 
     header {
-      background: linear-gradient(135deg, #ffffff, #f9f1df);
-      border-bottom: 7px solid #b00020;
-      border-radius: 0 0 28px 28px;
-      padding: 34px 28px;
-      box-shadow: 0 18px 45px rgba(48, 30, 17, 0.18);
+      background: linear-gradient(135deg, #ffffff, #f9edcf);
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      border-bottom: 7px solid var(--red);
+      box-shadow: 0 16px 38px rgba(36, 20, 15, 0.16);
+      padding: clamp(20px, 4vw, 34px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -80px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 24px solid rgba(212, 175, 55, 0.25);
     }
 
     .brand-line {
@@ -49,6 +103,8 @@
       justify-content: space-between;
       gap: 18px;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
     }
 
     .logo-box {
@@ -58,131 +114,128 @@
     }
 
     .logo-mark {
-      width: 62px;
-      height: 62px;
+      width: 58px;
+      height: 58px;
       border-radius: 16px;
-      background: #b00020;
-      color: #f5d48a;
+      background: var(--red);
+      color: var(--gold);
       display: grid;
       place-items: center;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 900;
-      box-shadow: inset 0 0 0 3px #f5d48a;
+      box-shadow: inset 0 0 0 3px var(--gold);
+      flex: 0 0 auto;
     }
 
     h1 {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.3rem, 6vw, 4.6rem);
+      font-size: clamp(2rem, 8vw, 4.4rem);
       color: #3d2614;
-      letter-spacing: 0.02em;
+      line-height: 1;
     }
 
     .subtitle {
-      margin: 8px 0 0;
-      font-size: 1.1rem;
-      color: #6f5943;
-      max-width: 700px;
+      margin: 9px 0 0;
+      color: var(--muted);
       line-height: 1.5;
+      font-weight: 650;
+      max-width: 700px;
     }
 
-    .pill {
+    .flight-pill {
       background: #3d2614;
-      color: #f5d48a;
-      border: 1px solid #f5d48a;
+      color: var(--gold);
+      border: 1px solid var(--gold);
       border-radius: 999px;
-      padding: 10px 16px;
-      font-weight: 700;
+      padding: 10px 15px;
+      font-weight: 900;
       white-space: nowrap;
     }
 
-    .status-row {
+    .steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      margin: 24px 0;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 20px 0;
     }
 
-    .status-card {
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid rgba(176, 0, 32, 0.18);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 12px 30px rgba(48, 30, 17, 0.12);
+    .step {
+      background: rgba(255, 255, 255, 0.86);
+border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 8px;
+      text-align: center;
+      color: var(--red);
+      font-weight: 900;
+      font-size: 0.9rem;
     }
 
-    .status-label {
-      display: block;
-      color: #85684b;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 7px;
-      font-weight: 700;
-    }
-
-    .status-value {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #3d2614;
+    .step.active {
+      background: var(--red);
+      color: white;
+      border-color: var(--gold);
+      box-shadow: 0 8px 18px rgba(127, 29, 29, 0.2);
     }
 
     .section-title {
       display: flex;
       align-items: end;
       justify-content: space-between;
-      gap: 16px;
-      margin: 30px 0 14px;
+      gap: 14px;
       flex-wrap: wrap;
+      margin: 24px 0 14px;
     }
 
     h2 {
       margin: 0;
       color: #3d2614;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 2rem;
+      font-size: clamp(1.55rem, 5vw, 2.15rem);
     }
 
     .hint {
       margin: 0;
-      color: #6f5943;
-      font-weight: 600;
+      color: var(--muted);
+      font-weight: 700;
     }
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
     }
 
     .meal-card {
       border: 0;
       padding: 0;
-      background: #fffdf8;
       border-radius: 22px;
       overflow: hidden;
+      background: var(--cream);
       text-align: left;
       cursor: pointer;
-      box-shadow: 0 16px 36px rgba(48, 30, 17, 0.18);
+      box-shadow: 0 14px 34px rgba(36, 20, 15, 0.17);
       transition: transform 0.16s ease, box-shadow 0.16s ease;
-      position: relative;
+      min-height: 100%;
     }
 
-.meal-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 46px rgba(48, 30, 17, 0.25);
+    .meal-card:hover,
+    .meal-card:focus-visible {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 44px rgba(36, 20, 15, 0.24);
+      outline: 3px solid var(--gold);
     }
 
     .meal-card.selected {
-      outline: 4px solid #b00020;
-      box-shadow: 0 22px 48px rgba(176, 0, 32, 0.24);
+      outline: 4px solid var(--red);
     }
 
     .meal-card img {
       width: 100%;
-      height: 165px;
+      height: 168px;
       object-fit: cover;
       display: block;
+      background: #ead7a4;
     }
 
     .meal-body {
@@ -190,80 +243,86 @@
     }
 
     .meal-type {
-      color: #b00020;
+      color: var(--red);
       font-size: 0.76rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 8px;
     }
 
     .meal-name {
-      color: #2b2118;
-      font-size: 1.18rem;
-      font-weight: 800;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--ink);
       margin-bottom: 8px;
     }
 
     .meal-description {
-      color: #6f5943;
+      color: var(--muted);
       line-height: 1.4;
       font-size: 0.94rem;
       min-height: 52px;
     }
 
     .meal-meta {
-      margin-top: 13px;
       display: flex;
       justify-content: space-between;
-      gap: 10px;
       align-items: center;
-      color: #3d2614;
-      font-weight: 800;
+      gap: 10px;
+      margin-top: 14px;
+      font-weight: 900;
     }
 
     .price {
-      color: #b00020;
+      color: var(--red);
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: start;
+      margin-top: 28px;
     }
 
     .panel {
-      margin-top: 30px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .order-panel,
-    .summary-panel {
-      background: rgba(255, 253, 248, 0.96);
+      background: rgba(255, 250, 240, 0.97);
+      border: 1px solid var(--line);
       border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 18px 45px rgba(48, 30, 17, 0.18);
-      border: 1px solid rgba(176, 0, 32, 0.16);
+      padding: 20px;
+      box-shadow: 0 16px 38px rgba(36, 20, 15, 0.16);
     }
 
     .tray {
-      min-height: 170px;
+      min-height: 160px;
       border: 1px solid #dbc9a5;
-      border-radius: 22px;
+      border-radius: 20px;
       background: linear-gradient(135deg, #fffdf8, #f3e6c8);
-      padding: 16px;
+      padding: 14px;
     }
 
     .empty {
-      color: #85684b;
-      font-weight: 700;
+      margin: 44px 0;
       text-align: center;
-      margin-top: 48px;
+      color: var(--muted);
+      font-weight: 800;
     }
 
     .tray-item {
       display: grid;
-      grid-template-columns: 64px 1fr auto;
+      grid-template-columns: 68px 1fr auto;
       gap: 12px;
       align-items: center;
-      padding: 10px 0;
+      padding: 11px 0;
       border-bottom: 1px solid #eadcbd;
     }
 
@@ -272,20 +331,36 @@
     }
 
     .tray-item img {
-      width: 64px;
-      height: 50px;
+      width: 68px;
+      height: 54px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 13px;
     }
 
     .tray-item strong {
       display: block;
-      color: #2b2118;
+      color: var(--ink);
     }
 
     .tray-item span {
-      color: #85684b;
+      color: var(--muted);
       font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+      font-weight: 850;
+    }
+
+    .summary-line.total {
+      border-bottom: 0;
+      font-size: 1.35rem;
+      color: var(--red);
     }
 
     .buttons {
@@ -295,181 +370,324 @@
       margin-top: 16px;
     }
 
-    button.action {
+button.action {
       border: 0;
       border-radius: 999px;
-      padding: 13px 18px;
-      font-weight: 800;
+      padding: 14px 18px;
+      min-height: 48px;
+      font-weight: 900;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
+      font-family: inherit;
     }
 
-    .confirm {
-      background: #b00020;
+    .primary {
+      background: var(--red);
       color: white;
     }
 
-    .random {
+    .dark {
       background: #3d2614;
-      color: #f5d48a;
+      color: var(--gold);
     }
 
-    .clear {
+    .light {
       background: #efe1c1;
       color: #3d2614;
     }
 
     .receipt {
       margin-top: 16px;
-      border-left: 5px solid #b00020;
+      border-left: 5px solid var(--red);
       background: #fff6e4;
       padding: 14px 16px;
       border-radius: 14px;
       color: #3d2614;
       line-height: 1.45;
-      font-weight: 700;
+      font-weight: 750;
     }
 
-    .summary-panel dl {
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 900;
+      color: #3d2614;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 2px solid #d8c8a1;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 16px;
+      background: white;
+      color: var(--ink);
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+    }
+
+    .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin: 0;
     }
 
-    .summary-panel dt {
-      color: #85684b;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 800;
+    .secure-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--green);
+      font-weight: 900;
     }
 
-    .summary-panel dd {
-      margin: 4px 0 0;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #2b2118;
-    }
-
-    .note {
+    .confirmed {
+      background: #ecfdf5;
+      border: 1px solid #86efac;
+      color: #166534;
+      border-radius: 18px;
+      padding: 18px;
+      font-size: 1.25rem;
+      font-weight: 900;
       margin-top: 16px;
-      color: #6f5943;
-      line-height: 1.45;
     }
 
     footer {
-      margin-top: 28px;
+      margin-top: 26px;
       text-align: center;
-      color: #6f5943;
+      color: var(--muted);
       font-size: 0.9rem;
       background: rgba(255, 255, 255, 0.78);
       padding: 12px;
       border-radius: 16px;
+      font-weight: 700;
     }
 
     @media (max-width: 760px) {
-      .panel {
+      body {
+        background-attachment: scroll;
+      }
+
+      .top-bar {
+        position: static;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .brand {
+        width: 100%;
+      }
+
+      .top-links {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .top-links a {
+        text-align: center;
+        padding: 10px 8px;
+      }
+
+      .app {
+        width: min(100% - 20px, 1120px);
+        padding-top: 12px;
+      }
+
+      .logo-box {
+        align-items: flex-start;
+      }
+
+      .logo-mark {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+      }
+
+      .flight-pill {
+        width: 100%;
+        text-align: center;
+      }
+
+      .steps {
         grid-template-columns: 1fr;
       }
 
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .meal-card img {
+        height: 190px;
+      }
+
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
       .tray-item {
-        grid-template-columns: 58px 1fr;
+        grid-template-columns: 62px 1fr;
       }
 
       .tray-price {
         grid-column: 2;
       }
+
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      button.action {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="top-bar">Emirates-style Sky Dining • Private roleplay demo</div>
+  <div class="top-bar">
+    <div class="brand">✈️ Emirates | London Stansted</div>
+    <nav class="top-links">
+      <a href="customer.html">Customer Booking</a>
+      <a href="staff.html">Staff Scanner</a>
+      <a href="security.html">Security</a>
+      <a href="index.html">Dining</a>
+    </nav>
+  </div>
 
   <main class="app">
-<header>
+    <header>
       <div class="brand-line">
         <div class="logo-box">
           <div class="logo-mark">E</div>
           <div>
             <h1>Sky Dining</h1>
-            <p class="subtitle">A formal airline meal selector inspired by premium Emirates-style colours: deep red, gold, cream, and polished cabin service.</p>
+<p class="subtitle">Choose premium meals for your Stansted journey, then continue to a polished payment step.</p>
           </div>
         </div>
-        <div class="pill">Flight EK 777 • Dinner Service</div>
+        <div class="flight-pill">Flight EK 777 • Dinner Service</div>
       </div>
     </header>
 
-    <section class="status-row">
-      <div class="status-card">
-        <span class="status-label">Passenger</span>
-        <span class="status-value">Boris Trifonov</span>
-      </div>
-      <div class="status-card">
-        <span class="status-label">Cabin</span>
-        <span class="status-value">Business Class</span>
-      </div>
-      <div class="status-card">
-        <span class="status-label">Selected dishes</span>
-        <span class="status-value" id="count">0</span>
-      </div>
-      <div class="status-card">
-        <span class="status-label">Total</span>
-        <span class="status-value" id="total">£0</span>
-      </div>
-    </section>
+    <div class="steps">
+      <div class="step active" id="stepMenu">1 Choose meal</div>
+      <div class="step" id="stepPay">2 Payment</div>
+      <div class="step" id="stepDone">3 Confirmation</div>
+    </div>
 
-    <section class="section-title">
-      <div>
-        <h2>Choose Your Meal</h2>
-        <p class="hint">Select from real-food photo menu cards.</p>
-      </div>
-      <p class="hint">Click a card to add it to your tray.</p>
-    </section>
+    <section class="screen active" id="menuScreen">
+      <section class="section-title">
+        <div>
+          <h2>Choose Your Meal</h2>
+          <p class="hint">Tap a real-food photo card to add it to your tray.</p>
+        </div>
+        <p class="hint"><span id="count">0</span> selected • <span id="total">£0</span></p>
+      </section>
 
-    <section class="menu-grid" id="menuGrid"></section>
+      <section class="menu-grid" id="menuGrid"></section>
 
-    <section class="panel">
-      <div class="order-panel">
-        <h2>Your Meal Tray</h2>
-        <div class="tray" id="tray">
-          <p class="empty">No dishes selected yet. Please choose from the menu above.</p>
+      <section class="checkout-layout">
+        <div class="panel">
+          <h2>Your Meal Tray</h2>
+          <div class="tray" id="tray">
+            <p class="empty">No dishes selected yet. Please choose from the menu above.</p>
+          </div>
+          <div class="buttons">
+            <button class="action dark" onclick="addRandomMeal()">Add chef recommendation</button>
+            <button class="action primary" onclick="goToPayment()">Continue to payment</button>
+            <button class="action light" onclick="clearTray()">Clear tray</button>
+          </div>
+          <div class="receipt" id="receipt">Your cabin crew is ready to prepare your selected meal.</div>
         </div>
 
-        <div class="buttons">
-          <button class="action random" onclick="addRandomMeal()">Add chef recommendation</button>
-          <button class="action confirm" onclick="confirmOrder()">Confirm meal selection</button>
-          <button class="action clear" onclick="clearTray()">Clear tray</button>
+        <div class="panel">
+          <h2>Order Total</h2>
+          <div class="summary-line"><span>Selected dishes</span><strong id="summaryCount">0</strong></div>
+          <div class="summary-line"><span>Dining total</span><strong id="summaryTotal">£0</strong></div>
+          <div class="summary-line total"><span>Amount due</span><strong id="amountDue">£0</strong></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="screen" id="paymentScreen">
+      <section class="checkout-layout">
+        <div class="panel">
+          <h2>Payment</h2>
+          <div class="secure-box">🔒 Secure checkout • Stansted Sky Dining</div>
+          <form onsubmit="completePayment(event)">
+            <div>
+              <label for="customerName">Passenger name</label>
+              <input id="customerName" placeholder="Boris Trifonov" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="cardName">Name on card</label>
+              <input id="cardName" placeholder="Name exactly as shown on card" autocomplete="cc-name" required>
+            </div>
+            <div>
+              <label for="cardNumber">Card number</label>
+              <input id="cardNumber" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="cc-number" required>
+            </div>
+            <div class="row">
+              <div>
+                <label for="expiry">Expiry</label>
+                <input id="expiry" inputmode="numeric" placeholder="MM/YY" autocomplete="cc-exp" required>
+              </div>
+              <div>
+                <label for="cvv">CVV</label>
+                <input id="cvv" inputmode="numeric" placeholder="123" autocomplete="cc-csc" required>
+              </div>
+            </div>
+            <div class="buttons">
+              <button class="action primary" type="submit">Pay and confirm</button>
+              <button class="action light" type="button" onclick="showMenu()">Back to menu</button>
+            </div>
+          </form>
         </div>
 
-        <div class="receipt" id="receipt">Your cabin crew is ready to prepare your selected meal.</div>
-      </div>
+        <div class="panel">
+          <h2>Payment Summary</h2>
+          <div id="paymentItems" class="tray"></div>
+          <div class="summary-line total"><span>Total</span><strong id="paymentTotal">£0</strong></div>
+        </div>
+      </section>
+    </section>
 
-      <div class="summary-panel">
-        <h2>Service Summary</h2>
-        <dl>
-          <div>
-            <dt>Service</dt>
-            <dd>Dinner</dd>
-          </div>
-          <div>
-            <dt>Seat</dt>
-            <dd>2A</dd>
-          </div>
-          <div>
-            <dt>Drink</dt>
-            <dd>Still Water</dd>
-          </div>
-          <div>
-            <dt>Status</dt>
-            <dd id="statusText">Selecting</dd>
-          </div>
-        </dl>
-        <p class="note">This is a pretend private website for roleplay and learning. It is not connected to Emirates or any real airline system.</p>
+    <section class="screen" id="confirmationScreen">
+      <div class="panel">
+        <h2>Dining Confirmed</h2>
+        <div class="confirmed" id="confirmationText">Your meal selection has been confirmed.</div>
+<div class="buttons">
+          <button class="action primary" onclick="location.href='customer.html'">Return to customer booking</button>
+          <button class="action dark" onclick="location.href='staff.html'">Open staff scanner</button>
+          <button class="action light" onclick="location.href='security.html'">Open security</button>
+        </div>
       </div>
     </section>
 
-    <footer>Premium airline-style food selector • HTML, CSS, and JavaScript only</footer>
+    <footer>London Stansted dining selector • Customer Booking • Staff Scanner • Security</footer>
   </main>
 
   <script>
@@ -477,7 +695,7 @@
       {
         type: "Main Course",
         name: "Grilled Chicken with Rice",
-        description: "Tender grilled chicken served with seasoned rice, vegetables, and a light sauce.",
+        description: "Grilled chicken served with seasoned rice, vegetables, and a light sauce.",
         price: 18,
         image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80"
       },
@@ -498,9 +716,9 @@
       {
         type: "Vegetarian",
         name: "Mediterranean Salad",
-        description: "Fresh salad with tomatoes, cucumber, olives, leaves, and a lemon dressing.",
+        description: "Fresh salad with tomatoes, cucumber, olives, leaves, and lemon dressing.",
         price: 12,
-image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80"
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80"
       },
       {
         type: "Light Meal",
@@ -537,8 +755,12 @@ image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format
     const tray = document.getElementById("tray");
     const count = document.getElementById("count");
     const total = document.getElementById("total");
+    const summaryCount = document.getElementById("summaryCount");
+    const summaryTotal = document.getElementById("summaryTotal");
+    const amountDue = document.getElementById("amountDue");
+    const paymentItems = document.getElementById("paymentItems");
+    const paymentTotal = document.getElementById("paymentTotal");
     const receipt = document.getElementById("receipt");
-    const statusText = document.getElementById("statusText");
 
     function buildMenu() {
       meals.forEach((meal, index) => {
@@ -551,8 +773,8 @@ image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format
             <div class="meal-name">${meal.name}</div>
             <div class="meal-description">${meal.description}</div>
             <div class="meal-meta">
-              <span>Choose dish</span>
-              <span class="price">£${meal.price}</span>
+              <span>Add to tray</span>
+<span class="price">£${meal.price}</span>
             </div>
           </div>
         `;
@@ -561,26 +783,34 @@ image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format
       });
     }
 
+    function mealTotal() {
+      return selectedMeals.reduce((sum, meal) => sum + meal.price, 0);
+    }
+
     function selectMeal(index, card) {
       selectedMeals.push(meals[index]);
       card.classList.add("selected");
       setTimeout(() => card.classList.remove("selected"), 450);
-      statusText.textContent = "Selecting";
-      receipt.textContent = `${meals[index].name} has been added to your premium meal tray.`;
+      receipt.textContent = `${meals[index].name} has been added to your meal tray.`;
       updateTray();
     }
 
     function updateTray() {
+      const totalPrice = mealTotal();
       count.textContent = selectedMeals.length;
-      const totalPrice = selectedMeals.reduce((sum, meal) => sum + meal.price, 0);
       total.textContent = `£${totalPrice}`;
+      summaryCount.textContent = selectedMeals.length;
+      summaryTotal.textContent = `£${totalPrice}`;
+      amountDue.textContent = `£${totalPrice}`;
+      paymentTotal.textContent = `£${totalPrice}`;
 
       if (selectedMeals.length === 0) {
         tray.innerHTML = `<p class="empty">No dishes selected yet. Please choose from the menu above.</p>`;
+        paymentItems.innerHTML = `<p class="empty">Your selected dishes will appear here.</p>`;
         return;
       }
 
-      tray.innerHTML = selectedMeals.map(meal => `
+      const itemsHtml = selectedMeals.map(meal => `
         <div class="tray-item">
           <img src="${meal.image}" alt="${meal.name}">
           <div>
@@ -590,36 +820,60 @@ image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format
           <strong class="tray-price">£${meal.price}</strong>
         </div>
       `).join("");
+
+      tray.innerHTML = itemsHtml;
+      paymentItems.innerHTML = itemsHtml;
     }
 
     function addRandomMeal() {
       const randomIndex = Math.floor(Math.random() * meals.length);
       selectedMeals.push(meals[randomIndex]);
       receipt.textContent = `Chef recommendation added: ${meals[randomIndex].name}.`;
-      statusText.textContent = "Selecting";
       updateTray();
     }
 
     function clearTray() {
       selectedMeals.length = 0;
-      statusText.textContent = "Selecting";
       receipt.textContent = "Your tray has been cleared. Please choose a new meal selection.";
       updateTray();
     }
 
-    function confirmOrder() {
-if (selectedMeals.length === 0) {
-        receipt.textContent = "Please select at least one dish before confirming your meal.";
+    function setStep(activeStep) {
+      document.querySelectorAll(".step").forEach(step => step.classList.remove("active"));
+      document.getElementById(activeStep).classList.add("active");
+    }
+
+    function showScreen(screenId) {
+      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      document.getElementById(screenId).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showMenu() {
+      setStep("stepMenu");
+      showScreen("menuScreen");
+    }
+
+    function goToPayment() {
+      if (selectedMeals.length === 0) {
+        receipt.textContent = "Please select at least one dish before continuing to payment.";
         return;
       }
+      setStep("stepPay");
+      showScreen("paymentScreen");
+    }
 
-      const mealNames = selectedMeals.map(meal => meal.name).join(", ");
-      const totalPrice = selectedMeals.reduce((sum, meal) => sum + meal.price, 0);
-      statusText.textContent = "Confirmed";
-      receipt.textContent = `Meal confirmed for seat 2A: ${mealNames}. Total: £${totalPrice}. Your cabin crew will serve it shortly.`;
+    function completePayment(event) {
+      event.preventDefault();
+      const passenger = document.getElementById("customerName").value.trim() || "Passenger";
+      const names = selectedMeals.map(meal => meal.name).join(", ");
+      setStep("stepDone");
+      document.getElementById("confirmationText").textContent = `${passenger}, your Sky Dining order is confirmed: ${names}. Total paid: £${mealTotal()}.`;
+      showScreen("confirmationScreen");
     }
 
     buildMenu();
+    updateTray();
   </script>
 </body>
 </html>

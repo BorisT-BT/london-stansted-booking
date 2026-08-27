@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goofy Food Picker</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Comic Sans MS, Comic Sans, Trebuchet MS, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 20%, #fff06a 0 70px, transparent 75px),
+        radial-gradient(circle at 90% 10%, #ff8be6 0 90px, transparent 95px),
+        radial-gradient(circle at 50% 90%, #80f7ff 0 110px, transparent 120px),
+        linear-gradient(135deg, #8b5cf6, #22c55e, #f97316);
+      color: #171717;
+      overflow-x: hidden;
+    }
+
+    .wiggle-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.25;
+      background-image:
+        repeating-linear-gradient(45deg, transparent 0 28px, white 28px 32px),
+        repeating-linear-gradient(-45deg, transparent 0 36px, black 36px 39px);
+      animation: slidey 8s linear infinite;
+    }
+
+    @keyframes slidey {
+      from { transform: translate(0, 0); }
+      to { transform: translate(45px, 45px); }
+    }
+
+    .app {
+      width: min(1050px, 94vw);
+      margin: 0 auto;
+      padding: 26px 0 50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.86);
+      border: 6px solid #111827;
+      border-radius: 34px;
+      padding: 22px;
+      box-shadow: 10px 10px 0 #111827;
+      transform: rotate(-1deg);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 5.4rem);
+      margin: 0;
+      text-shadow: 4px 4px 0 #facc15, 8px 8px 0 #fb7185;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      margin: 10px 0 0;
+      font-weight: 900;
+    }
+
+    .counter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin: 26px 0;
+    }
+
+    .counter {
+      background: #111827;
+      color: white;
+      border: 4px solid white;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 900;
+      box-shadow: 4px 4px 0 #facc15;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 18px;
+    }
+
+    .food-card {
+      border: 5px solid #111827;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.9);
+      min-height: 178px;
+      padding: 16px;
+      cursor: pointer;
+      box-shadow: 7px 7px 0 #111827;
+      transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .food-card:hover {
+      transform: translateY(-7px) rotate(2deg) scale(1.03);
+      box-shadow: 11px 13px 0 #111827;
+      background: #fff7ad;
+    }
+
+    .food-card.selected {
+      background: #bef264;
+      animation: boing 0.45s ease;
+    }
+
+    @keyframes boing {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.18) rotate(-4deg); }
+      100% { transform: scale(1); }
+    }
+
+    .emoji {
+      display: block;
+      font-size: 4rem;
+      filter: drop-shadow(4px 4px 0 #facc15);
+    }
+
+    .food-name {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin-top: 10px;
+    }
+
+    .food-note {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #525252;
+      margin-top: 5px;
+    }
+
+    .panel {
+      margin-top: 28px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 6px dashed #111827;
+      border-radius: 34px;
+      padding: 22px;
+      box-shadow: 10px 10px 0 #fb7185;
+      text-align: center;
+    }
+
+    .plate {
+      min-height: 135px;
+      border-radius: 999px;
+border: 7px solid #d1d5db;
+      background: radial-gradient(circle, #ffffff 0 42%, #e5e7eb 43% 65%, #f9fafb 66%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 18px;
+      margin: 16px auto;
+      max-width: 700px;
+    }
+
+    .plate span {
+      font-size: 3.1rem;
+      animation: tinyDance 1.1s infinite alternate ease-in-out;
+    }
+
+    .plate span:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes tinyDance {
+      from { transform: translateY(0) rotate(-5deg); }
+      to { transform: translateY(-8px) rotate(8deg); }
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 4px solid #111827;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 5px 5px 0 #111827;
+    }
+
+    button:hover {
+      transform: translateY(-3px) rotate(-2deg);
+    }
+
+    .random { background: #38bdf8; }
+    .clear { background: #fb7185; }
+    .order { background: #facc15; }
+
+    .receipt {
+      margin-top: 18px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      background: #111827;
+      color: white;
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 62px;
+    }
+
+    .mascot {
+      position: fixed;
+      right: 18px;
+      bottom: 12px;
+      font-size: 5rem;
+      animation: floaty 2s infinite ease-in-out;
+      z-index: 2;
+      user-select: none;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(8deg); }
+      50% { transform: translateY(-18px) rotate(-8deg); }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        box-shadow: 6px 6px 0 #111827;
+      }
+
+      .mascot {
+        font-size: 3.2rem;
+      }
+
+      .food-card {
+        min-height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wiggle-bg"></div>
+
+  <main class="app">
+    <header>
+      <h1>Goofy Food Picker</h1>
+      <p class="subtitle">Choose your dinner. The food is suspiciously bouncy.</p>
+    </header>
+
+    <section class="counter-row">
+      <div class="counter">Items chosen: <span id="count">0</span></div>
+      <div class="counter">Goofy rating: <span id="goofyRating">0</span>%</div>
+    </section>
+
+    <section class="food-grid" id="foodGrid"></section>
+
+    <section class="panel">
+      <h2>Your wobbling plate</h2>
+      <div class="plate" id="plate">
+        <strong>Click foods to add them here!</strong>
+      </div>
+
+      <div class="buttons">
+        <button class="random" onclick="randomFood()">🎲 Add random food</button>
+        <button class="order" onclick="makeOrder()">🧾 Make goofy order</button>
+        <button class="clear" onclick="clearPlate()">🧽 Clear plate</button>
+      </div>
+
+      <div class="receipt" id="receipt">No order yet. The chef is wearing a traffic cone.</div>
+    </section>
+  </main>
+
+  <div class="mascot" title="Chef Wobblebottom">👨‍🍳</div>
+
+  <script>
+    const foods = [
+      { name: "Banana Pizza", emoji: "🍌🍕", note: "wrong but powerful" },
+      { name: "Mega Burger", emoji: "🍔", note: "requires two hands and courage" },
+      { name: "Drama Taco", emoji: "🌮", note: "falls apart dramatically" },
+      { name: "Sneaky Sushi", emoji: "🍣", note: "probably plotting" },
+      { name: "Rocket Chips", emoji: "🍟", note: "launches into ketchup orbit" },
+      { name: "Spaghetti Tornado", emoji: "🍝", note: "spin before eating" },
+      { name: "Mystery Doughnut", emoji: "🍩", note: "may contain glitter" },
+      { name: "Chicken Nugget Army", emoji: "🍗", note: "marches at lunchtime" },
+      { name: "Ice Cream Volcano", emoji: "🍦", note: "melts with style" },
+      { name: "Pancake Stackzilla", emoji: "🥞", note: "taller than the chef" },
+      { name: "Cheese Moon", emoji: "🧀", note: "orbits your plate" },
+      { name: "Watermelon Helmet", emoji: "🍉", note: "not approved for cycling" }
+    ];
+
+const chosen = [];
+    const foodGrid = document.getElementById("foodGrid");
+    const plate = document.getElementById("plate");
+    const count = document.getElementById("count");
+    const goofyRating = document.getElementById("goofyRating");
+    const receipt = document.getElementById("receipt");
+
+    function buildFoodCards() {
+      foods.forEach((food, index) => {
+        const card = document.createElement("button");
+        card.className = "food-card";
+        card.innerHTML = `
+          <span class="emoji">${food.emoji}</span>
+          <span class="food-name">${food.name}</span>
+          <div class="food-note">${food.note}</div>
+        `;
+        card.addEventListener("click", () => addFood(index, card));
+        foodGrid.appendChild(card);
+      });
+    }
+
+    function addFood(index, card) {
+      chosen.push(foods[index]);
+      card.classList.add("selected");
+      setTimeout(() => card.classList.remove("selected"), 450);
+      updatePlate();
+      receipt.textContent = `${foods[index].name} has entered the plate. Everyone stay calm.`;
+    }
+
+    function updatePlate() {
+      count.textContent = chosen.length;
+      goofyRating.textContent = Math.min(100, chosen.length * 17);
+
+      if (chosen.length === 0) {
+        plate.innerHTML = "<strong>Click foods to add them here!</strong>";
+        return;
+      }
+
+      plate.innerHTML = chosen
+        .map(food => `<span title="${food.name}">${food.emoji}</span>`)
+        .join("");
+    }
+
+    function randomFood() {
+      const randomIndex = Math.floor(Math.random() * foods.length);
+      chosen.push(foods[randomIndex]);
+      updatePlate();
+      receipt.textContent = `Random choice: ${foods[randomIndex].name}. The kitchen made a silly noise.`;
+    }
+
+    function clearPlate() {
+      chosen.length = 0;
+      updatePlate();
+      receipt.textContent = "Plate cleared. The crumbs have escaped.";
+    }
+
+    function makeOrder() {
+      if (chosen.length === 0) {
+        receipt.textContent = "You need to choose food first, tiny restaurant boss.";
+        return;
+      }
+
+      const names = chosen.map(food => food.name).join(", ");
+      const chefNames = ["Captain Snackbeard", "Professor Pickle", "Chef Wobblebottom", "Sir Sauce-A-Lot"];
+      const chef = chefNames[Math.floor(Math.random() * chefNames.length)];
+      receipt.textContent = `${chef} says: Your order is ${names}. Estimated delivery: when the moon sneezes.`;
+    }
+
+    buildFoodCards();
+  </script>
+</body>
+</html>

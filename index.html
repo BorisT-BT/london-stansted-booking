@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Goofy Food Picker</title>
+  <title>Emirates Style Sky Dining</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,363 +12,614 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Comic Sans MS, Comic Sans, Trebuchet MS, Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #2b2118;
       background:
-        radial-gradient(circle at 10% 20%, #fff06a 0 70px, transparent 75px),
-        radial-gradient(circle at 90% 10%, #ff8be6 0 90px, transparent 95px),
-        radial-gradient(circle at 50% 90%, #80f7ff 0 110px, transparent 120px),
-        linear-gradient(135deg, #8b5cf6, #22c55e, #f97316);
-      color: #171717;
-      overflow-x: hidden;
+        linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)),
+        url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
     }
 
-    .wiggle-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.25;
-      background-image:
-        repeating-linear-gradient(45deg, transparent 0 28px, white 28px 32px),
-        repeating-linear-gradient(-45deg, transparent 0 36px, black 36px 39px);
-      animation: slidey 8s linear infinite;
-    }
-
-    @keyframes slidey {
-      from { transform: translate(0, 0); }
-      to { transform: translate(45px, 45px); }
+    .top-bar {
+      background: #b00020;
+      color: white;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
     }
 
     .app {
-      width: min(1050px, 94vw);
+      width: min(1120px, 94vw);
       margin: 0 auto;
-      padding: 26px 0 50px;
-      position: relative;
-      z-index: 1;
+      padding: 28px 0 50px;
     }
 
     header {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.86);
-      border: 6px solid #111827;
-      border-radius: 34px;
-      padding: 22px;
-      box-shadow: 10px 10px 0 #111827;
-      transform: rotate(-1deg);
+      background: linear-gradient(135deg, #ffffff, #f9f1df);
+      border-bottom: 7px solid #b00020;
+      border-radius: 0 0 28px 28px;
+      padding: 34px 28px;
+      box-shadow: 0 18px 45px rgba(48, 30, 17, 0.18);
+    }
+
+    .brand-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-mark {
+      width: 62px;
+      height: 62px;
+      border-radius: 16px;
+      background: #b00020;
+      color: #f5d48a;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 3px #f5d48a;
     }
 
     h1 {
-      font-size: clamp(2.4rem, 7vw, 5.4rem);
       margin: 0;
-      text-shadow: 4px 4px 0 #facc15, 8px 8px 0 #fb7185;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.3rem, 6vw, 4.6rem);
+      color: #3d2614;
+      letter-spacing: 0.02em;
     }
 
     .subtitle {
-      font-size: 1.25rem;
-      margin: 10px 0 0;
-      font-weight: 900;
+      margin: 8px 0 0;
+      font-size: 1.1rem;
+      color: #6f5943;
+      max-width: 700px;
+      line-height: 1.5;
     }
 
-    .counter-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-      margin: 26px 0;
-    }
-
-    .counter {
-      background: #111827;
-      color: white;
-      border: 4px solid white;
+    .pill {
+      background: #3d2614;
+      color: #f5d48a;
+      border: 1px solid #f5d48a;
       border-radius: 999px;
-      padding: 10px 18px;
-      font-weight: 900;
-      box-shadow: 4px 4px 0 #facc15;
+      padding: 10px 16px;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    .food-grid {
+    .status-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
     }
 
-    .food-card {
-      border: 5px solid #111827;
-      border-radius: 26px;
-      background: rgba(255, 255, 255, 0.9);
-      min-height: 178px;
+    .status-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(176, 0, 32, 0.18);
+      border-radius: 18px;
       padding: 16px;
-      cursor: pointer;
-      box-shadow: 7px 7px 0 #111827;
-      transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(48, 30, 17, 0.12);
     }
 
-    .food-card:hover {
-      transform: translateY(-7px) rotate(2deg) scale(1.03);
-      box-shadow: 11px 13px 0 #111827;
-      background: #fff7ad;
-    }
-
-    .food-card.selected {
-      background: #bef264;
-      animation: boing 0.45s ease;
-    }
-
-    @keyframes boing {
-      0% { transform: scale(1); }
-      45% { transform: scale(1.18) rotate(-4deg); }
-      100% { transform: scale(1); }
-    }
-
-    .emoji {
+    .status-label {
       display: block;
-      font-size: 4rem;
-      filter: drop-shadow(4px 4px 0 #facc15);
+      color: #85684b;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+      font-weight: 700;
     }
 
-    .food-name {
-      display: block;
-      font-size: 1.2rem;
-      font-weight: 900;
-      margin-top: 10px;
-    }
-
-    .food-note {
-      font-size: 0.88rem;
+    .status-value {
+      font-size: 1.3rem;
       font-weight: 800;
-      color: #525252;
-      margin-top: 5px;
+      color: #3d2614;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 30px 0 14px;
+      flex-wrap: wrap;
+    }
+
+    h2 {
+      margin: 0;
+      color: #3d2614;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+    }
+
+    .hint {
+      margin: 0;
+      color: #6f5943;
+      font-weight: 600;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 20px;
+    }
+
+    .meal-card {
+      border: 0;
+      padding: 0;
+      background: #fffdf8;
+      border-radius: 22px;
+      overflow: hidden;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 16px 36px rgba(48, 30, 17, 0.18);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      position: relative;
+    }
+
+.meal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 46px rgba(48, 30, 17, 0.25);
+    }
+
+    .meal-card.selected {
+      outline: 4px solid #b00020;
+      box-shadow: 0 22px 48px rgba(176, 0, 32, 0.24);
+    }
+
+    .meal-card img {
+      width: 100%;
+      height: 165px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .meal-body {
+      padding: 16px;
+    }
+
+    .meal-type {
+      color: #b00020;
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .meal-name {
+      color: #2b2118;
+      font-size: 1.18rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .meal-description {
+      color: #6f5943;
+      line-height: 1.4;
+      font-size: 0.94rem;
+      min-height: 52px;
+    }
+
+    .meal-meta {
+      margin-top: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      color: #3d2614;
+      font-weight: 800;
+    }
+
+    .price {
+      color: #b00020;
     }
 
     .panel {
-      margin-top: 28px;
-      background: rgba(255, 255, 255, 0.92);
-      border: 6px dashed #111827;
-      border-radius: 34px;
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .order-panel,
+    .summary-panel {
+      background: rgba(255, 253, 248, 0.96);
+      border-radius: 24px;
       padding: 22px;
-      box-shadow: 10px 10px 0 #fb7185;
+      box-shadow: 0 18px 45px rgba(48, 30, 17, 0.18);
+      border: 1px solid rgba(176, 0, 32, 0.16);
+    }
+
+    .tray {
+      min-height: 170px;
+      border: 1px solid #dbc9a5;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #fffdf8, #f3e6c8);
+      padding: 16px;
+    }
+
+    .empty {
+      color: #85684b;
+      font-weight: 700;
       text-align: center;
+      margin-top: 48px;
     }
 
-    .plate {
-      min-height: 135px;
-      border-radius: 999px;
-border: 7px solid #d1d5db;
-      background: radial-gradient(circle, #ffffff 0 42%, #e5e7eb 43% 65%, #f9fafb 66%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .tray-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
       gap: 12px;
-      flex-wrap: wrap;
-      padding: 18px;
-      margin: 16px auto;
-      max-width: 700px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eadcbd;
     }
 
-    .plate span {
-      font-size: 3.1rem;
-      animation: tinyDance 1.1s infinite alternate ease-in-out;
+    .tray-item:last-child {
+      border-bottom: 0;
     }
 
-    .plate span:nth-child(even) {
-      animation-delay: 0.2s;
+    .tray-item img {
+      width: 64px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 12px;
     }
 
-    @keyframes tinyDance {
-      from { transform: translateY(0) rotate(-5deg); }
-      to { transform: translateY(-8px) rotate(8deg); }
+    .tray-item strong {
+      display: block;
+      color: #2b2118;
+    }
+
+    .tray-item span {
+      color: #85684b;
+      font-size: 0.88rem;
     }
 
     .buttons {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 12px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
-    button {
-      border: 4px solid #111827;
+    button.action {
+      border: 0;
       border-radius: 999px;
       padding: 13px 18px;
-      font-size: 1rem;
-      font-weight: 900;
+      font-weight: 800;
       cursor: pointer;
-      font-family: inherit;
-      box-shadow: 5px 5px 0 #111827;
+      font-size: 0.95rem;
     }
 
-    button:hover {
-      transform: translateY(-3px) rotate(-2deg);
+    .confirm {
+      background: #b00020;
+      color: white;
     }
 
-    .random { background: #38bdf8; }
-    .clear { background: #fb7185; }
-    .order { background: #facc15; }
+    .random {
+      background: #3d2614;
+      color: #f5d48a;
+    }
+
+    .clear {
+      background: #efe1c1;
+      color: #3d2614;
+    }
 
     .receipt {
-      margin-top: 18px;
-      font-size: 1.25rem;
-      font-weight: 900;
-      background: #111827;
-      color: white;
-      border-radius: 20px;
-      padding: 16px;
-      min-height: 62px;
+      margin-top: 16px;
+      border-left: 5px solid #b00020;
+      background: #fff6e4;
+      padding: 14px 16px;
+      border-radius: 14px;
+      color: #3d2614;
+      line-height: 1.45;
+      font-weight: 700;
     }
 
-    .mascot {
-      position: fixed;
-      right: 18px;
-      bottom: 12px;
-      font-size: 5rem;
-      animation: floaty 2s infinite ease-in-out;
-      z-index: 2;
-      user-select: none;
+    .summary-panel dl {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 0;
     }
 
-    @keyframes floaty {
-      0%, 100% { transform: translateY(0) rotate(8deg); }
-      50% { transform: translateY(-18px) rotate(-8deg); }
+    .summary-panel dt {
+      color: #85684b;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
     }
 
-    @media (max-width: 600px) {
-      header {
-        box-shadow: 6px 6px 0 #111827;
+    .summary-panel dd {
+      margin: 4px 0 0;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #2b2118;
+    }
+
+    .note {
+      margin-top: 16px;
+      color: #6f5943;
+      line-height: 1.45;
+    }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: #6f5943;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.78);
+      padding: 12px;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 760px) {
+      .panel {
+        grid-template-columns: 1fr;
       }
 
-      .mascot {
-        font-size: 3.2rem;
+      .tray-item {
+        grid-template-columns: 58px 1fr;
       }
 
-      .food-card {
-        min-height: 150px;
+      .tray-price {
+        grid-column: 2;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wiggle-bg"></div>
+  <div class="top-bar">Emirates-style Sky Dining • Private roleplay demo</div>
 
   <main class="app">
-    <header>
-      <h1>Goofy Food Picker</h1>
-      <p class="subtitle">Choose your dinner. The food is suspiciously bouncy.</p>
+<header>
+      <div class="brand-line">
+        <div class="logo-box">
+          <div class="logo-mark">E</div>
+          <div>
+            <h1>Sky Dining</h1>
+            <p class="subtitle">A formal airline meal selector inspired by premium Emirates-style colours: deep red, gold, cream, and polished cabin service.</p>
+          </div>
+        </div>
+        <div class="pill">Flight EK 777 • Dinner Service</div>
+      </div>
     </header>
 
-    <section class="counter-row">
-      <div class="counter">Items chosen: <span id="count">0</span></div>
-      <div class="counter">Goofy rating: <span id="goofyRating">0</span>%</div>
+    <section class="status-row">
+      <div class="status-card">
+        <span class="status-label">Passenger</span>
+        <span class="status-value">Boris Trifonov</span>
+      </div>
+      <div class="status-card">
+        <span class="status-label">Cabin</span>
+        <span class="status-value">Business Class</span>
+      </div>
+      <div class="status-card">
+        <span class="status-label">Selected dishes</span>
+        <span class="status-value" id="count">0</span>
+      </div>
+      <div class="status-card">
+        <span class="status-label">Total</span>
+        <span class="status-value" id="total">£0</span>
+      </div>
     </section>
 
-    <section class="food-grid" id="foodGrid"></section>
+    <section class="section-title">
+      <div>
+        <h2>Choose Your Meal</h2>
+        <p class="hint">Select from real-food photo menu cards.</p>
+      </div>
+      <p class="hint">Click a card to add it to your tray.</p>
+    </section>
+
+    <section class="menu-grid" id="menuGrid"></section>
 
     <section class="panel">
-      <h2>Your wobbling plate</h2>
-      <div class="plate" id="plate">
-        <strong>Click foods to add them here!</strong>
+      <div class="order-panel">
+        <h2>Your Meal Tray</h2>
+        <div class="tray" id="tray">
+          <p class="empty">No dishes selected yet. Please choose from the menu above.</p>
+        </div>
+
+        <div class="buttons">
+          <button class="action random" onclick="addRandomMeal()">Add chef recommendation</button>
+          <button class="action confirm" onclick="confirmOrder()">Confirm meal selection</button>
+          <button class="action clear" onclick="clearTray()">Clear tray</button>
+        </div>
+
+        <div class="receipt" id="receipt">Your cabin crew is ready to prepare your selected meal.</div>
       </div>
 
-      <div class="buttons">
-        <button class="random" onclick="randomFood()">🎲 Add random food</button>
-        <button class="order" onclick="makeOrder()">🧾 Make goofy order</button>
-        <button class="clear" onclick="clearPlate()">🧽 Clear plate</button>
+      <div class="summary-panel">
+        <h2>Service Summary</h2>
+        <dl>
+          <div>
+            <dt>Service</dt>
+            <dd>Dinner</dd>
+          </div>
+          <div>
+            <dt>Seat</dt>
+            <dd>2A</dd>
+          </div>
+          <div>
+            <dt>Drink</dt>
+            <dd>Still Water</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd id="statusText">Selecting</dd>
+          </div>
+        </dl>
+        <p class="note">This is a pretend private website for roleplay and learning. It is not connected to Emirates or any real airline system.</p>
       </div>
-
-      <div class="receipt" id="receipt">No order yet. The chef is wearing a traffic cone.</div>
     </section>
+
+    <footer>Premium airline-style food selector • HTML, CSS, and JavaScript only</footer>
   </main>
 
-  <div class="mascot" title="Chef Wobblebottom">👨‍🍳</div>
-
   <script>
-    const foods = [
-      { name: "Banana Pizza", emoji: "🍌🍕", note: "wrong but powerful" },
-      { name: "Mega Burger", emoji: "🍔", note: "requires two hands and courage" },
-      { name: "Drama Taco", emoji: "🌮", note: "falls apart dramatically" },
-      { name: "Sneaky Sushi", emoji: "🍣", note: "probably plotting" },
-      { name: "Rocket Chips", emoji: "🍟", note: "launches into ketchup orbit" },
-      { name: "Spaghetti Tornado", emoji: "🍝", note: "spin before eating" },
-      { name: "Mystery Doughnut", emoji: "🍩", note: "may contain glitter" },
-      { name: "Chicken Nugget Army", emoji: "🍗", note: "marches at lunchtime" },
-      { name: "Ice Cream Volcano", emoji: "🍦", note: "melts with style" },
-      { name: "Pancake Stackzilla", emoji: "🥞", note: "taller than the chef" },
-      { name: "Cheese Moon", emoji: "🧀", note: "orbits your plate" },
-      { name: "Watermelon Helmet", emoji: "🍉", note: "not approved for cycling" }
+    const meals = [
+      {
+        type: "Main Course",
+        name: "Grilled Chicken with Rice",
+        description: "Tender grilled chicken served with seasoned rice, vegetables, and a light sauce.",
+        price: 18,
+        image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Main Course",
+        name: "Beef Steak Dinner",
+        description: "Sliced steak with roasted vegetables and a rich savoury glaze.",
+        price: 24,
+        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Main Course",
+        name: "Creamy Pasta",
+        description: "Pasta in a smooth cream sauce with herbs and parmesan-style garnish.",
+        price: 16,
+        image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Vegetarian",
+        name: "Mediterranean Salad",
+        description: "Fresh salad with tomatoes, cucumber, olives, leaves, and a lemon dressing.",
+        price: 12,
+image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Light Meal",
+        name: "Smoked Salmon Plate",
+        description: "A chilled salmon plate with bread, salad garnish, and elegant presentation.",
+        price: 20,
+        image: "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Dessert",
+        name: "Chocolate Dessert",
+        description: "A rich chocolate dessert served as the final course after dinner.",
+        price: 9,
+        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Dessert",
+        name: "Fruit Platter",
+        description: "Fresh sliced fruit arranged for a lighter sweet option.",
+        price: 8,
+        image: "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        type: "Drink",
+        name: "Orange Juice",
+        description: "Fresh orange juice served chilled with the meal service.",
+        price: 4,
+        image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=900&q=80"
+      }
     ];
 
-const chosen = [];
-    const foodGrid = document.getElementById("foodGrid");
-    const plate = document.getElementById("plate");
+    const selectedMeals = [];
+    const menuGrid = document.getElementById("menuGrid");
+    const tray = document.getElementById("tray");
     const count = document.getElementById("count");
-    const goofyRating = document.getElementById("goofyRating");
+    const total = document.getElementById("total");
     const receipt = document.getElementById("receipt");
+    const statusText = document.getElementById("statusText");
 
-    function buildFoodCards() {
-      foods.forEach((food, index) => {
+    function buildMenu() {
+      meals.forEach((meal, index) => {
         const card = document.createElement("button");
-        card.className = "food-card";
+        card.className = "meal-card";
         card.innerHTML = `
-          <span class="emoji">${food.emoji}</span>
-          <span class="food-name">${food.name}</span>
-          <div class="food-note">${food.note}</div>
+          <img src="${meal.image}" alt="${meal.name}">
+          <div class="meal-body">
+            <div class="meal-type">${meal.type}</div>
+            <div class="meal-name">${meal.name}</div>
+            <div class="meal-description">${meal.description}</div>
+            <div class="meal-meta">
+              <span>Choose dish</span>
+              <span class="price">£${meal.price}</span>
+            </div>
+          </div>
         `;
-        card.addEventListener("click", () => addFood(index, card));
-        foodGrid.appendChild(card);
+        card.addEventListener("click", () => selectMeal(index, card));
+        menuGrid.appendChild(card);
       });
     }
 
-    function addFood(index, card) {
-      chosen.push(foods[index]);
+    function selectMeal(index, card) {
+      selectedMeals.push(meals[index]);
       card.classList.add("selected");
       setTimeout(() => card.classList.remove("selected"), 450);
-      updatePlate();
-      receipt.textContent = `${foods[index].name} has entered the plate. Everyone stay calm.`;
+      statusText.textContent = "Selecting";
+      receipt.textContent = `${meals[index].name} has been added to your premium meal tray.`;
+      updateTray();
     }
 
-    function updatePlate() {
-      count.textContent = chosen.length;
-      goofyRating.textContent = Math.min(100, chosen.length * 17);
+    function updateTray() {
+      count.textContent = selectedMeals.length;
+      const totalPrice = selectedMeals.reduce((sum, meal) => sum + meal.price, 0);
+      total.textContent = `£${totalPrice}`;
 
-      if (chosen.length === 0) {
-        plate.innerHTML = "<strong>Click foods to add them here!</strong>";
+      if (selectedMeals.length === 0) {
+        tray.innerHTML = `<p class="empty">No dishes selected yet. Please choose from the menu above.</p>`;
         return;
       }
 
-      plate.innerHTML = chosen
-        .map(food => `<span title="${food.name}">${food.emoji}</span>`)
-        .join("");
+      tray.innerHTML = selectedMeals.map(meal => `
+        <div class="tray-item">
+          <img src="${meal.image}" alt="${meal.name}">
+          <div>
+            <strong>${meal.name}</strong>
+            <span>${meal.type}</span>
+          </div>
+          <strong class="tray-price">£${meal.price}</strong>
+        </div>
+      `).join("");
     }
 
-    function randomFood() {
-      const randomIndex = Math.floor(Math.random() * foods.length);
-      chosen.push(foods[randomIndex]);
-      updatePlate();
-      receipt.textContent = `Random choice: ${foods[randomIndex].name}. The kitchen made a silly noise.`;
+    function addRandomMeal() {
+      const randomIndex = Math.floor(Math.random() * meals.length);
+      selectedMeals.push(meals[randomIndex]);
+      receipt.textContent = `Chef recommendation added: ${meals[randomIndex].name}.`;
+      statusText.textContent = "Selecting";
+      updateTray();
     }
 
-    function clearPlate() {
-      chosen.length = 0;
-      updatePlate();
-      receipt.textContent = "Plate cleared. The crumbs have escaped.";
+    function clearTray() {
+      selectedMeals.length = 0;
+      statusText.textContent = "Selecting";
+      receipt.textContent = "Your tray has been cleared. Please choose a new meal selection.";
+      updateTray();
     }
 
-    function makeOrder() {
-      if (chosen.length === 0) {
-        receipt.textContent = "You need to choose food first, tiny restaurant boss.";
+    function confirmOrder() {
+if (selectedMeals.length === 0) {
+        receipt.textContent = "Please select at least one dish before confirming your meal.";
         return;
       }
 
-      const names = chosen.map(food => food.name).join(", ");
-      const chefNames = ["Captain Snackbeard", "Professor Pickle", "Chef Wobblebottom", "Sir Sauce-A-Lot"];
-      const chef = chefNames[Math.floor(Math.random() * chefNames.length)];
-      receipt.textContent = `${chef} says: Your order is ${names}. Estimated delivery: when the moon sneezes.`;
+      const mealNames = selectedMeals.map(meal => meal.name).join(", ");
+      const totalPrice = selectedMeals.reduce((sum, meal) => sum + meal.price, 0);
+      statusText.textContent = "Confirmed";
+      receipt.textContent = `Meal confirmed for seat 2A: ${mealNames}. Total: £${totalPrice}. Your cabin crew will serve it shortly.`;
     }
 
-    buildFoodCards();
+    buildMenu();
   </script>
 </body>
 </html>
